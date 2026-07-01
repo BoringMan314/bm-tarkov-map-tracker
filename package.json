@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "Dev tools for bm-tarkov-map-tracker (SVG rasterize for factory sync)",
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

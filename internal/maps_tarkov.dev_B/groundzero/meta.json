@@ -1,0 +1,18 @@
+{
+    "name": "groundzero",
+    "display_name": "Ground Zero",
+    "description": "",
+    "xmin": -99,
+    "xmax": 249,
+    "zmin": -124,
+    "zmax": 364,
+    "coordinates_rotation": 180,
+    "width": 348.92543,
+    "height": 488.44792,
+    "transform": [
+        0.524,
+        167.3,
+        0.524,
+        65.1
+    ]
+}

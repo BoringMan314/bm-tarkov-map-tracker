@@ -1,0 +1,91 @@
+{
+    "name": "labs",
+    "display_name": "Labs",
+    "description": "",
+    "xmin": -287,
+    "xmax": -80,
+    "zmin": -477,
+    "zmax": -193,
+    "coordinates_rotation": 270,
+    "width": 720.0,
+    "height": 586.0,
+    "transform": [
+        0.575,
+        281.2,
+        0.575,
+        193.7
+    ],
+    "points": {
+        "pmc": [
+            {
+                "id": "761dedf3fefaf3526e0ce19c7d7b1a3d494fce8a",
+                "name": "Ventilation Shaft",
+                "coordinates": [
+                    -144.94,
+                    -396.826
+                ]
+            },
+            {
+                "id": "c846e13f4bf7afe28c0cf214bd9e7b4685ba592f",
+                "name": "Sewage Conduit",
+                "coordinates": [
+                    -122.889992,
+                    -258.3245
+                ]
+            },
+            {
+                "id": "c5c6f818755ac844b4723b1a2cf057569da410ee",
+                "name": "Parking Gate",
+                "coordinates": [
+                    -231.73,
+                    -434.816376
+                ]
+            },
+            {
+                "id": "6499ac7374cd238366b977944e305a08afd2e9e3",
+                "name": "Hangar Gate",
+                "coordinates": [
+                    -170.66,
+                    -245.94
+                ]
+            }
+        ],
+        "scav": [],
+        "coop": [
+            {
+                "id": "ed029f26c9d60bf00d926b4d7e7876b0591b411a",
+                "name": "Medical Block Elevator",
+                "coordinates": [
+                    -112.423,
+                    -343.986
+                ]
+            },
+            {
+                "id": "4cfc8fb5003e428d6cb9f8492690068afba50c71",
+                "name": "Cargo Elevator",
+                "coordinates": [
+                    -112.152,
+                    -408.64
+                ]
+            },
+            {
+                "id": "1a5ae89d5401d277f8b317c18951dfe0e1bfd695",
+                "name": "Main Elevator",
+                "coordinates": [
+                    -282.304016,
+                    -334.896
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "8",
+                "name": "Transit to Streets of Tarkov",
+                "coordinates": [
+                    -169.079956,
+                    -420.878052
+                ]
+            }
+        ]
+    }
+}

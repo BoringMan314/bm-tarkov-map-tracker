@@ -1,0 +1,25 @@
+{
+    "name": "labyrinth",
+    "display_name": "Labyrinth",
+    "description": "",
+    "xmin": 53.0,
+    "xmax": -52.0,
+    "zmin": -37.0,
+    "zmax": 76.0,
+    "coordinates_rotation": 270,
+    "width": 4096.0,
+    "height": 3584.0,
+    "transform": [
+        2.115,
+        85.5,
+        2.115,
+        128.0
+    ],
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 1,
+    "tile_max_x": 15,
+    "tile_max_y": 14,
+    "tile_size": 256,
+    "map_asset_rev": "51c252aab9979cc8"
+}

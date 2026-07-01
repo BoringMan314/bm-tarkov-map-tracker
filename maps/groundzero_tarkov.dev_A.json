@@ -1,0 +1,93 @@
+{
+    "name": "groundzero",
+    "display_name": "Ground Zero",
+    "description": "",
+    "xmin": -99.0,
+    "xmax": 249.0,
+    "zmin": -124.0,
+    "zmax": 364.0,
+    "coordinates_rotation": 180,
+    "width": 2926.0,
+    "height": 4096.0,
+    "transform": [
+        0.524,
+        167.3,
+        0.524,
+        65.1
+    ],
+    "tile_zoom": 4,
+    "tile_min_x": 2,
+    "tile_min_y": 0,
+    "tile_max_x": 13,
+    "tile_max_y": 15,
+    "tile_size": 256,
+    "stitch_width": 3072.0,
+    "stitch_height": 4096.0,
+    "map_offset_x": 73,
+    "map_offset_y": 0,
+    "points": {
+        "pmc": [
+            {
+                "id": "d6870dda31937ff93662ce903afe1099b24011a1",
+                "name": "Police Cordon V-Ex",
+                "coordinates": [
+                    -19.5134068,
+                    114.942139
+                ]
+            },
+            {
+                "id": "89ff19116feeafdf4a2b4e538cafb5364ffbe862",
+                "name": "Mira Ave (Flare)",
+                "coordinates": [
+                    218.225,
+                    -38.5065842
+                ]
+            },
+            {
+                "id": "122676fe448d426d085e9516114534966a69c3ff",
+                "name": "Tartowers Sales Office",
+                "coordinates": [
+                    190.804,
+                    133.388992
+                ]
+            }
+        ],
+        "scav": [],
+        "coop": [
+            {
+                "id": "549ceec177747468ebe86bcfd5a486d1dce9ed64",
+                "name": "Emercom Checkpoint",
+                "coordinates": [
+                    151.625,
+                    -97.45658
+                ]
+            },
+            {
+                "id": "118fa7e3eae47190871eb4ea20d4f3ca2718b73f",
+                "name": "Scav Checkpoint (Co-op)",
+                "coordinates": [
+                    25.2195644,
+                    -79.5413742
+                ]
+            },
+            {
+                "id": "ab623005251ffcd3603a5df2610917a998d9a17e",
+                "name": "Nakatani Basement Stairs",
+                "coordinates": [
+                    -16.1249924,
+                    335.063416
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "1",
+                "name": "Transit to Streets of Tarkov",
+                "coordinates": [
+                    222.829117,
+                    65.72
+                ]
+            }
+        ]
+    }
+}

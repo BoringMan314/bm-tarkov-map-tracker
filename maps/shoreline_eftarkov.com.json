@@ -1,0 +1,228 @@
+{
+    "name": "shoreline",
+    "display_name": "Shoreline",
+    "description": "",
+    "width": 13824.0,
+    "height": 5632.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 54,
+    "eftarkov_rows": 22,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "90c9e56d19a7aac3",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-shoreline-pmc-0",
+                "name": "走私者的通道（合作撤离点）",
+                "coordinates": [
+                    -465.0,
+                    -1975.0
+                ],
+                "display_coordinates": [
+                    6447.0,
+                    841.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-1",
+                "name": "通往北方的路（载具撤离点）",
+                "coordinates": [
+                    -1288.0,
+                    -2600.0
+                ],
+                "display_coordinates": [
+                    5624.0,
+                    216.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-2",
+                "name": "攀岩者之路",
+                "coordinates": [
+                    -2935.0,
+                    -2530.0
+                ],
+                "display_coordinates": [
+                    3977.0,
+                    286.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-3",
+                "name": "通往海关的路",
+                "coordinates": [
+                    260.0,
+                    -745.0
+                ],
+                "display_coordinates": [
+                    7172.0,
+                    2071.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-4",
+                "name": "通往灯塔的路",
+                "coordinates": [
+                    -5940.0,
+                    -2000.0
+                ],
+                "display_coordinates": [
+                    972.0,
+                    816.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-5",
+                "name": "码头的船",
+                "coordinates": [
+                    -2269.0,
+                    2020.0
+                ],
+                "display_coordinates": [
+                    4643.0,
+                    4836.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-6",
+                "name": "铁路桥",
+                "coordinates": [
+                    1090.0,
+                    710.0
+                ],
+                "display_coordinates": [
+                    8002.0,
+                    3526.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-7",
+                "name": "隧道",
+                "coordinates": [
+                    -5820.0,
+                    740.0
+                ],
+                "display_coordinates": [
+                    1092.0,
+                    3556.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-pmc-8",
+                "name": "山间堡垒（需要纸条）",
+                "coordinates": [
+                    -2035.0,
+                    -2678.0
+                ],
+                "display_coordinates": [
+                    4877.0,
+                    138.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-shoreline-scav-0",
+                "name": "走私者的通道（合作撤离点）",
+                "coordinates": [
+                    -465.0,
+                    -1975.0
+                ],
+                "display_coordinates": [
+                    6447.0,
+                    841.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-scav-1",
+                "name": "通往海关的路",
+                "coordinates": [
+                    260.0,
+                    -745.0
+                ],
+                "display_coordinates": [
+                    7172.0,
+                    2071.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-scav-2",
+                "name": "灯塔",
+                "coordinates": [
+                    -1710.0,
+                    1980.0
+                ],
+                "display_coordinates": [
+                    5202.0,
+                    4796.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-scav-3",
+                "name": "被毁的道路",
+                "coordinates": [
+                    -5740.0,
+                    855.0
+                ],
+                "display_coordinates": [
+                    1172.0,
+                    3671.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-scav-4",
+                "name": "行政楼地下室",
+                "coordinates": [
+                    3105.0,
+                    20.0
+                ],
+                "display_coordinates": [
+                    10017.0,
+                    2836.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-scav-5",
+                "name": "健身房疗养院东楼 入口",
+                "coordinates": [
+                    5250.0,
+                    1920.0
+                ],
+                "display_coordinates": [
+                    12162.0,
+                    4736.0
+                ]
+            },
+            {
+                "id": "eft-shoreline-scav-6",
+                "name": "山间堡垒（需要纸条）",
+                "coordinates": [
+                    -2035.0,
+                    -2678.0
+                ],
+                "display_coordinates": [
+                    4877.0,
+                    138.0
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-shoreline-transit-0",
+                "name": "前往灯塔",
+                "coordinates": [
+                    -5800.0,
+                    -2000.0
+                ],
+                "display_coordinates": [
+                    1112.0,
+                    816.0
+                ]
+            }
+        ]
+    }
+}

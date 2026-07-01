@@ -1,0 +1,14 @@
+{
+    "order": [
+        "factory",
+        "groundzero",
+        "interchange",
+        "labs",
+        "customs",
+        "shoreline",
+        "reserve",
+        "woods",
+        "streets"
+    ],
+    "default": "factory"
+}

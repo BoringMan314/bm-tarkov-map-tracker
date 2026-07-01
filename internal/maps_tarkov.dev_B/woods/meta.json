@@ -1,0 +1,24 @@
+{
+    "name": "woods",
+    "display_name": "Woods",
+    "description": "",
+    "xmin": -761,
+    "xmax": 646,
+    "zmin": -914,
+    "zmax": 442,
+    "coordinates_rotation": 180,
+    "width": 1472.7926,
+    "height": 1420.5995,
+    "transform": [
+        0.1855,
+        112.95,
+        0.1855,
+        167.85
+    ],
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 0,
+    "tile_max_x": 15,
+    "tile_max_y": 15,
+    "tile_size": 256
+}

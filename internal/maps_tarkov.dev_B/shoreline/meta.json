@@ -1,0 +1,24 @@
+{
+    "name": "shoreline",
+    "display_name": "Shoreline",
+    "description": "",
+    "xmin": -1056,
+    "xmax": 504,
+    "zmin": -415,
+    "zmax": 618,
+    "coordinates_rotation": 180,
+    "width": 1559.5717,
+    "height": 1032.4935,
+    "transform": [
+        0.16,
+        83.2,
+        0.16,
+        111.1
+    ],
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 2,
+    "tile_max_x": 15,
+    "tile_max_y": 13,
+    "tile_size": 256
+}

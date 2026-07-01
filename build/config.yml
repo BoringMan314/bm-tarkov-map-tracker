@@ -1,0 +1,45 @@
+# Wails v3 build/dev configuration (Windows only).
+# After editing `info`, run: wails3 task common:update:build-assets
+version: '3'
+
+info:
+  companyName: "[B.M] 圓周率 3.14"
+  productName: "[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14"
+  productIdentifier: "com.bm.tarkov-map-tracker"
+  description: "[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14"
+  copyright: "[B.M] 圓周率 3.14"
+  comments: "bm-tarkov-map-tracker"
+  version: "0.1"
+
+dev_mode:
+  root_path: .
+  log_level: warn
+  debounce: 1000
+  ignore:
+    dir:
+      - .git
+      - node_modules
+      - frontend
+      - bin
+    file:
+      - .DS_Store
+      - .gitignore
+      - .gitkeep
+      - "*_test.go"
+    watched_extension:
+      - "*.go"
+      - "*.js"
+      - "*.ts"
+    git_ignore: true
+  executes:
+    - cmd: wails3 build DEV=true
+      type: blocking
+    - cmd: wails3 task common:dev:frontend
+      type: background
+    - cmd: wails3 task run
+      type: primary
+
+fileAssociations: []
+
+other:
+  - name: My Other Data

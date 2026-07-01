@@ -1,0 +1,354 @@
+{
+    "factory": [
+        {
+            "id": "a11f20d1f462bc4c8f39699e8a59fc0b58b71299",
+            "name": "Gate 3",
+            "coordinates": [
+                58.709,
+                60.86811
+            ]
+        },
+        {
+            "id": "7e582daaf3ef18c90132998441c217f246387a06",
+            "name": "Camera Bunker Door",
+            "coordinates": [
+                -15.71578,
+                40.1081123
+            ]
+        },
+        {
+            "id": "cbe6ccd60767142298488227e57ab554cf47cd2e",
+            "name": "Office Window",
+            "coordinates": [
+                17.8332214,
+                39.8851128
+            ]
+        }
+    ],
+    "groundzero": [],
+    "interchange": [],
+    "labs": [],
+    "customs": [
+        {
+            "id": "372308f8ae6c385c1a1397bf925af53847545a7d",
+            "name": "Military Base CP",
+            "coordinates": [
+                644.87915,
+                126.867371
+            ]
+        },
+        {
+            "id": "de953d179a503c836b89f8497600c448b1d7067d",
+            "name": "Passage Between Rocks",
+            "coordinates": [
+                539.394,
+                200.3388
+            ]
+        },
+        {
+            "id": "7097325dad6b074566fc1e7744d8490151b001e7",
+            "name": "Railroad to Military Base",
+            "coordinates": [
+                489.058228,
+                221.391266
+            ]
+        },
+        {
+            "id": "977d435f5b1510a2fe4d662a8fc30d7cc19bd90c",
+            "name": "Old Road Gate",
+            "coordinates": [
+                181.769958,
+                214.01001
+            ]
+        },
+        {
+            "id": "d048daa472b3806f452fdb3d4991032bab4366d5",
+            "name": "Sniper Roadblock",
+            "coordinates": [
+                15.0805054,
+                126.291855
+            ]
+        },
+        {
+            "id": "90ab07a4eacd76a88ae6a51bf8c2f17c92828691",
+            "name": "Railroad to Port",
+            "coordinates": [
+                -149.109558,
+                46.68419
+            ]
+        },
+        {
+            "id": "606fa68466f40d1d349f443bd89df5934097ceaa",
+            "name": "Trailer Park Workers' Shack",
+            "coordinates": [
+                -248.543152,
+                -232.991119
+            ]
+        },
+        {
+            "id": "299a91e6562ad4d55747ac15f15c9e8608cff9d4",
+            "name": "Railroad to Tarkov",
+            "coordinates": [
+                -163.4682,
+                -217.452026
+            ]
+        },
+        {
+            "id": "8574c32eb626a3e230f454d65b9262d4f9e9fbf8",
+            "name": "RUAF Roadblock",
+            "coordinates": [
+                -9.436584,
+                -138.743988
+            ]
+        },
+        {
+            "id": "1bcdc243701067f1469ee4d177ddde7c53aaecb6",
+            "name": "Warehouse 17",
+            "coordinates": [
+                50.7402344,
+                -69.8183746
+            ]
+        },
+        {
+            "id": "8194ee54571a0670e4d5bd0a02bdcb1cbb77a03e",
+            "name": "Factory Shacks",
+            "coordinates": [
+                205.5899,
+                3.31001282
+            ]
+        },
+        {
+            "id": "3fd0602903f1971d6930874e8f6cd4d754bceb58",
+            "name": "Warehouse 4",
+            "coordinates": [
+                341.569946,
+                -25.84999
+            ]
+        },
+        {
+            "id": "00e4ba8e84314ddf6878090f2e7d3aaddcb43f53",
+            "name": "Old Gas Station Gate",
+            "coordinates": [
+                300.509,
+                -198.522247
+            ]
+        },
+        {
+            "id": "f162159cfa266422af986074b4397587616effcb",
+            "name": "Factory Far Corner",
+            "coordinates": [
+                652.454834,
+                -160.48848
+            ]
+        },
+        {
+            "id": "988603509e1d1a6d59642e9b6c4514386416053f",
+            "name": "Administration Gate",
+            "coordinates": [
+                671.13,
+                -54.6699753
+            ]
+        },
+        {
+            "id": "cbb161149bdb3062b2a27447fbc804385948f671",
+            "name": "Scav Checkpoint",
+            "coordinates": [
+                652.24,
+                -27.1200027
+            ]
+        }
+    ],
+    "shoreline": [
+        {
+            "id": "5111952a9fb5c265a38886216302756c2b2b819f",
+            "name": "Road to Customs",
+            "coordinates": [
+                -859.05,
+                0.49
+            ]
+        },
+        {
+            "id": "52b4672a43e470435ec4722b09571d0bf7724f7e",
+            "name": "Lighthouse",
+            "coordinates": [
+                -458.1507,
+                567.2876
+            ]
+        },
+        {
+            "id": "a3cd7a839e550508ed301f4bc1725c2e2f33a0b7",
+            "name": "Ruined Road",
+            "coordinates": [
+                366.62,
+                332.51
+            ]
+        },
+        {
+            "id": "175520fd8ce745c377fea12ac3b38690e371ab24",
+            "name": "East Wing Gym Entrance",
+            "coordinates": [
+                -296.9457,
+                -100.892
+            ]
+        },
+        {
+            "id": "8ef2d534d0db570a392ebc4486fad51eefdfa2d6",
+            "name": "Admin Basement",
+            "coordinates": [
+                -256.87,
+                -149.782379
+            ]
+        }
+    ],
+    "labyrinth": [],
+    "reserve": [
+        {
+            "id": "e50b50945f4e27556cec43815504e61ef26493d1",
+            "name": "Hole in the Wall by the Mountains",
+            "coordinates": [
+                -261.43,
+                48.52
+            ]
+        },
+        {
+            "id": "adfd835074e6d2abf54127650c036eb1975e0c40",
+            "name": "Heating Pipe",
+            "coordinates": [
+                -35.26,
+                -180.12
+            ]
+        },
+        {
+            "id": "fe060ae84e549f3a3d04647f866c5286f29f966d",
+            "name": "Depot Hermetic Door",
+            "coordinates": [
+                120.78,
+                -120.352
+            ]
+        },
+        {
+            "id": "a61497fa1b52d87d04036733c44b8477f92e1332",
+            "name": "Checkpoint Fence",
+            "coordinates": [
+                61.97,
+                134.31
+            ]
+        }
+    ],
+    "woods": [
+        {
+            "id": "9916015e766588eaefa49e1928e2967bd1f53ff8",
+            "name": "Dead Man's Place",
+            "coordinates": [
+                195.550049,
+                259.210022
+            ]
+        },
+        {
+            "id": "46ce7e8018a7220ce3d109ca393afa9c5178bf2e",
+            "name": "Boat",
+            "coordinates": [
+                176.640015,
+                215.859985
+            ]
+        },
+        {
+            "id": "cee75741135c2ca663d183991ae86431eb7f4573",
+            "name": "Scav House",
+            "coordinates": [
+                413.685669,
+                242.17038
+            ]
+        },
+        {
+            "id": "3a795d4c8fdd97e5166373147d64c6598dfb4488",
+            "name": "Scav Bunker",
+            "coordinates": [
+                220.426651,
+                -705.7956
+            ]
+        },
+        {
+            "id": "10c4727b4cf24e04f2ea6c6b61242684936e0d98",
+            "name": "Mountain Stash",
+            "coordinates": [
+                -210.334351,
+                -213.4996
+            ]
+        },
+        {
+            "id": "ef2fa5721c6f52097f0cb55ff938b631d241d63c",
+            "name": "Eastern Rocks",
+            "coordinates": [
+                -509.364319,
+                -35.3295975
+            ]
+        },
+        {
+            "id": "f5b3db451be4709e1742f7d377f4536ef9c0640e",
+            "name": "Old Railway Depot",
+            "coordinates": [
+                -517.93,
+                149.19
+            ]
+        },
+        {
+            "id": "2766656887b738cb1b0a1fcaedf163e30f98b0c9",
+            "name": "RUAF Roadblock",
+            "coordinates": [
+                -135.774353,
+                416.2604
+            ]
+        }
+    ],
+    "streets": [
+        {
+            "id": "8fcf0902c03e68a2201173fc1fb9ba62376353a7",
+            "name": "Entrance to Catacombs",
+            "coordinates": [
+                -249.008026,
+                243.797
+            ]
+        },
+        {
+            "id": "14828b7f158d3d3c623ad25f7a21f59bebb15e68",
+            "name": "Ventilation Shaft",
+            "coordinates": [
+                -124.127106,
+                423.93
+            ]
+        },
+        {
+            "id": "81520cac6bc2000d30eb8d1adc403774d8e6ec93",
+            "name": "Sewer Manhole",
+            "coordinates": [
+                276.113,
+                345.389984
+            ]
+        },
+        {
+            "id": "62b57ca54c93d9004db81f424db031efa2b0e7a9",
+            "name": "Near Kamchatskaya Arch",
+            "coordinates": [
+                259.57,
+                48.72
+            ]
+        },
+        {
+            "id": "a92c7dcc94b188316921781856aa7a15fb4a4ebc",
+            "name": "Cardinal Apartment Complex Parking",
+            "coordinates": [
+                104.84,
+                -161.170013
+            ]
+        },
+        {
+            "id": "2f79c92d99215405c202d8b7f1e6eace137f9b5f",
+            "name": "Klimov Shopping Mall Exfil",
+            "coordinates": [
+                -163.821014,
+                -5.65802
+            ]
+        }
+    ]
+}

@@ -1,0 +1,156 @@
+{
+    "name": "interchange",
+    "display_name": "Interchange",
+    "description": "",
+    "width": 12544.0,
+    "height": 6400.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 49,
+    "eftarkov_rows": 25,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "f3bcd7af0c4080a0",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-interchange-pmc-0",
+                "name": "Scav营地（合作撤离点）",
+                "coordinates": [
+                    -4675.0,
+                    -360.0
+                ],
+                "display_coordinates": [
+                    1597.0,
+                    2840.0
+                ]
+            },
+            {
+                "id": "eft-interchange-pmc-1",
+                "name": "发电站",
+                "coordinates": [
+                    -930.0,
+                    -2670.0
+                ],
+                "display_coordinates": [
+                    5342.0,
+                    530.0
+                ]
+            },
+            {
+                "id": "eft-interchange-pmc-2",
+                "name": "铁路撤离点",
+                "coordinates": [
+                    -5953.0,
+                    -3070.0
+                ],
+                "display_coordinates": [
+                    319.0,
+                    130.0
+                ]
+            },
+            {
+                "id": "eft-interchange-pmc-3",
+                "name": "Emercom检查点",
+                "coordinates": [
+                    -475.0,
+                    1800.0
+                ],
+                "display_coordinates": [
+                    5797.0,
+                    5000.0
+                ]
+            },
+            {
+                "id": "eft-interchange-pmc-4",
+                "name": "围栏破洞",
+                "coordinates": [
+                    -1150.0,
+                    -365.0
+                ],
+                "display_coordinates": [
+                    5122.0,
+                    2835.0
+                ]
+            },
+            {
+                "id": "eft-interchange-pmc-5",
+                "name": "安全屋出口",
+                "coordinates": [
+                    -2356.0,
+                    197.0
+                ],
+                "display_coordinates": [
+                    3916.0,
+                    3397.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-interchange-scav-0",
+                "name": "Scav营地（合作撤离点）",
+                "coordinates": [
+                    -4675.0,
+                    -360.0
+                ],
+                "display_coordinates": [
+                    1597.0,
+                    2840.0
+                ]
+            },
+            {
+                "id": "eft-interchange-scav-1",
+                "name": "铁路撤离点",
+                "coordinates": [
+                    -5953.0,
+                    -3070.0
+                ],
+                "display_coordinates": [
+                    319.0,
+                    130.0
+                ]
+            },
+            {
+                "id": "eft-interchange-scav-2",
+                "name": "Emercom检查点",
+                "coordinates": [
+                    -475.0,
+                    1800.0
+                ],
+                "display_coordinates": [
+                    5797.0,
+                    5000.0
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-interchange-transit-0",
+                "name": "前往塔科夫街区",
+                "coordinates": [
+                    -4547.0,
+                    -3070.0
+                ],
+                "display_coordinates": [
+                    1725.0,
+                    130.0
+                ]
+            },
+            {
+                "id": "eft-interchange-transit-1",
+                "name": "前往海关",
+                "coordinates": [
+                    -4598.0,
+                    2680.0
+                ],
+                "display_coordinates": [
+                    1674.0,
+                    5880.0
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,151 @@
+{
+    "name": "reserve",
+    "display_name": "Reserve",
+    "description": "",
+    "xmin": -303.0,
+    "xmax": 289.0,
+    "zmin": -293.0,
+    "zmax": 244.0,
+    "coordinates_rotation": 180,
+    "display_rotation": -15,
+    "transform": [
+        0.395,
+        122.0,
+        0.395,
+        137.65
+    ],
+    "width": 4096.0,
+    "height": 3413.0,
+    "stitch_width": 4096.0,
+    "stitch_height": 3584.0,
+    "map_offset_x": 0,
+    "map_offset_y": 85,
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 1,
+    "tile_max_x": 15,
+    "tile_max_y": 14,
+    "tile_size": 256,
+    "points": {
+        "pmc": [
+            {
+                "id": "6b678e71f8042cf7af291a87bcd1e6b629ff8b5a",
+                "name": "D-2",
+                "coordinates": [
+                    -121.479065,
+                    172.24913
+                ]
+            },
+            {
+                "id": "6eb9d336eb71fbf68c7d809b55dec62ec89e7627",
+                "name": "Cliff Descent",
+                "coordinates": [
+                    -9.24,
+                    208.43
+                ]
+            },
+            {
+                "id": "870fee41d9fe39a659dc9d79008e3965629bbba0",
+                "name": "Exit to Woods",
+                "coordinates": [
+                    36.53,
+                    -221.56
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "e50b50945f4e27556cec43815504e61ef26493d1",
+                "name": "Hole in the Wall by the Mountains",
+                "coordinates": [
+                    -261.43,
+                    48.52
+                ]
+            },
+            {
+                "id": "adfd835074e6d2abf54127650c036eb1975e0c40",
+                "name": "Heating Pipe",
+                "coordinates": [
+                    -35.26,
+                    -180.12
+                ]
+            },
+            {
+                "id": "fe060ae84e549f3a3d04647f866c5286f29f966d",
+                "name": "Depot Hermetic Door",
+                "coordinates": [
+                    120.78,
+                    -120.352
+                ]
+            },
+            {
+                "id": "a61497fa1b52d87d04036733c44b8477f92e1332",
+                "name": "Checkpoint Fence",
+                "coordinates": [
+                    61.97,
+                    134.31
+                ]
+            }
+        ],
+        "coop": [
+            {
+                "id": "c5a30892ba8b44107663736aaeca1a3f7ff61391",
+                "name": "Armored Train",
+                "coordinates": [
+                    144.986,
+                    -147.352
+                ]
+            },
+            {
+                "id": "bf8015e63fa543ce72fe16f5c3476be29ba80fcc",
+                "name": "Bunker Hermetic Door",
+                "coordinates": [
+                    61.9206619,
+                    -190.541931
+                ]
+            },
+            {
+                "id": "acd6a6b60241f90925084d8f608b89ba7a459fdb",
+                "name": "Scav Lands (Co-Op)",
+                "coordinates": [
+                    -127.9,
+                    -142.59
+                ]
+            },
+            {
+                "id": "4cd3f8f23a3092756fb509287ccc5332aeea6453",
+                "name": "Sewer Manhole",
+                "coordinates": [
+                    40.18,
+                    76.45
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "18",
+                "name": "Transit to Customs",
+                "coordinates": [
+                    -196.729477,
+                    -117.808853
+                ]
+            },
+            {
+                "id": "19",
+                "name": "Transit to Woods",
+                "coordinates": [
+                    216.860535,
+                    -201.048859
+                ]
+            },
+            {
+                "id": "20",
+                "name": "Transit to Lighthouse",
+                "coordinates": [
+                    238.800537,
+                    -128.048859
+                ]
+            }
+        ]
+    }
+}

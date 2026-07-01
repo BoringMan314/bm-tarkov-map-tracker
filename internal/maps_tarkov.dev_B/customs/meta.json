@@ -1,0 +1,24 @@
+{
+    "name": "customs",
+    "display_name": "Customs",
+    "description": "",
+    "xmin": -372,
+    "xmax": 698,
+    "zmin": -307,
+    "zmax": 237,
+    "coordinates_rotation": 180,
+    "width": 1062.4827,
+    "height": 535.17401,
+    "transform": [
+        0.239,
+        168.65,
+        0.239,
+        136.35
+    ],
+    "tile_zoom": 5,
+    "tile_min_x": 0,
+    "tile_min_y": 8,
+    "tile_max_x": 31,
+    "tile_max_y": 23,
+    "tile_size": 256
+}

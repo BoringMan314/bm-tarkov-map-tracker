@@ -1,0 +1,213 @@
+{
+    "factory": [
+        {
+            "id": "12",
+            "name": "Transit to Woods",
+            "coordinates": [
+                23.7,
+                61.61
+            ]
+        },
+        {
+            "id": "13",
+            "name": "Transit to Customs",
+            "coordinates": [
+                18.51,
+                -48.33
+            ]
+        },
+        {
+            "id": "14",
+            "name": "Transit to The Lab",
+            "coordinates": [
+                -26.539,
+                -42.013
+            ]
+        }
+    ],
+    "groundzero": [
+        {
+            "id": "1",
+            "name": "Transit to Streets of Tarkov",
+            "coordinates": [
+                222.829117,
+                65.72
+            ]
+        }
+    ],
+    "interchange": [
+        {
+            "id": "6",
+            "name": "Transit to Customs",
+            "coordinates": [
+                274.3,
+                395.93
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Transit to Streets of Tarkov",
+            "coordinates": [
+                263.1,
+                -444.4
+            ]
+        }
+    ],
+    "labs": [
+        {
+            "id": "8",
+            "name": "Transit to Streets of Tarkov",
+            "coordinates": [
+                -169.079956,
+                -420.878052
+            ]
+        }
+    ],
+    "customs": [
+        {
+            "id": "9",
+            "name": "Transit to Reserve",
+            "coordinates": [
+                651.7,
+                124.6
+            ]
+        },
+        {
+            "id": "10",
+            "name": "Transit to Factory",
+            "coordinates": [
+                354.31,
+                -190.1
+            ]
+        },
+        {
+            "id": "11",
+            "name": "Transit to Interchange",
+            "coordinates": [
+                -335.24,
+                -205.68
+            ]
+        },
+        {
+            "id": "42",
+            "name": "Transit to Shoreline",
+            "coordinates": [
+                23.67,
+                139.53
+            ]
+        }
+    ],
+    "shoreline": [
+        {
+            "id": "24",
+            "name": "Transit to Lighthouse",
+            "coordinates": [
+                417.2,
+                -217.5
+            ]
+        },
+        {
+            "id": "25",
+            "name": "Transit to Terminal",
+            "coordinates": [
+                -965.82,
+                364.49
+            ]
+        },
+        {
+            "id": "43",
+            "name": "Transit to Labyrinth",
+            "coordinates": [
+                -197.958,
+                -81.085
+            ]
+        }
+    ],
+    "labyrinth": [],
+    "reserve": [
+        {
+            "id": "18",
+            "name": "Transit to Customs",
+            "coordinates": [
+                -196.729477,
+                -117.808853
+            ]
+        },
+        {
+            "id": "19",
+            "name": "Transit to Woods",
+            "coordinates": [
+                216.860535,
+                -201.048859
+            ]
+        },
+        {
+            "id": "20",
+            "name": "Transit to Lighthouse",
+            "coordinates": [
+                238.800537,
+                -128.048859
+            ]
+        }
+    ],
+    "woods": [
+        {
+            "id": "15",
+            "name": "Transit to Factory",
+            "coordinates": [
+                -362.45,
+                360.7704
+            ]
+        },
+        {
+            "id": "16",
+            "name": "Transit to Reserve",
+            "coordinates": [
+                246.06,
+                369.9
+            ]
+        },
+        {
+            "id": "17",
+            "name": "Transit to Lighthouse",
+            "coordinates": [
+                494.34,
+                345.37
+            ]
+        },
+        {
+            "id": "41",
+            "name": "Transit to Customs",
+            "coordinates": [
+                -153.05,
+                402.13
+            ]
+        }
+    ],
+    "streets": [
+        {
+            "id": "3",
+            "name": "Transit to Ground Zero",
+            "coordinates": [
+                -260.05,
+                103.645729
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Transit to Interchange",
+            "coordinates": [
+                286.670776,
+                505.539978
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Transit to The Lab",
+            "coordinates": [
+                206.955,
+                82.194
+            ]
+        }
+    ]
+}

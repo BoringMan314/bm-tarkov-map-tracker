@@ -1,0 +1,156 @@
+{
+    "name": "groundzero",
+    "display_name": "Groundzero",
+    "description": "",
+    "width": 10240.0,
+    "height": 6144.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 40,
+    "eftarkov_rows": 31,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "2e27fa4a95bab55b",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-groundzero-pmc-0",
+                "name": "Scav检查站（合作撤离）",
+                "coordinates": [
+                    2380.0,
+                    -1410.0
+                ],
+                "display_coordinates": [
+                    7500.0,
+                    2558.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-pmc-1",
+                "name": "警方封锁线（载具撤离点）",
+                "coordinates": [
+                    2720.0,
+                    40.0
+                ],
+                "display_coordinates": [
+                    7840.0,
+                    4008.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-pmc-2",
+                "name": "Mira大道（绿色信号棒）",
+                "coordinates": [
+                    990.0,
+                    -535.0
+                ],
+                "display_coordinates": [
+                    6110.0,
+                    3433.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-pmc-3",
+                "name": "Nakatani地下室楼梯",
+                "coordinates": [
+                    2780.0,
+                    1665.0
+                ],
+                "display_coordinates": [
+                    7900.0,
+                    5633.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-pmc-4",
+                "name": "Emercom检查站",
+                "coordinates": [
+                    1480.0,
+                    -1523.0
+                ],
+                "display_coordinates": [
+                    6600.0,
+                    2445.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-pmc-5",
+                "name": "Tartowers销售办公室（需要纸条）",
+                "coordinates": [
+                    1194.0,
+                    163.0
+                ],
+                "display_coordinates": [
+                    6314.0,
+                    4131.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-groundzero-scav-0",
+                "name": "Scav检查站（合作撤离）",
+                "coordinates": [
+                    2380.0,
+                    -1410.0
+                ],
+                "display_coordinates": [
+                    7500.0,
+                    2558.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-scav-1",
+                "name": "Nakatani地下室楼梯",
+                "coordinates": [
+                    2780.0,
+                    1665.0
+                ],
+                "display_coordinates": [
+                    7900.0,
+                    5633.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-scav-2",
+                "name": "Emercom检查站",
+                "coordinates": [
+                    1480.0,
+                    -1523.0
+                ],
+                "display_coordinates": [
+                    6600.0,
+                    2445.0
+                ]
+            },
+            {
+                "id": "eft-groundzero-scav-3",
+                "name": "Tartowers销售办公室（需要纸条）",
+                "coordinates": [
+                    1194.0,
+                    163.0
+                ],
+                "display_coordinates": [
+                    6314.0,
+                    4131.0
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-groundzero-transit-0",
+                "name": "前往塔科夫街区",
+                "coordinates": [
+                    900.0,
+                    -335.0
+                ],
+                "display_coordinates": [
+                    6020.0,
+                    3633.0
+                ]
+            }
+        ]
+    }
+}

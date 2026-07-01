@@ -1,0 +1,180 @@
+{
+    "name": "factory",
+    "display_name": "Factory",
+    "description": "",
+    "width": 13824.0,
+    "height": 6912.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 4,
+    "eftarkov_cols": 54,
+    "eftarkov_rows": 30,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "8e21cc53377157b1",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-factory-pmc-0",
+                "name": "3号门",
+                "coordinates": [
+                    -2180.0,
+                    -983.0
+                ],
+                "display_coordinates": [
+                    4732.0,
+                    2857.0
+                ]
+            },
+            {
+                "id": "eft-factory-pmc-1",
+                "name": "地下室",
+                "coordinates": [
+                    5448.0,
+                    -1504.0
+                ],
+                "display_coordinates": [
+                    12360.0,
+                    2336.0
+                ]
+            },
+            {
+                "id": "eft-factory-pmc-2",
+                "name": "0号门",
+                "coordinates": [
+                    -1945.0,
+                    2750.0
+                ],
+                "display_coordinates": [
+                    4967.0,
+                    6590.0
+                ]
+            },
+            {
+                "id": "eft-factory-pmc-3",
+                "name": "医疗帐篷大门",
+                "coordinates": [
+                    1600.0,
+                    1425.0
+                ],
+                "display_coordinates": [
+                    8512.0,
+                    5265.0
+                ]
+            },
+            {
+                "id": "eft-factory-pmc-4",
+                "name": "庭院大门",
+                "coordinates": [
+                    -2230.0,
+                    100.0
+                ],
+                "display_coordinates": [
+                    4682.0,
+                    3940.0
+                ]
+            },
+            {
+                "id": "eft-factory-pmc-5",
+                "name": "走私者小道（需要纸条）",
+                "coordinates": [
+                    5440.0,
+                    -620.0
+                ],
+                "display_coordinates": [
+                    12352.0,
+                    3220.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-factory-scav-0",
+                "name": "3号门",
+                "coordinates": [
+                    -2180.0,
+                    -983.0
+                ],
+                "display_coordinates": [
+                    4732.0,
+                    2857.0
+                ]
+            },
+            {
+                "id": "eft-factory-scav-1",
+                "name": "监控地堡大门",
+                "coordinates": [
+                    3140.0,
+                    1350.0
+                ],
+                "display_coordinates": [
+                    10052.0,
+                    5190.0
+                ]
+            },
+            {
+                "id": "eft-factory-scav-2",
+                "name": "办公室窗户",
+                "coordinates": [
+                    -4740.0,
+                    400.0
+                ],
+                "display_coordinates": [
+                    2172.0,
+                    4240.0
+                ]
+            },
+            {
+                "id": "eft-factory-scav-3",
+                "name": "走私者小道（需要纸条）",
+                "coordinates": [
+                    5440.0,
+                    -620.0
+                ],
+                "display_coordinates": [
+                    12352.0,
+                    3220.0
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-factory-transit-0",
+                "name": "前往海关",
+                "coordinates": [
+                    1365.0,
+                    307.0
+                ],
+                "display_coordinates": [
+                    8277.0,
+                    4147.0
+                ]
+            },
+            {
+                "id": "eft-factory-transit-1",
+                "name": "前往森林",
+                "coordinates": [
+                    -2050.0,
+                    100.0
+                ],
+                "display_coordinates": [
+                    4862.0,
+                    3940.0
+                ]
+            },
+            {
+                "id": "eft-factory-transit-2",
+                "name": "前往实验室",
+                "coordinates": [
+                    5800.0,
+                    1760.0
+                ],
+                "display_coordinates": [
+                    12712.0,
+                    5600.0
+                ]
+            }
+        ]
+    }
+}

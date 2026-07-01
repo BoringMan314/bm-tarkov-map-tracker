@@ -1,0 +1,288 @@
+{
+    "name": "reserve",
+    "display_name": "Reserve",
+    "description": "",
+    "width": 11008.0,
+    "height": 7936.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 43,
+    "eftarkov_rows": 32,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "826c746e337581bc",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-reserve-pmc-0",
+                "name": "Scav之地（合作撤离点）",
+                "coordinates": [
+                    1500.0,
+                    -420.0
+                ],
+                "display_coordinates": [
+                    7004.0,
+                    3676.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-1",
+                "name": "装甲列车",
+                "coordinates": [
+                    -1320.0,
+                    171.0
+                ],
+                "display_coordinates": [
+                    4184.0,
+                    4267.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-2",
+                "name": "地堡密闭门（需要拉闸）",
+                "coordinates": [
+                    -1673.0,
+                    -2140.0
+                ],
+                "display_coordinates": [
+                    3831.0,
+                    1956.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-3",
+                "name": "地堡密闭门（拉闸点）",
+                "coordinates": [
+                    1470.0,
+                    1760.0
+                ],
+                "display_coordinates": [
+                    6974.0,
+                    5856.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-4",
+                "name": "下水道检修孔",
+                "coordinates": [
+                    260.0,
+                    1933.0
+                ],
+                "display_coordinates": [
+                    5764.0,
+                    6029.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-5",
+                "name": "峭壁斜坡",
+                "coordinates": [
+                    1170.0,
+                    3413.0
+                ],
+                "display_coordinates": [
+                    6674.0,
+                    7509.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-6",
+                "name": "D-2（需要拉闸）",
+                "coordinates": [
+                    -3675.0,
+                    1920.0
+                ],
+                "display_coordinates": [
+                    1829.0,
+                    6016.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-7",
+                "name": "D-2（拉闸点）",
+                "coordinates": [
+                    -4419.0,
+                    -418.0
+                ],
+                "display_coordinates": [
+                    1085.0,
+                    3678.0
+                ]
+            },
+            {
+                "id": "eft-reserve-pmc-8",
+                "name": "前往森林的路（需要纸条）",
+                "coordinates": [
+                    -720.0,
+                    -885.0
+                ],
+                "display_coordinates": [
+                    4784.0,
+                    3211.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-reserve-scav-0",
+                "name": "Scav之地（合作撤离点）",
+                "coordinates": [
+                    1500.0,
+                    -420.0
+                ],
+                "display_coordinates": [
+                    7004.0,
+                    3676.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-1",
+                "name": "装甲列车",
+                "coordinates": [
+                    -1320.0,
+                    171.0
+                ],
+                "display_coordinates": [
+                    4184.0,
+                    4267.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-2",
+                "name": "地堡密闭门（需要拉闸）",
+                "coordinates": [
+                    -1673.0,
+                    -2140.0
+                ],
+                "display_coordinates": [
+                    3831.0,
+                    1956.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-3",
+                "name": "地堡密闭门（拉闸点）",
+                "coordinates": [
+                    1470.0,
+                    1760.0
+                ],
+                "display_coordinates": [
+                    6974.0,
+                    5856.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-4",
+                "name": "下水道检修孔",
+                "coordinates": [
+                    260.0,
+                    1933.0
+                ],
+                "display_coordinates": [
+                    5764.0,
+                    6029.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-5",
+                "name": "加热管道",
+                "coordinates": [
+                    350.0,
+                    -585.0
+                ],
+                "display_coordinates": [
+                    5854.0,
+                    3511.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-6",
+                "name": "仓库密闭门",
+                "coordinates": [
+                    -1720.0,
+                    -3013.0
+                ],
+                "display_coordinates": [
+                    3784.0,
+                    1083.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-7",
+                "name": "检查点围墙",
+                "coordinates": [
+                    200.0,
+                    2560.0
+                ],
+                "display_coordinates": [
+                    5704.0,
+                    6656.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-8",
+                "name": "山边缺口围墙",
+                "coordinates": [
+                    3730.0,
+                    950.0
+                ],
+                "display_coordinates": [
+                    9234.0,
+                    5046.0
+                ]
+            },
+            {
+                "id": "eft-reserve-scav-9",
+                "name": "前往森林的路（需要纸条）",
+                "coordinates": [
+                    -720.0,
+                    -885.0
+                ],
+                "display_coordinates": [
+                    4784.0,
+                    3211.0
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-reserve-transit-0",
+                "name": "前往海关",
+                "coordinates": [
+                    2377.0,
+                    -420.0
+                ],
+                "display_coordinates": [
+                    7881.0,
+                    3676.0
+                ]
+            },
+            {
+                "id": "eft-reserve-transit-1",
+                "name": "前往森林",
+                "coordinates": [
+                    -2715.0,
+                    -170.0
+                ],
+                "display_coordinates": [
+                    2789.0,
+                    3926.0
+                ]
+            },
+            {
+                "id": "eft-reserve-transit-2",
+                "name": "前往灯塔",
+                "coordinates": [
+                    -2715.0,
+                    565.0
+                ],
+                "display_coordinates": [
+                    2789.0,
+                    4661.0
+                ]
+            }
+        ]
+    }
+}

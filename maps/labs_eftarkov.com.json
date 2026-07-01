@@ -1,0 +1,191 @@
+{
+    "name": "labs",
+    "display_name": "Labs",
+    "description": "",
+    "width": 13824.0,
+    "height": 4352.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 54,
+    "eftarkov_rows": 18,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "04a6cde07c07b3bc",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-labs-pmc-0",
+                "name": "主电梯（需要拉闸）",
+                "coordinates": [
+                    -5009.0,
+                    -1840.0
+                ],
+                "display_coordinates": [
+                    1903.0,
+                    464.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-1",
+                "name": "主电梯（拉闸点）",
+                "coordinates": [
+                    -5629.0,
+                    -1642.0
+                ],
+                "display_coordinates": [
+                    1283.0,
+                    662.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-2",
+                "name": "机库大门（需要拉闸）",
+                "coordinates": [
+                    1201.0,
+                    305.0
+                ],
+                "display_coordinates": [
+                    8113.0,
+                    2609.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-3",
+                "name": "机库大门（拉闸点）",
+                "coordinates": [
+                    5351.0,
+                    300.0
+                ],
+                "display_coordinates": [
+                    12263.0,
+                    2604.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-4",
+                "name": "医疗电梯（需要拉闸）",
+                "coordinates": [
+                    -5177.0,
+                    1425.0
+                ],
+                "display_coordinates": [
+                    1735.0,
+                    3729.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-5",
+                "name": "医疗电梯（拉闸点）",
+                "coordinates": [
+                    -4589.0,
+                    1198.0
+                ],
+                "display_coordinates": [
+                    2323.0,
+                    3502.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-6",
+                "name": "货运电梯（需要拉闸）",
+                "coordinates": [
+                    2916.0,
+                    1405.0
+                ],
+                "display_coordinates": [
+                    9828.0,
+                    3709.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-7",
+                "name": "货运电梯（拉闸点）",
+                "coordinates": [
+                    -5379.0,
+                    1250.0
+                ],
+                "display_coordinates": [
+                    1533.0,
+                    3554.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-8",
+                "name": "停车场大门（需要拉闸）",
+                "coordinates": [
+                    -2929.0,
+                    -860.0
+                ],
+                "display_coordinates": [
+                    3983.0,
+                    1444.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-9",
+                "name": "停车场大门（拉闸点）",
+                "coordinates": [
+                    3396.0,
+                    -1110.0
+                ],
+                "display_coordinates": [
+                    10308.0,
+                    1194.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-10",
+                "name": "污水管道（需要拉闸）",
+                "coordinates": [
+                    -3589.0,
+                    910.0
+                ],
+                "display_coordinates": [
+                    3323.0,
+                    3214.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-11",
+                "name": "污水管道（拉闸点）",
+                "coordinates": [
+                    -3579.0,
+                    665.0
+                ],
+                "display_coordinates": [
+                    3333.0,
+                    2969.0
+                ]
+            },
+            {
+                "id": "eft-labs-pmc-12",
+                "name": "通风管道（不能背包）",
+                "coordinates": [
+                    -6309.0,
+                    760.0
+                ],
+                "display_coordinates": [
+                    603.0,
+                    3064.0
+                ]
+            }
+        ],
+        "scav": [],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-labs-transit-0",
+                "name": "前往塔科夫街区",
+                "coordinates": [
+                    -2467.0,
+                    335.0
+                ],
+                "display_coordinates": [
+                    4445.0,
+                    2639.0
+                ]
+            }
+        ]
+    }
+}

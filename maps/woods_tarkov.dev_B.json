@@ -1,0 +1,210 @@
+{
+    "name": "woods",
+    "display_name": "Woods",
+    "description": "",
+    "xmin": -761,
+    "xmax": 646,
+    "zmin": -914,
+    "zmax": 442,
+    "coordinates_rotation": 180,
+    "width": 1472.7926,
+    "height": 1420.5995,
+    "transform": [
+        0.1855,
+        112.95,
+        0.1855,
+        167.85
+    ],
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 0,
+    "tile_max_x": 15,
+    "tile_max_y": 15,
+    "tile_size": 256,
+    "points": {
+        "pmc": [
+            {
+                "id": "3f08df8a92b8d58e1011741f86a65c317180fef0",
+                "name": "RUAF Gate",
+                "coordinates": [
+                    -141.730011,
+                    446.8
+                ]
+            },
+            {
+                "id": "3c768283f1012c72aa4140252f44c538448eafa7",
+                "name": "ZB-016",
+                "coordinates": [
+                    -389.159973,
+                    11.0449905
+                ]
+            },
+            {
+                "id": "96ddc4bf8688f90f215226fd5788e1291ed13bfd",
+                "name": "ZB-014",
+                "coordinates": [
+                    447.24,
+                    57.46
+                ]
+            },
+            {
+                "id": "64f88a7c564eb38938c7b679f89ff265dfbf2685",
+                "name": "Bridge V-Ex",
+                "coordinates": [
+                    -485.325745,
+                    -504.061432
+                ]
+            },
+            {
+                "id": "98dfbaebc7bedea817c9ea5ec2e36f42a36b7ebf",
+                "name": "Northern UN Roadblock",
+                "coordinates": [
+                    -557.324341,
+                    -67.0496
+                ]
+            },
+            {
+                "id": "e0dbb9eb8a01eadb9e4610d53ecd65ccd320336c",
+                "name": "Power Line Passage (Flare)",
+                "coordinates": [
+                    573.985657,
+                    -85.2596
+                ]
+            },
+            {
+                "id": "6145baca210bf473bb0ce242a54ce1fe82df9bfe",
+                "name": "Railway Bridge to Tarkov",
+                "coordinates": [
+                    -730.43,
+                    129.32
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "9916015e766588eaefa49e1928e2967bd1f53ff8",
+                "name": "Dead Man's Place",
+                "coordinates": [
+                    195.550049,
+                    259.210022
+                ]
+            },
+            {
+                "id": "46ce7e8018a7220ce3d109ca393afa9c5178bf2e",
+                "name": "Boat",
+                "coordinates": [
+                    176.640015,
+                    215.859985
+                ]
+            },
+            {
+                "id": "cee75741135c2ca663d183991ae86431eb7f4573",
+                "name": "Scav House",
+                "coordinates": [
+                    413.685669,
+                    242.17038
+                ]
+            },
+            {
+                "id": "3a795d4c8fdd97e5166373147d64c6598dfb4488",
+                "name": "Scav Bunker",
+                "coordinates": [
+                    220.426651,
+                    -705.7956
+                ]
+            },
+            {
+                "id": "10c4727b4cf24e04f2ea6c6b61242684936e0d98",
+                "name": "Mountain Stash",
+                "coordinates": [
+                    -210.334351,
+                    -213.4996
+                ]
+            },
+            {
+                "id": "ef2fa5721c6f52097f0cb55ff938b631d241d63c",
+                "name": "Eastern Rocks",
+                "coordinates": [
+                    -509.364319,
+                    -35.3295975
+                ]
+            },
+            {
+                "id": "f5b3db451be4709e1742f7d377f4536ef9c0640e",
+                "name": "Old Railway Depot",
+                "coordinates": [
+                    -517.93,
+                    149.19
+                ]
+            },
+            {
+                "id": "2766656887b738cb1b0a1fcaedf163e30f98b0c9",
+                "name": "RUAF Roadblock",
+                "coordinates": [
+                    -135.774353,
+                    416.2604
+                ]
+            }
+        ],
+        "coop": [
+            {
+                "id": "742010f4b5dde77d692c99991e2576fb6c90f351",
+                "name": "Friendship Bridge (Co-Op)",
+                "coordinates": [
+                    93.17,
+                    -843.98
+                ]
+            },
+            {
+                "id": "e6fd5a732d1fd0662221d75f31f0e2e8021ef4ca",
+                "name": "UN Roadblock",
+                "coordinates": [
+                    -536.1243,
+                    286.7704
+                ]
+            },
+            {
+                "id": "e70d314d202e673b96671e810e54cef5657c16ca",
+                "name": "Outskirts",
+                "coordinates": [
+                    349.035645,
+                    358.580383
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "15",
+                "name": "Transit to Factory",
+                "coordinates": [
+                    -362.45,
+                    360.7704
+                ]
+            },
+            {
+                "id": "16",
+                "name": "Transit to Reserve",
+                "coordinates": [
+                    246.06,
+                    369.9
+                ]
+            },
+            {
+                "id": "17",
+                "name": "Transit to Lighthouse",
+                "coordinates": [
+                    494.34,
+                    345.37
+                ]
+            },
+            {
+                "id": "41",
+                "name": "Transit to Customs",
+                "coordinates": [
+                    -153.05,
+                    402.13
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,180 @@
+{
+    "factory": [],
+    "groundzero": [
+        {
+            "id": "549ceec177747468ebe86bcfd5a486d1dce9ed64",
+            "name": "Emercom Checkpoint",
+            "coordinates": [
+                151.625,
+                -97.45658
+            ]
+        },
+        {
+            "id": "118fa7e3eae47190871eb4ea20d4f3ca2718b73f",
+            "name": "Scav Checkpoint (Co-op)",
+            "coordinates": [
+                25.2195644,
+                -79.5413742
+            ]
+        },
+        {
+            "id": "ab623005251ffcd3603a5df2610917a998d9a17e",
+            "name": "Nakatani Basement Stairs",
+            "coordinates": [
+                -16.1249924,
+                335.063416
+            ]
+        }
+    ],
+    "interchange": [
+        {
+            "id": "2a589e01386c564a296894e93a3aaf18ec53207d",
+            "name": "Emercom Checkpoint",
+            "coordinates": [
+                -321.56,
+                266.74
+            ]
+        },
+        {
+            "id": "fdc29c48395f3b30a7b2ba8ed645cbebfe69e539",
+            "name": "Railway Exfil",
+            "coordinates": [
+                472.32,
+                -429.74
+            ]
+        },
+        {
+            "id": "0c3fb47380ded5e2af6a0fc90611ee0abda60f69",
+            "name": "Scav Camp (Co-Op)",
+            "coordinates": [
+                278.69,
+                -30.97
+            ]
+        }
+    ],
+    "labs": [
+        {
+            "id": "ed029f26c9d60bf00d926b4d7e7876b0591b411a",
+            "name": "Medical Block Elevator",
+            "coordinates": [
+                -112.423,
+                -343.986
+            ]
+        },
+        {
+            "id": "4cfc8fb5003e428d6cb9f8492690068afba50c71",
+            "name": "Cargo Elevator",
+            "coordinates": [
+                -112.152,
+                -408.64
+            ]
+        },
+        {
+            "id": "1a5ae89d5401d277f8b317c18951dfe0e1bfd695",
+            "name": "Main Elevator",
+            "coordinates": [
+                -282.304016,
+                -334.896
+            ]
+        }
+    ],
+    "customs": [
+        {
+            "id": "7c993e82fe52ccedbdf9591f92e3bf9fe4352a4e",
+            "name": "Crossroads",
+            "coordinates": [
+                -334.804016,
+                -87.97917
+            ]
+        },
+        {
+            "id": "88192ee8ec04e9844e35f327d441b74987a182bd",
+            "name": "Boiler Room Basement (Co-op)",
+            "coordinates": [
+                100.56,
+                -44.42
+            ]
+        }
+    ],
+    "shoreline": [
+        {
+            "id": "c5ae90597356b707d9d1d9522efe7a24fe7d4b71",
+            "name": "Smugglers' Path (Co-op)",
+            "coordinates": [
+                -729.4,
+                -255.1
+            ]
+        }
+    ],
+    "labyrinth": [],
+    "reserve": [
+        {
+            "id": "c5a30892ba8b44107663736aaeca1a3f7ff61391",
+            "name": "Armored Train",
+            "coordinates": [
+                144.986,
+                -147.352
+            ]
+        },
+        {
+            "id": "bf8015e63fa543ce72fe16f5c3476be29ba80fcc",
+            "name": "Bunker Hermetic Door",
+            "coordinates": [
+                61.9206619,
+                -190.541931
+            ]
+        },
+        {
+            "id": "acd6a6b60241f90925084d8f608b89ba7a459fdb",
+            "name": "Scav Lands (Co-Op)",
+            "coordinates": [
+                -127.9,
+                -142.59
+            ]
+        },
+        {
+            "id": "4cd3f8f23a3092756fb509287ccc5332aeea6453",
+            "name": "Sewer Manhole",
+            "coordinates": [
+                40.18,
+                76.45
+            ]
+        }
+    ],
+    "woods": [
+        {
+            "id": "742010f4b5dde77d692c99991e2576fb6c90f351",
+            "name": "Friendship Bridge (Co-Op)",
+            "coordinates": [
+                93.17,
+                -843.98
+            ]
+        },
+        {
+            "id": "e6fd5a732d1fd0662221d75f31f0e2e8021ef4ca",
+            "name": "UN Roadblock",
+            "coordinates": [
+                -536.1243,
+                286.7704
+            ]
+        },
+        {
+            "id": "e70d314d202e673b96671e810e54cef5657c16ca",
+            "name": "Outskirts",
+            "coordinates": [
+                349.035645,
+                358.580383
+            ]
+        }
+    ],
+    "streets": [
+        {
+            "id": "d830108cdf0fcd33b785ca39d380255658905371",
+            "name": "Pinewood Basement (Co-Op)",
+            "coordinates": [
+                -114.28,
+                64.88
+            ]
+        }
+    ]
+}

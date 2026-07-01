@@ -1,0 +1,265 @@
+{
+    "name": "streets",
+    "display_name": "Streets",
+    "description": "",
+    "width": 20224.0,
+    "height": 11776.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 79,
+    "eftarkov_rows": 56,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "fa549542d0c076fa",
+    "points": {
+        "pmc": [
+            {
+                "id": "65f6067829924e26e0cb31d4ac24fee1870ec944",
+                "name": "Courtyard",
+                "coordinates": [
+                    -148.947,
+                    500.151978
+                ],
+                "display_coordinates": [
+                    11444.65,
+                    9626.98
+                ]
+            },
+            {
+                "id": "264ee7ea338658549942113cbbf0a6ea31402975",
+                "name": "Primorsky Ave Taxi V-Ex",
+                "coordinates": [
+                    -2.191315,
+                    461.232971
+                ],
+                "display_coordinates": [
+                    10297.23,
+                    9322.18
+                ]
+            },
+            {
+                "id": "cb867ea360a89dbc48694c43d193553d564529f9",
+                "name": "Stylobate Building Elevator",
+                "coordinates": [
+                    -44.7435,
+                    -72.15
+                ],
+                "display_coordinates": [
+                    10629.93,
+                    5144.89
+                ]
+            },
+            {
+                "id": "99e05bbf5d6f6dad97773774af735e37ae3edd44",
+                "name": "Crash Site",
+                "coordinates": [
+                    312.74,
+                    405.96
+                ],
+                "display_coordinates": [
+                    7834.91,
+                    8889.29
+                ]
+            },
+            {
+                "id": "974e40db5a7ac4d1937688eb6415b2333f9a3766",
+                "name": "Sewer River",
+                "coordinates": [
+                    -267.04,
+                    219.48
+                ],
+                "display_coordinates": [
+                    12367.98,
+                    7428.84
+                ]
+            },
+            {
+                "id": "29cd42c5025edb6a619dd961fbc20ad639127189",
+                "name": "Damaged House",
+                "coordinates": [
+                    -248.971,
+                    344.275
+                ],
+                "display_coordinates": [
+                    12226.7,
+                    8406.2
+                ]
+            },
+            {
+                "id": "59f13279288d9ac630955c14dc3368b492061e7c",
+                "name": "Collapsed Crane",
+                "coordinates": [
+                    216.12,
+                    272.7
+                ],
+                "display_coordinates": [
+                    8590.35,
+                    7845.65
+                ]
+            },
+            {
+                "id": "19b2c9157d56629da496df0bc42dbe5c49439e4c",
+                "name": "Klimov Street (Flare)",
+                "coordinates": [
+                    -263.41,
+                    43.19
+                ],
+                "display_coordinates": [
+                    12339.59,
+                    6048.2
+                ]
+            },
+            {
+                "id": "b17b3bec8b22bdd99d6e9589ed0d9a41f2f6aac8",
+                "name": "Expo Checkpoint",
+                "coordinates": [
+                    213.12,
+                    -104.96
+                ],
+                "display_coordinates": [
+                    8613.8,
+                    4887.93
+                ]
+            },
+            {
+                "id": "787c7f07f2b19b39ad8ba5a14ae69c10088191fd",
+                "name": "Smugglers' Basement",
+                "coordinates": [
+                    75.99,
+                    50.0100021
+                ],
+                "display_coordinates": [
+                    9685.97,
+                    6101.61
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "8fcf0902c03e68a2201173fc1fb9ba62376353a7",
+                "name": "Entrance to Catacombs",
+                "coordinates": [
+                    -249.008026,
+                    243.797
+                ],
+                "display_coordinates": [
+                    12226.99,
+                    7619.29
+                ]
+            },
+            {
+                "id": "14828b7f158d3d3c623ad25f7a21f59bebb15e68",
+                "name": "Ventilation Shaft",
+                "coordinates": [
+                    -124.127106,
+                    423.93
+                ],
+                "display_coordinates": [
+                    11250.6,
+                    9030.03
+                ]
+            },
+            {
+                "id": "81520cac6bc2000d30eb8d1adc403774d8e6ec93",
+                "name": "Sewer Manhole",
+                "coordinates": [
+                    276.113,
+                    345.389984
+                ],
+                "display_coordinates": [
+                    8121.29,
+                    8414.93
+                ]
+            },
+            {
+                "id": "62b57ca54c93d9004db81f424db031efa2b0e7a9",
+                "name": "Near Kamchatskaya Arch",
+                "coordinates": [
+                    259.57,
+                    48.72
+                ],
+                "display_coordinates": [
+                    8250.63,
+                    6091.51
+                ]
+            },
+            {
+                "id": "a92c7dcc94b188316921781856aa7a15fb4a4ebc",
+                "name": "Cardinal Apartment Complex Parking",
+                "coordinates": [
+                    104.84,
+                    -161.170013
+                ],
+                "display_coordinates": [
+                    9460.4,
+                    4447.71
+                ]
+            },
+            {
+                "id": "2f79c92d99215405c202d8b7f1e6eace137f9b5f",
+                "name": "Klimov Shopping Mall Exfil",
+                "coordinates": [
+                    -163.821014,
+                    -5.65802
+                ],
+                "display_coordinates": [
+                    11560.95,
+                    5665.63
+                ]
+            }
+        ],
+        "coop": [
+            {
+                "id": "d830108cdf0fcd33b785ca39d380255658905371",
+                "name": "Pinewood Basement (Co-Op)",
+                "coordinates": [
+                    -114.28,
+                    64.88
+                ],
+                "display_coordinates": [
+                    11173.61,
+                    6218.07
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "3",
+                "name": "Transit to Ground Zero",
+                "coordinates": [
+                    -260.05,
+                    103.645729
+                ],
+                "display_coordinates": [
+                    12313.32,
+                    6521.67
+                ]
+            },
+            {
+                "id": "4",
+                "name": "Transit to Interchange",
+                "coordinates": [
+                    286.670776,
+                    505.539978
+                ],
+                "display_coordinates": [
+                    8038.74,
+                    9669.17
+                ]
+            },
+            {
+                "id": "5",
+                "name": "Transit to The Lab",
+                "coordinates": [
+                    206.955,
+                    82.194
+                ],
+                "display_coordinates": [
+                    8662.0,
+                    6353.66
+                ]
+            }
+        ]
+    }
+}

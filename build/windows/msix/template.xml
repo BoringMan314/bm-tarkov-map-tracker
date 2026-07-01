@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MsixPackagingToolTemplate
+    xmlns="http://schemas.microsoft.com/msix/packaging/msixpackagingtool/template/2022">
+    <Settings
+        AllowTelemetry="false"
+        ApplyACLsToPackageFiles="true"
+        GenerateCommandLineFile="true"
+        AllowPromptForPassword="false">
+    </Settings>
+    <Installer
+        Path="bm-tarkov-map-tracker.exe"
+        Arguments=""
+        InstallLocation="C:\Program Files\[B.M] 圓周率 3.14\[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14">
+    </Installer>
+    <PackageInformation
+        PackageName="[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14"
+        PackageDisplayName="[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14"
+        PublisherName="CN=[B.M] 圓周率 3.14"
+        PublisherDisplayName="[B.M] 圓周率 3.14"
+        Version="1.0.0.0"
+        PackageDescription="A bm-tarkov-map-tracker application">
+        <Capabilities>
+            <Capability Name="runFullTrust" />
+            
+        </Capabilities>
+        <Applications>
+            <Application
+                Id="com.example.bmtarkovmaptracker"
+                Description="A bm-tarkov-map-tracker application"
+                DisplayName="[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14"
+                ExecutableName="bm-tarkov-map-tracker.exe"
+                EntryPoint="Windows.FullTrustApplication">
+                
+            </Application>
+        </Applications>
+        <Resources>
+            <Resource Language="en-us" />
+        </Resources>
+        <Dependencies>
+            <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+        </Dependencies>
+        <Properties>
+            <Framework>false</Framework>
+            <DisplayName>[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14</DisplayName>
+            <PublisherDisplayName>[B.M] 圓周率 3.14</PublisherDisplayName>
+            <Description>A bm-tarkov-map-tracker application</Description>
+            <Logo>Assets\AppIcon.png</Logo>
+        </Properties>
+    </PackageInformation>
+    <SaveLocation PackagePath="bm-tarkov-map-tracker.msix" />
+    <PackageIntegrity>
+        <CertificatePath></CertificatePath>
+    </PackageIntegrity>
+</MsixPackagingToolTemplate>

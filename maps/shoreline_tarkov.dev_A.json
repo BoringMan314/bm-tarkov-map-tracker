@@ -1,0 +1,174 @@
+{
+    "name": "shoreline",
+    "display_name": "Shoreline",
+    "description": "",
+    "xmin": -1056.0,
+    "xmax": 504.0,
+    "zmin": -415.0,
+    "zmax": 618.0,
+    "coordinates_rotation": 180,
+    "transform": [
+        0.16,
+        83.2,
+        0.16,
+        111.1
+    ],
+    "width": 4096.0,
+    "height": 2688.0,
+    "stitch_width": 4096.0,
+    "stitch_height": 3072.0,
+    "map_offset_x": 0,
+    "map_offset_y": 192,
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 2,
+    "tile_max_x": 15,
+    "tile_max_y": 13,
+    "tile_size": 256,
+    "points": {
+        "pmc": [
+            {
+                "id": "e95d3547939574dfb73ce20064c5aff811bf02ea",
+                "name": "Road to North V-Ex",
+                "coordinates": [
+                    -543.264038,
+                    -379.651367
+                ]
+            },
+            {
+                "id": "97440eb4ab5a337942dc616f5dde5905adadd627",
+                "name": "Road to Customs",
+                "coordinates": [
+                    -859.05,
+                    0.49
+                ]
+            },
+            {
+                "id": "57d9c15c96a8221867b52676d889e26a994b9512",
+                "name": "Railway Bridge",
+                "coordinates": [
+                    -1029.29,
+                    307.59
+                ]
+            },
+            {
+                "id": "5c32b0d555293798312b3a4bd805b34987b5f576",
+                "name": "Tunnel",
+                "coordinates": [
+                    376.36,
+                    319.25
+                ]
+            },
+            {
+                "id": "11890c73b821b558b2198881ae9659c426a6b289",
+                "name": "Path to Lighthouse",
+                "coordinates": [
+                    448.9,
+                    -254.6
+                ]
+            },
+            {
+                "id": "d21fd4e674ea08152c99c97fbe031b71269c58d6",
+                "name": "Pier Boat",
+                "coordinates": [
+                    -332.5907,
+                    561.2576
+                ]
+            },
+            {
+                "id": "efc0e77c1e0a83ff35aa27d8a091e31e770338ec",
+                "name": "Climber's Trail",
+                "coordinates": [
+                    -214.3,
+                    -361.8
+                ]
+            },
+            {
+                "id": "b4ff87efb1c1450520552d27addab7793688d475",
+                "name": "Mountain Bunker",
+                "coordinates": [
+                    -390.956024,
+                    -385.721
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "5111952a9fb5c265a38886216302756c2b2b819f",
+                "name": "Road to Customs",
+                "coordinates": [
+                    -859.05,
+                    0.49
+                ]
+            },
+            {
+                "id": "52b4672a43e470435ec4722b09571d0bf7724f7e",
+                "name": "Lighthouse",
+                "coordinates": [
+                    -458.1507,
+                    567.2876
+                ]
+            },
+            {
+                "id": "a3cd7a839e550508ed301f4bc1725c2e2f33a0b7",
+                "name": "Ruined Road",
+                "coordinates": [
+                    366.62,
+                    332.51
+                ]
+            },
+            {
+                "id": "175520fd8ce745c377fea12ac3b38690e371ab24",
+                "name": "East Wing Gym Entrance",
+                "coordinates": [
+                    -296.9457,
+                    -100.892
+                ]
+            },
+            {
+                "id": "8ef2d534d0db570a392ebc4486fad51eefdfa2d6",
+                "name": "Admin Basement",
+                "coordinates": [
+                    -256.87,
+                    -149.782379
+                ]
+            }
+        ],
+        "coop": [
+            {
+                "id": "c5ae90597356b707d9d1d9522efe7a24fe7d4b71",
+                "name": "Smugglers' Path (Co-op)",
+                "coordinates": [
+                    -729.4,
+                    -255.1
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "24",
+                "name": "Transit to Lighthouse",
+                "coordinates": [
+                    417.2,
+                    -217.5
+                ]
+            },
+            {
+                "id": "25",
+                "name": "Transit to Terminal",
+                "coordinates": [
+                    -965.82,
+                    364.49
+                ]
+            },
+            {
+                "id": "43",
+                "name": "Transit to Labyrinth",
+                "coordinates": [
+                    -197.958,
+                    -81.085
+                ]
+            }
+        ]
+    }
+}

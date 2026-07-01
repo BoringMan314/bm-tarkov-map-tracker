@@ -1,0 +1,956 @@
+{
+    "ffb8b37a6390d2c3b00baeee3295492ea1e19a93": {
+        "en": "Cellars",
+        "ja": "Cellars",
+        "zh_CN": "地下室",
+        "zh_TW": "地下室"
+    },
+    "a11f20d1f462bc4c8f39699e8a59fc0b58b71299": {
+        "en": "Gate 3",
+        "ja": "Gate 3",
+        "zh_CN": "3号门",
+        "zh_TW": "3號門"
+    },
+    "7ae0a08942ce71d8d713ef3628c86619598160f4": {
+        "en": "Gate 3",
+        "ja": "Gate 3",
+        "zh_CN": "3号门",
+        "zh_TW": "3號門"
+    },
+    "7e582daaf3ef18c90132998441c217f246387a06": {
+        "en": "Camera Bunker Door",
+        "ja": "Camera Bunker Door",
+        "zh_CN": "监控地堡大门",
+        "zh_TW": "監控地堡大門"
+    },
+    "cbe6ccd60767142298488227e57ab554cf47cd2e": {
+        "en": "Office Window",
+        "ja": "Office Window",
+        "zh_CN": "办公室窗户",
+        "zh_TW": "辦公室窗戶"
+    },
+    "4f953558d3d7bca7bd7b4d40a6429adc34cc1834": {
+        "en": "Gate 0",
+        "ja": "Gate 0",
+        "zh_CN": "0号门",
+        "zh_TW": "0號門"
+    },
+    "7bb46d641d59983a58440a7a58d65933d981c211": {
+        "en": "Med Tent Gate",
+        "ja": "Med Tent Gate",
+        "zh_CN": "医疗帐篷大门",
+        "zh_TW": "醫療帳篷大門"
+    },
+    "1846030b40983ab096b3d1e39f72da5697f39154": {
+        "en": "Courtyard Gate",
+        "ja": "Courtyard Gate",
+        "zh_CN": "庭院大门",
+        "zh_TW": "庭院大門"
+    },
+    "3faf0c5c7f9dfe2c4ec9cf029fbe14ede9720cc1": {
+        "en": "Smugglers' Passage",
+        "ja": "Smuggler's Passage",
+        "zh_CN": "走私者小道",
+        "zh_TW": "走私者小道"
+    },
+    "12": {
+        "en": "Transit to Woods",
+        "ja": "Transit to Woods",
+        "zh_CN": "前往森林",
+        "zh_TW": "前往森林"
+    },
+    "13": {
+        "en": "Transit to Customs",
+        "ja": "Transit to Customs",
+        "zh_CN": "前往海关",
+        "zh_TW": "前往海關"
+    },
+    "14": {
+        "en": "Transit to The Lab",
+        "ja": "Transit to The Lab",
+        "zh_CN": "前往实验室",
+        "zh_TW": "前往實驗室"
+    },
+    "d0781374be523027a2a8e1edf6fe08449c45c382": {
+        "en": "ZB-013",
+        "ja": "ZB-013",
+        "zh_CN": "ZB-013",
+        "zh_TW": "ZB-013"
+    },
+    "feafaf9787defedcb6b7ea3da97f342870bc8073": {
+        "en": "Dorms V-Ex",
+        "ja": "Dorms V-Ex",
+        "zh_CN": "宿舍载具撤离点",
+        "zh_TW": "宿舍載具撤離點"
+    },
+    "02cdf102e32c481d3b5fabcf1dcf3df3962522bb": {
+        "en": "ZB-1011",
+        "ja": "ZB-1011",
+        "zh_CN": "ZB-1011",
+        "zh_TW": "ZB-1011"
+    },
+    "7c993e82fe52ccedbdf9591f92e3bf9fe4352a4e": {
+        "en": "Crossroads",
+        "ja": "Crossroads",
+        "zh_CN": "十字路口",
+        "zh_TW": "十字路口"
+    },
+    "e0e61c2ed23ae5387b02dfc1acb88dab0c83ff95": {
+        "en": "Old Gas Station",
+        "ja": "Old Gas Station",
+        "zh_CN": "老加油站",
+        "zh_TW": "老加油站"
+    },
+    "0df2e62edcfb6e0f1c36fd7be585a5850dd83eed": {
+        "en": "Trailer Park",
+        "ja": "Trailer Park",
+        "zh_CN": "拖车停车场",
+        "zh_TW": "拖車停車場"
+    },
+    "b113904d09c836e3b6fb937ebd1201f30a5900e6": {
+        "en": "RUAF Roadblock",
+        "ja": "RUAF Roadblock",
+        "zh_CN": "RUAF路障",
+        "zh_TW": "RUAF路障"
+    },
+    "372308f8ae6c385c1a1397bf925af53847545a7d": {
+        "en": "Military Base CP",
+        "ja": "Military Base CP",
+        "zh_CN": "军事基地检查站",
+        "zh_TW": "軍事基地檢查站"
+    },
+    "de953d179a503c836b89f8497600c448b1d7067d": {
+        "en": "Passage Between Rocks",
+        "ja": "Passage Between Rocks",
+        "zh_CN": "石间小道",
+        "zh_TW": "石間小道"
+    },
+    "7097325dad6b074566fc1e7744d8490151b001e7": {
+        "en": "Railroad to Military Base",
+        "ja": "Railroad to Military Base",
+        "zh_CN": "通往军事基地的铁路",
+        "zh_TW": "通往軍事基地的鐵路"
+    },
+    "977d435f5b1510a2fe4d662a8fc30d7cc19bd90c": {
+        "en": "Old Road Gate",
+        "ja": "Old Road Gate",
+        "zh_CN": "老路大门",
+        "zh_TW": "老路大門"
+    },
+    "d048daa472b3806f452fdb3d4991032bab4366d5": {
+        "en": "Sniper Roadblock",
+        "ja": "Sniper Roadblock",
+        "zh_CN": "狙击手路障",
+        "zh_TW": "狙擊手路障"
+    },
+    "90ab07a4eacd76a88ae6a51bf8c2f17c92828691": {
+        "en": "Railroad to Port",
+        "ja": "Railroad to Port",
+        "zh_CN": "通往港口的铁路",
+        "zh_TW": "通往港口的鐵路"
+    },
+    "606fa68466f40d1d349f443bd89df5934097ceaa": {
+        "en": "Trailer Park Workers' Shack",
+        "ja": "Trailer Park Workers' Shack",
+        "zh_CN": "拖车停车场工人棚屋",
+        "zh_TW": "拖車停車場工人棚屋"
+    },
+    "299a91e6562ad4d55747ac15f15c9e8608cff9d4": {
+        "en": "Railroad to Tarkov",
+        "ja": "Railroad to Tarkov",
+        "zh_CN": "通往塔科夫的铁路",
+        "zh_TW": "通往塔科夫的鐵路"
+    },
+    "8574c32eb626a3e230f454d65b9262d4f9e9fbf8": {
+        "en": "RUAF Roadblock",
+        "ja": "RUAF Roadblock",
+        "zh_CN": "RUAF路障",
+        "zh_TW": "RUAF路障"
+    },
+    "1bcdc243701067f1469ee4d177ddde7c53aaecb6": {
+        "en": "Warehouse 17",
+        "ja": "Warehouse 17",
+        "zh_CN": "17号仓库",
+        "zh_TW": "17號倉庫"
+    },
+    "8194ee54571a0670e4d5bd0a02bdcb1cbb77a03e": {
+        "en": "Factory Shacks",
+        "ja": "Factory Shacks",
+        "zh_CN": "工厂棚屋",
+        "zh_TW": "工廠棚屋"
+    },
+    "3fd0602903f1971d6930874e8f6cd4d754bceb58": {
+        "en": "Warehouse 4",
+        "ja": "Warehouse 4",
+        "zh_CN": "4号仓库",
+        "zh_TW": "4號倉庫"
+    },
+    "00e4ba8e84314ddf6878090f2e7d3aaddcb43f53": {
+        "en": "Old Gas Station Gate",
+        "ja": "Old Gas Station Gate",
+        "zh_CN": "老加油站",
+        "zh_TW": "老加油站"
+    },
+    "f162159cfa266422af986074b4397587616effcb": {
+        "en": "Factory Far Corner",
+        "ja": "Factory Far Corner",
+        "zh_CN": "工厂远角",
+        "zh_TW": "工廠遠角"
+    },
+    "988603509e1d1a6d59642e9b6c4514386416053f": {
+        "en": "Administration Gate",
+        "ja": "Administration Gate",
+        "zh_CN": "行政区大门",
+        "zh_TW": "行政區大門"
+    },
+    "b051486cb850a811e354ac34b2ec5790bd2a12c5": {
+        "en": "Railroad Passage (Flare)",
+        "ja": "Railroad Passage (Flare)",
+        "zh_CN": "铁路通道（信号弹）",
+        "zh_TW": "鐵路通道（信號彈）"
+    },
+    "cbb161149bdb3062b2a27447fbc804385948f671": {
+        "en": "Scav Checkpoint",
+        "ja": "Scav Checkpoint",
+        "zh_CN": "Scav检查站",
+        "zh_TW": "Scav檢查站"
+    },
+    "88192ee8ec04e9844e35f327d441b74987a182bd": {
+        "en": "Boiler Room Basement (Co-op)",
+        "ja": "Boiler room basement (Co-op)",
+        "zh_CN": "地下室锅炉房（合作撤离）",
+        "zh_TW": "地下室鍋爐房（合作撤離）"
+    },
+    "311ae28f72d9c9fe3be801b2d503088167e325c3": {
+        "en": "Smugglers' Boat",
+        "ja": "Smuggler's Boat",
+        "zh_CN": "走私者的船",
+        "zh_TW": "走私者的船"
+    },
+    "908b7d419bb7152858c973b561a1ee7ed5f55a81": {
+        "en": "Smugglers' Bunker (ZB-1012)",
+        "ja": "Smuggler's Bunker (ZB-1012)",
+        "zh_CN": "走私者地堡 (ZB-1012)",
+        "zh_TW": "走私者地堡 (ZB-1012)"
+    },
+    "9": {
+        "en": "Transit to Reserve",
+        "ja": "Transit to Reserve",
+        "zh_CN": "前往储备站",
+        "zh_TW": "前往儲備站"
+    },
+    "10": {
+        "en": "Transit to Factory",
+        "ja": "Transit to Factory",
+        "zh_CN": "前往工厂",
+        "zh_TW": "前往工廠"
+    },
+    "11": {
+        "en": "Transit to Interchange",
+        "ja": "Transit to Interchange",
+        "zh_CN": "前往立交桥",
+        "zh_TW": "前往立交橋"
+    },
+    "42": {
+        "en": "Transit to Shoreline",
+        "ja": "Transit to Shoreline",
+        "zh_CN": "前往海岸线",
+        "zh_TW": "前往海岸線"
+    },
+    "742010f4b5dde77d692c99991e2576fb6c90f351": {
+        "en": "Friendship Bridge (Co-Op)",
+        "ja": "Friendship Bridge (Co-Op)",
+        "zh_CN": "友谊之桥（合作撤离）",
+        "zh_TW": "友誼之橋（合作撤離）"
+    },
+    "3f08df8a92b8d58e1011741f86a65c317180fef0": {
+        "en": "RUAF Gate",
+        "ja": "RUAF Gate",
+        "zh_CN": "RUAF大门",
+        "zh_TW": "RUAF大門"
+    },
+    "3c768283f1012c72aa4140252f44c538448eafa7": {
+        "en": "ZB-016",
+        "ja": "ZB-016",
+        "zh_CN": "ZB-016",
+        "zh_TW": "ZB-016"
+    },
+    "96ddc4bf8688f90f215226fd5788e1291ed13bfd": {
+        "en": "ZB-014",
+        "ja": "ZB-014",
+        "zh_CN": "ZB-014",
+        "zh_TW": "ZB-014"
+    },
+    "e6fd5a732d1fd0662221d75f31f0e2e8021ef4ca": {
+        "en": "UN Roadblock",
+        "ja": "UN Roadblock",
+        "zh_CN": "UN路障",
+        "zh_TW": "UN路障"
+    },
+    "64f88a7c564eb38938c7b679f89ff265dfbf2685": {
+        "en": "Bridge V-Ex",
+        "ja": "Bridge V-Ex",
+        "zh_CN": "大桥载具撤离点",
+        "zh_TW": "大橋載具撤離點"
+    },
+    "c0a4ba6cf6476b99f2dcba3a85b21018c4853fe9": {
+        "en": "Outskirts",
+        "ja": "Outskirts",
+        "zh_CN": "郊区",
+        "zh_TW": "郊區"
+    },
+    "9916015e766588eaefa49e1928e2967bd1f53ff8": {
+        "en": "Dead Man's Place",
+        "ja": "Dead Man's Place",
+        "zh_CN": "亡者之所",
+        "zh_TW": "亡者之所"
+    },
+    "46ce7e8018a7220ce3d109ca393afa9c5178bf2e": {
+        "en": "Boat",
+        "ja": "Boat",
+        "zh_CN": "那艘船",
+        "zh_TW": "那艘船"
+    },
+    "cee75741135c2ca663d183991ae86431eb7f4573": {
+        "en": "Scav House",
+        "ja": "Scav House",
+        "zh_CN": "Scav小屋",
+        "zh_TW": "Scav小屋"
+    },
+    "3a795d4c8fdd97e5166373147d64c6598dfb4488": {
+        "en": "Scav Bunker",
+        "ja": "Scav Bunker",
+        "zh_CN": "Scav地堡",
+        "zh_TW": "Scav地堡"
+    },
+    "10c4727b4cf24e04f2ea6c6b61242684936e0d98": {
+        "en": "Mountain Stash",
+        "ja": "Mountain Stash",
+        "zh_CN": "山间仓库",
+        "zh_TW": "山間倉庫"
+    },
+    "ef2fa5721c6f52097f0cb55ff938b631d241d63c": {
+        "en": "Eastern Rocks",
+        "ja": "Eastern Rocks",
+        "zh_CN": "东部岩石",
+        "zh_TW": "東部岩石"
+    },
+    "f5b3db451be4709e1742f7d377f4536ef9c0640e": {
+        "en": "Old Railway Depot",
+        "ja": "Old Railway Depot",
+        "zh_CN": "旧火车站",
+        "zh_TW": "舊火車站"
+    },
+    "0f7b5f228a32ab1dbd8544277419521ba1cc5e3b": {
+        "en": "UN Roadblock",
+        "ja": "UN Roadblock",
+        "zh_CN": "UN路障",
+        "zh_TW": "UN路障"
+    },
+    "2766656887b738cb1b0a1fcaedf163e30f98b0c9": {
+        "en": "RUAF Roadblock",
+        "ja": "RUAF Roadblock",
+        "zh_CN": "RUAF路障",
+        "zh_TW": "RUAF路障"
+    },
+    "e70d314d202e673b96671e810e54cef5657c16ca": {
+        "en": "Outskirts",
+        "ja": "Outskirts",
+        "zh_CN": "郊区",
+        "zh_TW": "郊區"
+    },
+    "98dfbaebc7bedea817c9ea5ec2e36f42a36b7ebf": {
+        "en": "Northern UN Roadblock",
+        "ja": "Northern UN Roadblock",
+        "zh_CN": "北部UN路障",
+        "zh_TW": "北部UN路障"
+    },
+    "e0dbb9eb8a01eadb9e4610d53ecd65ccd320336c": {
+        "en": "Power Line Passage (Flare)",
+        "ja": "Power Line Passage (Flare)",
+        "zh_CN": "输电通道（信号弹）",
+        "zh_TW": "輸電通道（信號彈）"
+    },
+    "6145baca210bf473bb0ce242a54ce1fe82df9bfe": {
+        "en": "Railway Bridge to Tarkov",
+        "ja": "Railway Bridge to Tarkov",
+        "zh_CN": "前往塔科夫的铁路桥",
+        "zh_TW": "前往塔科夫的鐵路橋"
+    },
+    "15": {
+        "en": "Transit to Factory",
+        "ja": "Transit to Factory",
+        "zh_CN": "前往工厂",
+        "zh_TW": "前往工廠"
+    },
+    "16": {
+        "en": "Transit to Reserve",
+        "ja": "Transit to Reserve",
+        "zh_CN": "前往储备站",
+        "zh_TW": "前往儲備站"
+    },
+    "17": {
+        "en": "Transit to Lighthouse",
+        "ja": "Transit to Lighthouse",
+        "zh_CN": "前往灯塔",
+        "zh_TW": "前往燈塔"
+    },
+    "41": {
+        "en": "Transit to Customs",
+        "ja": "Transit to Customs",
+        "zh_CN": "前往海关",
+        "zh_TW": "前往海關"
+    },
+    "3a8cfedc77147d2e438f8a2c55a01ae3d6defb25": {
+        "en": "Armored Train",
+        "ja": "Armored Train",
+        "zh_CN": "装甲列车",
+        "zh_TW": "裝甲列車"
+    },
+    "39a8452ee1c2a3b68737781843c98e69ed1a59aa": {
+        "en": "Road to Military Base V-Ex",
+        "ja": "Road to Military Base V-Ex",
+        "zh_CN": "通往军事基地的载具撤离点",
+        "zh_TW": "通往軍事基地的載具撤離點"
+    },
+    "a04ce346b08f0cea9faebb65d86a7b7797e2f25d": {
+        "en": "Side Tunnel (Co-Op)",
+        "ja": "Side Tunnel (Co-Op)",
+        "zh_CN": "隧道（合作撤离点）",
+        "zh_TW": "隧道（合作撤離點）"
+    },
+    "d76677800a142f800df6709b3b22946aeff43253": {
+        "en": "Mountain Pass",
+        "ja": "Mountain Pass",
+        "zh_CN": "山间小路",
+        "zh_TW": "山間小路"
+    },
+    "2cdd9d1604ebe77b3fa8bf1461530ca5b3551d8f": {
+        "en": "Path to Shoreline",
+        "ja": "Path to Shoreline",
+        "zh_CN": "通往海岸线的路",
+        "zh_TW": "通往海岸線的路"
+    },
+    "5c81e25f20e4784c348357ce1a0eb1100ad0a417": {
+        "en": "Path to Shoreline",
+        "ja": "Path to Shoreline",
+        "zh_CN": "通往海岸线的路",
+        "zh_TW": "通往海岸線的路"
+    },
+    "000e0a2d35821648d27c6479d9358b0d227c6804": {
+        "en": "Northern Checkpoint",
+        "ja": "Northern Checkpoint",
+        "zh_CN": "北部检查站",
+        "zh_TW": "北部檢查站"
+    },
+    "7d6c864aa862997ba573be0fcf47b118e253d1e1": {
+        "en": "Southern Road",
+        "ja": "Southern Road",
+        "zh_CN": "南部大路",
+        "zh_TW": "南部大路"
+    },
+    "6298212fb861936bdc49e266e741b5675324642f": {
+        "en": "Southern Road Landslide",
+        "ja": "Southern Road Landslide",
+        "zh_CN": "南部大路塌方处",
+        "zh_TW": "南部大路塌方處"
+    },
+    "e10a9500d83d8ccb3cc0b466179237aab352f4b3": {
+        "en": "Hideout Under the Landing Stage",
+        "ja": "Hideout Under the Landing Stage",
+        "zh_CN": "浮动码头下方的藏身处",
+        "zh_TW": "浮動碼頭下方的藏身處"
+    },
+    "91f4f4548a1dbad8913ad4178a008efa7b68a28f": {
+        "en": "Scav Hideout at the Grotto",
+        "ja": "Scav Hideout at the Grotto",
+        "zh_CN": "洞穴Scav藏身处",
+        "zh_TW": "洞穴Scav藏身處"
+    },
+    "cc4bb53226a9cc3578662bac1a6b9dc9a0fba3bc": {
+        "en": "Industrial Zone Gates",
+        "ja": "Industrial Zone Gates",
+        "zh_CN": "厂区大门",
+        "zh_TW": "廠區大門"
+    },
+    "86689a1e06268028c220b923fd7c676d7f9497dd": {
+        "en": "Passage by the Lake",
+        "ja": "Passage by the Lake",
+        "zh_CN": "湖边小径",
+        "zh_TW": "湖邊小徑"
+    },
+    "21": {
+        "en": "Transit to Shoreline",
+        "ja": "Transit to Shoreline",
+        "zh_CN": "前往海岸线",
+        "zh_TW": "前往海岸線"
+    },
+    "22": {
+        "en": "Transit to Reserve",
+        "ja": "Transit to Reserve",
+        "zh_CN": "前往储备站",
+        "zh_TW": "前往儲備站"
+    },
+    "23": {
+        "en": "Transit to Woods",
+        "ja": "Transit to Woods",
+        "zh_CN": "前往森林",
+        "zh_TW": "前往森林"
+    },
+    "e95d3547939574dfb73ce20064c5aff811bf02ea": {
+        "en": "Road to North V-Ex",
+        "ja": "Road to North V-Ex",
+        "zh_CN": "通往北方的路（载具撤离点）",
+        "zh_TW": "通往北方的路（載具撤離點）"
+    },
+    "97440eb4ab5a337942dc616f5dde5905adadd627": {
+        "en": "Road to Customs",
+        "ja": "Road to Customs",
+        "zh_CN": "通往海关的路",
+        "zh_TW": "通往海關的路"
+    },
+    "57d9c15c96a8221867b52676d889e26a994b9512": {
+        "en": "Railway Bridge",
+        "ja": "Railway Bridge",
+        "zh_CN": "铁路桥",
+        "zh_TW": "鐵路橋"
+    },
+    "5c32b0d555293798312b3a4bd805b34987b5f576": {
+        "en": "Tunnel",
+        "ja": "Tunnel",
+        "zh_CN": "隧道",
+        "zh_TW": "隧道"
+    },
+    "11890c73b821b558b2198881ae9659c426a6b289": {
+        "en": "Path to Lighthouse",
+        "ja": "Path to Lighthouse",
+        "zh_CN": "通往灯塔的路",
+        "zh_TW": "通往燈塔的路"
+    },
+    "5111952a9fb5c265a38886216302756c2b2b819f": {
+        "en": "Road to Customs",
+        "ja": "Road to Customs",
+        "zh_CN": "通往海关的路",
+        "zh_TW": "通往海關的路"
+    },
+    "52b4672a43e470435ec4722b09571d0bf7724f7e": {
+        "en": "Lighthouse",
+        "ja": "Lighthouse",
+        "zh_CN": "灯塔",
+        "zh_TW": "燈塔"
+    },
+    "a3cd7a839e550508ed301f4bc1725c2e2f33a0b7": {
+        "en": "Ruined Road",
+        "ja": "Ruined Road",
+        "zh_CN": "被毁的道路",
+        "zh_TW": "被毀的道路"
+    },
+    "175520fd8ce745c377fea12ac3b38690e371ab24": {
+        "en": "East Wing Gym Entrance",
+        "ja": "East Wing Gym Entrance",
+        "zh_CN": "健身房东楼入口",
+        "zh_TW": "健身房東樓入口"
+    },
+    "8ef2d534d0db570a392ebc4486fad51eefdfa2d6": {
+        "en": "Admin Basement",
+        "ja": "Admin Basement",
+        "zh_CN": "行政楼地下室",
+        "zh_TW": "行政樓地下室"
+    },
+    "c5ae90597356b707d9d1d9522efe7a24fe7d4b71": {
+        "en": "Smugglers' Path (Co-op)",
+        "ja": "Smuggler's Path (Co-op)",
+        "zh_CN": "走私者之路（合作撤离点）",
+        "zh_TW": "走私者之路（合作撤離點）"
+    },
+    "d21fd4e674ea08152c99c97fbe031b71269c58d6": {
+        "en": "Pier Boat",
+        "ja": "Pier Boat",
+        "zh_CN": "码头的船",
+        "zh_TW": "碼頭的船"
+    },
+    "efc0e77c1e0a83ff35aa27d8a091e31e770338ec": {
+        "en": "Climber's Trail",
+        "ja": "Climber's Trail",
+        "zh_CN": "攀岩者之路",
+        "zh_TW": "攀巖者之路"
+    },
+    "b4ff87efb1c1450520552d27addab7793688d475": {
+        "en": "Mountain Bunker",
+        "ja": "Mountain Bunker",
+        "zh_CN": "山边地堡",
+        "zh_TW": "山邊地堡"
+    },
+    "24": {
+        "en": "Transit to Lighthouse",
+        "ja": "Transit to Lighthouse",
+        "zh_CN": "前往灯塔",
+        "zh_TW": "前往燈塔"
+    },
+    "25": {
+        "en": "Transit to Terminal",
+        "ja": "Transit to Terminal",
+        "zh_CN": "前往终点站",
+        "zh_TW": "前往終點站"
+    },
+    "43": {
+        "en": "Transit to Labyrinth",
+        "ja": "Transit to Labyrinth",
+        "zh_CN": "前往迷宫",
+        "zh_TW": "前往迷宮"
+    },
+    "c5a30892ba8b44107663736aaeca1a3f7ff61391": {
+        "en": "Armored Train",
+        "ja": "Armored Train",
+        "zh_CN": "装甲列车",
+        "zh_TW": "裝甲列車"
+    },
+    "6b678e71f8042cf7af291a87bcd1e6b629ff8b5a": {
+        "en": "D-2",
+        "ja": "D-2",
+        "zh_CN": "D-2",
+        "zh_TW": "D-2"
+    },
+    "bf8015e63fa543ce72fe16f5c3476be29ba80fcc": {
+        "en": "Bunker Hermetic Door",
+        "ja": "Bunker Hermetic Door",
+        "zh_CN": "地堡密闭门",
+        "zh_TW": "地堡密閉門"
+    },
+    "6eb9d336eb71fbf68c7d809b55dec62ec89e7627": {
+        "en": "Cliff Descent",
+        "ja": "Cliff Descent",
+        "zh_CN": "峭壁斜坡",
+        "zh_TW": "峭壁斜坡"
+    },
+    "acd6a6b60241f90925084d8f608b89ba7a459fdb": {
+        "en": "Scav Lands (Co-Op)",
+        "ja": "Scav Lands (Co-Op)",
+        "zh_CN": "Scav之地（合作撤离点）",
+        "zh_TW": "Scav之地（合作撤離點）"
+    },
+    "4cd3f8f23a3092756fb509287ccc5332aeea6453": {
+        "en": "Sewer Manhole",
+        "ja": "Sewer Manhole",
+        "zh_CN": "下水道检修孔",
+        "zh_TW": "下水道檢修孔"
+    },
+    "e50b50945f4e27556cec43815504e61ef26493d1": {
+        "en": "Hole in the Wall by the Mountains",
+        "ja": "Hole in the Wall by the Mountains",
+        "zh_CN": "山边围墙缺口",
+        "zh_TW": "山邊圍牆缺口"
+    },
+    "adfd835074e6d2abf54127650c036eb1975e0c40": {
+        "en": "Heating Pipe",
+        "ja": "Heating Pipe",
+        "zh_CN": "加热管道",
+        "zh_TW": "加熱管道"
+    },
+    "fe060ae84e549f3a3d04647f866c5286f29f966d": {
+        "en": "Depot Hermetic Door",
+        "ja": "Depot Hermetic Door",
+        "zh_CN": "库房密闭门",
+        "zh_TW": "庫房密閉門"
+    },
+    "a61497fa1b52d87d04036733c44b8477f92e1332": {
+        "en": "Checkpoint Fence",
+        "ja": "Checkpoint Fence",
+        "zh_CN": "检查站围墙",
+        "zh_TW": "檢查站圍牆"
+    },
+    "870fee41d9fe39a659dc9d79008e3965629bbba0": {
+        "en": "Exit to Woods",
+        "ja": "Exit to Woods",
+        "zh_CN": "前往森林的路",
+        "zh_TW": "前往森林的路"
+    },
+    "18": {
+        "en": "Transit to Customs",
+        "ja": "Transit to Customs",
+        "zh_CN": "前往海关",
+        "zh_TW": "前往海關"
+    },
+    "19": {
+        "en": "Transit to Woods",
+        "ja": "Transit to Woods",
+        "zh_CN": "前往森林",
+        "zh_TW": "前往森林"
+    },
+    "20": {
+        "en": "Transit to Lighthouse",
+        "ja": "Transit to Lighthouse",
+        "zh_CN": "前往灯塔",
+        "zh_TW": "前往燈塔"
+    },
+    "2a589e01386c564a296894e93a3aaf18ec53207d": {
+        "en": "Emercom Checkpoint",
+        "ja": "Emercom Checkpoint",
+        "zh_CN": "EMERCOM 检查站",
+        "zh_TW": "EMERCOM 檢查站"
+    },
+    "fdc29c48395f3b30a7b2ba8ed645cbebfe69e539": {
+        "en": "Railway Exfil",
+        "ja": "Railway Exfil",
+        "zh_CN": "铁路撤离点",
+        "zh_TW": "鐵路撤離點"
+    },
+    "1abefb699e1a8304defcd8b41dcbbeee14adde52": {
+        "en": "Power Station V-Ex",
+        "ja": "Power Station V-Ex",
+        "zh_CN": "发电站载具撤离点",
+        "zh_TW": "發電站載具撤離點"
+    },
+    "0c3fb47380ded5e2af6a0fc90611ee0abda60f69": {
+        "en": "Scav Camp (Co-Op)",
+        "ja": "Scav Camp (Co-Op)",
+        "zh_CN": "Scav 营地（合作撤离点）",
+        "zh_TW": "Scav 營地（合作撤離點）"
+    },
+    "9685be261b82bedb2d9298cc69cd1f282e250096": {
+        "en": "Hole in the Fence",
+        "ja": "Hole in the Fence",
+        "zh_CN": "围栏破洞",
+        "zh_TW": "圍欄破洞"
+    },
+    "9570d4e280d97bd1a43756135036f3212eb6d8a8": {
+        "en": "Saferoom Exfil",
+        "ja": "Saferoom Exfil",
+        "zh_CN": "安全屋撤离点",
+        "zh_TW": "安全屋撤離點"
+    },
+    "6": {
+        "en": "Transit to Customs",
+        "ja": "Transit to Customs",
+        "zh_CN": "前往海关",
+        "zh_TW": "前往海關"
+    },
+    "7": {
+        "en": "Transit to Streets of Tarkov",
+        "ja": "Transit to Streets of Tarkov",
+        "zh_CN": "前往塔科夫街区",
+        "zh_TW": "前往塔科夫街區"
+    },
+    "8fcf0902c03e68a2201173fc1fb9ba62376353a7": {
+        "en": "Entrance to Catacombs",
+        "ja": "Entrance to Catacombs",
+        "zh_CN": "墓穴入口",
+        "zh_TW": "墓穴入口"
+    },
+    "14828b7f158d3d3c623ad25f7a21f59bebb15e68": {
+        "en": "Ventilation Shaft",
+        "ja": "Ventilation Shaft",
+        "zh_CN": "通风管道",
+        "zh_TW": "通風管道"
+    },
+    "81520cac6bc2000d30eb8d1adc403774d8e6ec93": {
+        "en": "Sewer Manhole",
+        "ja": "Sewer Manhole",
+        "zh_CN": "下水道",
+        "zh_TW": "下水道"
+    },
+    "62b57ca54c93d9004db81f424db031efa2b0e7a9": {
+        "en": "Near Kamchatskaya Arch",
+        "ja": "Near Kamchatskaya Arch",
+        "zh_CN": "Kamchatskaya大街拱门",
+        "zh_TW": "Kamchatskaya大街拱門"
+    },
+    "a92c7dcc94b188316921781856aa7a15fb4a4ebc": {
+        "en": "Cardinal Apartment Complex Parking",
+        "ja": "Cardinal Apartment Complex Parking",
+        "zh_CN": "Cardinal公寓停车场",
+        "zh_TW": "Cardinal公寓停車場"
+    },
+    "2f79c92d99215405c202d8b7f1e6eace137f9b5f": {
+        "en": "Klimov Shopping Mall Exfil",
+        "ja": "Klimov Shopping Mall Exfil",
+        "zh_CN": "Klimov 商场撤离点",
+        "zh_TW": "Klimov 商場撤離點"
+    },
+    "65f6067829924e26e0cb31d4ac24fee1870ec944": {
+        "en": "Courtyard",
+        "ja": "Courtyard",
+        "zh_CN": "院子",
+        "zh_TW": "院子"
+    },
+    "264ee7ea338658549942113cbbf0a6ea31402975": {
+        "en": "Primorsky Ave Taxi V-Ex",
+        "ja": "Primorsky Ave Taxi V-Ex",
+        "zh_CN": "Primorsky大道出租车载具撤离点",
+        "zh_TW": "Primorsky大道出租車載具撤離點"
+    },
+    "cb867ea360a89dbc48694c43d193553d564529f9": {
+        "en": "Stylobate Building Elevator",
+        "ja": "Stylobate Building Elevator",
+        "zh_CN": "升降梯",
+        "zh_TW": "升降梯"
+    },
+    "99e05bbf5d6f6dad97773774af735e37ae3edd44": {
+        "en": "Crash Site",
+        "ja": "Crash Site",
+        "zh_CN": "坠机现场",
+        "zh_TW": "墜機現場"
+    },
+    "974e40db5a7ac4d1937688eb6415b2333f9a3766": {
+        "en": "Sewer River",
+        "ja": "Sewer River",
+        "zh_CN": "污水河",
+        "zh_TW": "污水河"
+    },
+    "29cd42c5025edb6a619dd961fbc20ad639127189": {
+        "en": "Damaged House",
+        "ja": "Damaged House",
+        "zh_CN": "受损的房屋",
+        "zh_TW": "受損的房屋"
+    },
+    "59f13279288d9ac630955c14dc3368b492061e7c": {
+        "en": "Collapsed Crane",
+        "ja": "Collapsed Crane",
+        "zh_CN": "倒塌的吊车",
+        "zh_TW": "倒塌的吊車"
+    },
+    "19b2c9157d56629da496df0bc42dbe5c49439e4c": {
+        "en": "Klimov Street (Flare)",
+        "ja": "Klimov Street (Flare)",
+        "zh_CN": "Klimov 大街（信号弹）",
+        "zh_TW": "Klimov 大街（信號彈）"
+    },
+    "d830108cdf0fcd33b785ca39d380255658905371": {
+        "en": "Pinewood Basement (Co-Op)",
+        "ja": "Pinewood Basement (Co-Op)",
+        "zh_CN": "Pinewood地下室（合作撤离点）",
+        "zh_TW": "Pinewood地下室（合作撤離點）"
+    },
+    "b17b3bec8b22bdd99d6e9589ed0d9a41f2f6aac8": {
+        "en": "Expo Checkpoint",
+        "ja": "Expo Checkpoint",
+        "zh_CN": "展览馆检查站",
+        "zh_TW": "展覽館檢查站"
+    },
+    "787c7f07f2b19b39ad8ba5a14ae69c10088191fd": {
+        "en": "Smugglers' Basement",
+        "ja": "Smuggler's Basement",
+        "zh_CN": "走私者地下室入口",
+        "zh_TW": "走私者地下室入口"
+    },
+    "3": {
+        "en": "Transit to Ground Zero",
+        "ja": "Transit to Ground Zero",
+        "zh_CN": "前往中心区",
+        "zh_TW": "前往中心區"
+    },
+    "4": {
+        "en": "Transit to Interchange",
+        "ja": "Transit to Interchange",
+        "zh_CN": "前往立交桥",
+        "zh_TW": "前往立交橋"
+    },
+    "5": {
+        "en": "Transit to The Lab",
+        "ja": "Transit to The Lab",
+        "zh_CN": "前往实验室",
+        "zh_TW": "前往實驗室"
+    },
+    "ed029f26c9d60bf00d926b4d7e7876b0591b411a": {
+        "en": "Medical Block Elevator",
+        "ja": "Medical Block Elevator",
+        "zh_CN": "医疗区电梯",
+        "zh_TW": "醫療區電梯"
+    },
+    "4cfc8fb5003e428d6cb9f8492690068afba50c71": {
+        "en": "Cargo Elevator",
+        "ja": "Cargo Elevator",
+        "zh_CN": "货运电梯",
+        "zh_TW": "貨運電梯"
+    },
+    "1a5ae89d5401d277f8b317c18951dfe0e1bfd695": {
+        "en": "Main Elevator",
+        "ja": "Main Elevator",
+        "zh_CN": "主电梯",
+        "zh_TW": "主電梯"
+    },
+    "761dedf3fefaf3526e0ce19c7d7b1a3d494fce8a": {
+        "en": "Ventilation Shaft",
+        "ja": "Ventilation Shaft",
+        "zh_CN": "通风管道",
+        "zh_TW": "通風管道"
+    },
+    "c846e13f4bf7afe28c0cf214bd9e7b4685ba592f": {
+        "en": "Sewage Conduit",
+        "ja": "Sewage Conduit",
+        "zh_CN": "污水管道",
+        "zh_TW": "污水管道"
+    },
+    "c5c6f818755ac844b4723b1a2cf057569da410ee": {
+        "en": "Parking Gate",
+        "ja": "Parking Gate",
+        "zh_CN": "停车场大门",
+        "zh_TW": "停車場大門"
+    },
+    "6499ac7374cd238366b977944e305a08afd2e9e3": {
+        "en": "Hangar Gate",
+        "ja": "Hangar Gate",
+        "zh_CN": "库房大门",
+        "zh_TW": "庫房大門"
+    },
+    "8": {
+        "en": "Transit to Streets of Tarkov",
+        "ja": "Transit to Streets of Tarkov",
+        "zh_CN": "前往塔科夫街区",
+        "zh_TW": "前往塔科夫街區"
+    },
+    "d6870dda31937ff93662ce903afe1099b24011a1": {
+        "en": "Police Cordon V-Ex",
+        "ja": "Police Cordon V-Ex",
+        "zh_CN": "警方封锁线（载具撤离点）",
+        "zh_TW": "警方封鎖線（載具撤離點）"
+    },
+    "549ceec177747468ebe86bcfd5a486d1dce9ed64": {
+        "en": "Emercom Checkpoint",
+        "ja": "Emercom Checkpoint",
+        "zh_CN": "EMERCOM 检查站",
+        "zh_TW": "EMERCOM 檢查站"
+    },
+    "118fa7e3eae47190871eb4ea20d4f3ca2718b73f": {
+        "en": "Scav Checkpoint (Co-op)",
+        "ja": "Scav Checkpoint (Co-op)",
+        "zh_CN": "Scav检查站（合作撤离点）",
+        "zh_TW": "Scav檢查站（合作撤離點）"
+    },
+    "ab623005251ffcd3603a5df2610917a998d9a17e": {
+        "en": "Nakatani Basement Stairs",
+        "ja": "Nakatani Basement Stairs",
+        "zh_CN": "Nakatani地下室楼梯",
+        "zh_TW": "Nakatani地下室樓梯"
+    },
+    "89ff19116feeafdf4a2b4e538cafb5364ffbe862": {
+        "en": "Mira Ave (Flare)",
+        "ja": "Mira Ave (Flare)",
+        "zh_CN": "Mira 大道（信号弹）",
+        "zh_TW": "Mira 大道（信號彈）"
+    },
+    "122676fe448d426d085e9516114534966a69c3ff": {
+        "en": "Tartowers Sales Office",
+        "ja": "Tartowers Sales Office",
+        "zh_CN": "Tartowers销售办公室",
+        "zh_TW": "Tartowers銷售辦公室"
+    },
+    "1": {
+        "en": "Transit to Streets of Tarkov",
+        "ja": "Transit to Streets of Tarkov",
+        "zh_CN": "前往塔科夫街区",
+        "zh_TW": "前往塔科夫街區"
+    },
+    "145db8cb7d81891137f780e183901f601a461127": {
+        "en": "The Way Up",
+        "ja": "The Way Up",
+        "zh_CN": "向上通路",
+        "zh_TW": "向上通路"
+    },
+    "7c1c38af52a07d10fbcbc9a811db636d36e9818b": {
+        "en": "Ariadne's Path",
+        "ja": "Ariadne's Path",
+        "zh_CN": "阿里阿德涅之线",
+        "zh_TW": "阿里阿德涅之線"
+    }
+}

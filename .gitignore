@@ -1,0 +1,11 @@
+參考/
+*.txt
+*.exe
+bm-tarkov-map-tracker.json
+.task
+bin
+frontend/node_modules
+node_modules
+build/windows/nsis/MicrosoftEdgeWebview2Setup.exe
+wails_windows_*.syso
+tools

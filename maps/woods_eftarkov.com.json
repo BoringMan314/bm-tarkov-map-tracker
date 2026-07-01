@@ -1,0 +1,325 @@
+{
+    "name": "woods",
+    "display_name": "Woods",
+    "description": "",
+    "width": 12288.0,
+    "height": 11264.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 4,
+    "eftarkov_cols": 48,
+    "eftarkov_rows": 44,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "bca3cfe5c0e05cc1",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-woods-pmc-0",
+                "name": "友谊之桥（合作撤离）",
+                "coordinates": [
+                    -1470.0,
+                    -5170.0
+                ],
+                "display_coordinates": [
+                    4674.0,
+                    462.0
+                ]
+            },
+            {
+                "id": "eft-woods-pmc-2",
+                "name": "RUAF大门",
+                "coordinates": [
+                    395.0,
+                    5430.0
+                ],
+                "display_coordinates": [
+                    6539.0,
+                    11062.0
+                ]
+            },
+            {
+                "id": "eft-woods-pmc-4",
+                "name": "ZB-014",
+                "coordinates": [
+                    -4710.0,
+                    2330.0
+                ],
+                "display_coordinates": [
+                    1434.0,
+                    7962.0
+                ]
+            },
+            {
+                "id": "eft-woods-pmc-5",
+                "name": "大桥载具撤离点",
+                "coordinates": [
+                    3350.0,
+                    -2350.0
+                ],
+                "display_coordinates": [
+                    9494.0,
+                    3282.0
+                ]
+            },
+            {
+                "id": "eft-woods-pmc-6",
+                "name": "北部UN路障",
+                "coordinates": [
+                    3880.0,
+                    1320.0
+                ],
+                "display_coordinates": [
+                    10024.0,
+                    6952.0
+                ]
+            },
+            {
+                "id": "eft-woods-pmc-7",
+                "name": "ZB-016",
+                "coordinates": [
+                    2370.0,
+                    2305.0
+                ],
+                "display_coordinates": [
+                    8514.0,
+                    7937.0
+                ]
+            },
+            {
+                "id": "eft-woods-pmc-8",
+                "name": "输电通道（绿色信号棒）",
+                "coordinates": [
+                    -5100.0,
+                    1365.0
+                ],
+                "display_coordinates": [
+                    1044.0,
+                    6997.0
+                ]
+            },
+            {
+                "id": "eft-woods-pmc-9",
+                "name": "前往塔科夫的铁路桥（需要纸条）",
+                "coordinates": [
+                    5300.0,
+                    2950.0
+                ],
+                "display_coordinates": [
+                    11444.0,
+                    8582.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-woods-scav-0",
+                "name": "友谊之桥（合作撤离）",
+                "coordinates": [
+                    -1470.0,
+                    -5170.0
+                ],
+                "display_coordinates": [
+                    4674.0,
+                    462.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-2",
+                "name": "RUAF路障",
+                "coordinates": [
+                    395.0,
+                    5430.0
+                ],
+                "display_coordinates": [
+                    6539.0,
+                    11062.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-4",
+                "name": "那艘船",
+                "coordinates": [
+                    -2270.0,
+                    3750.0
+                ],
+                "display_coordinates": [
+                    3874.0,
+                    9382.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-5",
+                "name": "亡者之所",
+                "coordinates": [
+                    -2430.0,
+                    4050.0
+                ],
+                "display_coordinates": [
+                    3714.0,
+                    9682.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-6",
+                "name": "东部岩石",
+                "coordinates": [
+                    3480.0,
+                    1600.0
+                ],
+                "display_coordinates": [
+                    9624.0,
+                    7232.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-7",
+                "name": "山间仓库",
+                "coordinates": [
+                    950.0,
+                    140.0
+                ],
+                "display_coordinates": [
+                    7094.0,
+                    5772.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-8",
+                "name": "旧火车站",
+                "coordinates": [
+                    3560.0,
+                    3170.0
+                ],
+                "display_coordinates": [
+                    9704.0,
+                    8802.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-9",
+                "name": "Scav之桥",
+                "coordinates": [
+                    -1470.0,
+                    -5170.0
+                ],
+                "display_coordinates": [
+                    4674.0,
+                    462.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-10",
+                "name": "Scav地堡",
+                "coordinates": [
+                    -3055.0,
+                    -4025.0
+                ],
+                "display_coordinates": [
+                    3089.0,
+                    1607.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-11",
+                "name": "Scav小屋",
+                "coordinates": [
+                    -4210.0,
+                    3915.0
+                ],
+                "display_coordinates": [
+                    1934.0,
+                    9547.0
+                ]
+            },
+            {
+                "id": "eft-woods-scav-12",
+                "name": "前往塔科夫的铁路桥（需要纸条）",
+                "coordinates": [
+                    5300.0,
+                    2950.0
+                ],
+                "display_coordinates": [
+                    11444.0,
+                    8582.0
+                ]
+            }
+        ],
+        "coop": [
+            {
+                "id": "eft-woods-coop-0",
+                "name": "郊区",
+                "coordinates": [
+                    -3655.0,
+                    4750.0
+                ],
+                "display_coordinates": [
+                    2489.0,
+                    10382.0
+                ]
+            },
+            {
+                "id": "eft-woods-coop-1",
+                "name": "UN路障",
+                "coordinates": [
+                    3630.0,
+                    4300.0
+                ],
+                "display_coordinates": [
+                    9774.0,
+                    9932.0
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "eft-woods-transit-0",
+                "name": "前往海关",
+                "coordinates": [
+                    450.0,
+                    5280.0
+                ],
+                "display_coordinates": [
+                    6594.0,
+                    10912.0
+                ]
+            },
+            {
+                "id": "eft-woods-transit-1",
+                "name": "前往工厂",
+                "coordinates": [
+                    2273.0,
+                    4920.0
+                ],
+                "display_coordinates": [
+                    8417.0,
+                    10552.0
+                ]
+            },
+            {
+                "id": "eft-woods-transit-2",
+                "name": "前往灯塔",
+                "coordinates": [
+                    -4800.0,
+                    4800.0
+                ],
+                "display_coordinates": [
+                    1344.0,
+                    10432.0
+                ]
+            },
+            {
+                "id": "eft-woods-transit-3",
+                "name": "前往储备站",
+                "coordinates": [
+                    -2900.0,
+                    4800.0
+                ],
+                "display_coordinates": [
+                    3244.0,
+                    10432.0
+                ]
+            }
+        ]
+    }
+}

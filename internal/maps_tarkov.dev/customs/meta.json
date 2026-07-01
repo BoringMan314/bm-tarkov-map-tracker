@@ -1,0 +1,29 @@
+{
+    "name": "customs",
+    "display_name": "Customs",
+    "description": "",
+    "xmin": -372.0,
+    "xmax": 698.0,
+    "zmin": -307.0,
+    "zmax": 237.0,
+    "coordinates_rotation": 180,
+    "transform": [
+        0.239,
+        168.65,
+        0.239,
+        136.35
+    ],
+    "width": 8192.0,
+    "height": 4096.0,
+    "stitch_width": 8192.0,
+    "stitch_height": 4096.0,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "tile_zoom": 5,
+    "tile_min_x": 0,
+    "tile_min_y": 8,
+    "tile_max_x": 31,
+    "tile_max_y": 23,
+    "tile_size": 256,
+    "map_asset_rev": "8b906e4d106d28b6"
+}

@@ -1,0 +1,15 @@
+{
+    "name": "woods",
+    "display_name": "Woods",
+    "description": "",
+    "width": 12288.0,
+    "height": 11264.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 4,
+    "eftarkov_cols": 48,
+    "eftarkov_rows": 44,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "bca3cfe5c0e05cc1"
+}

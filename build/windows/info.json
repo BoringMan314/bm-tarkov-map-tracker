@@ -1,0 +1,18 @@
+{
+  "fixed": {
+    "file_version": "0.1.0.0",
+    "product_version": "0.1.0.0"
+  },
+  "info": {
+    "0409": {
+      "ProductVersion": "0.1.0.0",
+      "CompanyName": "[B.M] 圓周率 3.14",
+      "FileDescription": "[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14",
+      "LegalCopyright": "[B.M] 圓周率 3.14",
+      "ProductName": "[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14",
+      "Comments": "bm-tarkov-map-tracker",
+      "InternalName": "bm-tarkov-map-tracker",
+      "OriginalFilename": "bm-tarkov-map-tracker.exe"
+    }
+  }
+}

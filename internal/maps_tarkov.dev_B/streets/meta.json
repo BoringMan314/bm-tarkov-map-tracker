@@ -1,0 +1,18 @@
+{
+    "name": "streets",
+    "display_name": "Streets of Tarkov",
+    "description": "",
+    "xmin": -280,
+    "xmax": 323,
+    "zmin": -295,
+    "zmax": 532,
+    "coordinates_rotation": 180,
+    "width": 605.32395,
+    "height": 831.57753,
+    "transform": [
+        0.38,
+        0.0,
+        0.38,
+        0.0
+    ]
+}

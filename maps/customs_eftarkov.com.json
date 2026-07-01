@@ -1,0 +1,444 @@
+{
+    "name": "customs",
+    "display_name": "Customs",
+    "description": "",
+    "width": 10240.0,
+    "height": 5632.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 40,
+    "eftarkov_rows": 24,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "map_asset_rev": "42a8946f8c245123",
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-customs-pmc-0",
+                "name": "地下室锅炉房（合作撤离）",
+                "coordinates": [
+                    -570.0,
+                    1320.0
+                ],
+                "display_coordinates": [
+                    4550.0,
+                    4392.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-1",
+                "name": "十字路口",
+                "coordinates": [
+                    -3850.0,
+                    -460.0
+                ],
+                "display_coordinates": [
+                    1270.0,
+                    2612.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-2",
+                "name": "RUAF路障",
+                "coordinates": [
+                    -1550.0,
+                    -5.0
+                ],
+                "display_coordinates": [
+                    3570.0,
+                    3067.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-3",
+                "name": "宿舍载具撤离点",
+                "coordinates": [
+                    -130.0,
+                    -2640.0
+                ],
+                "display_coordinates": [
+                    4990.0,
+                    432.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-4",
+                "name": "老加油站",
+                "coordinates": [
+                    800.0,
+                    245.0
+                ],
+                "display_coordinates": [
+                    5920.0,
+                    3317.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-5",
+                "name": "拖车停车场",
+                "coordinates": [
+                    -3770.0,
+                    600.0
+                ],
+                "display_coordinates": [
+                    1350.0,
+                    3672.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-6",
+                "name": "ZB-013",
+                "coordinates": [
+                    1100.0,
+                    2067.0
+                ],
+                "display_coordinates": [
+                    6220.0,
+                    5139.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-7",
+                "name": "ZB-1011",
+                "coordinates": [
+                    3180.0,
+                    -107.0
+                ],
+                "display_coordinates": [
+                    8300.0,
+                    2965.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-8",
+                "name": "铁路通道",
+                "coordinates": [
+                    25.0,
+                    750.0
+                ],
+                "display_coordinates": [
+                    5145.0,
+                    3822.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-9",
+                "name": "走私者的船（需要纸条）",
+                "coordinates": [
+                    -1740.0,
+                    -1930.0
+                ],
+                "display_coordinates": [
+                    3380.0,
+                    1142.0
+                ]
+            },
+            {
+                "id": "eft-customs-pmc-10",
+                "name": "走私者的掩体 (ZB-1012)（需要纸条）",
+                "coordinates": [
+                    1930.0,
+                    -221.0
+                ],
+                "display_coordinates": [
+                    7050.0,
+                    2851.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-customs-scav-0",
+                "name": "地下室锅炉房（合作撤离）",
+                "coordinates": [
+                    -570.0,
+                    1320.0
+                ],
+                "display_coordinates": [
+                    4550.0,
+                    4392.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-1",
+                "name": "十字路口",
+                "coordinates": [
+                    -3850.0,
+                    -460.0
+                ],
+                "display_coordinates": [
+                    1270.0,
+                    2612.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-2",
+                "name": "RUAF路障",
+                "coordinates": [
+                    -1550.0,
+                    -5.0
+                ],
+                "display_coordinates": [
+                    3570.0,
+                    3067.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-3",
+                "name": "行政区大门",
+                "coordinates": [
+                    3440.0,
+                    -670.0
+                ],
+                "display_coordinates": [
+                    8560.0,
+                    2402.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-4",
+                "name": "工厂远角",
+                "coordinates": [
+                    3325.0,
+                    140.0
+                ],
+                "display_coordinates": [
+                    8445.0,
+                    3212.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-5",
+                "name": "工厂棚屋",
+                "coordinates": [
+                    18.0,
+                    -1132.0
+                ],
+                "display_coordinates": [
+                    5138.0,
+                    1940.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-6",
+                "name": "军事基地检查站",
+                "coordinates": [
+                    3270.0,
+                    -1950.0
+                ],
+                "display_coordinates": [
+                    8390.0,
+                    1122.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-7",
+                "name": "老加油站",
+                "coordinates": [
+                    790.0,
+                    385.0
+                ],
+                "display_coordinates": [
+                    5910.0,
+                    3457.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-8",
+                "name": "老路大门",
+                "coordinates": [
+                    -130.0,
+                    -2640.0
+                ],
+                "display_coordinates": [
+                    4990.0,
+                    432.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-9",
+                "name": "石间小道",
+                "coordinates": [
+                    2550.0,
+                    -2490.0
+                ],
+                "display_coordinates": [
+                    7670.0,
+                    582.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-10",
+                "name": "通往军事基地的铁路",
+                "coordinates": [
+                    2180.0,
+                    -2680.0
+                ],
+                "display_coordinates": [
+                    7300.0,
+                    392.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-11",
+                "name": "通往港口的铁路",
+                "coordinates": [
+                    -2492.0,
+                    -1400.0
+                ],
+                "display_coordinates": [
+                    2628.0,
+                    1672.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-12",
+                "name": "通往塔科夫的铁路",
+                "coordinates": [
+                    -2670.0,
+                    530.0
+                ],
+                "display_coordinates": [
+                    2450.0,
+                    3602.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-13",
+                "name": "Scav检查站",
+                "coordinates": [
+                    3310.0,
+                    -880.0
+                ],
+                "display_coordinates": [
+                    8430.0,
+                    2192.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-14",
+                "name": "狙击手路障",
+                "coordinates": [
+                    -1350.0,
+                    -2000.0
+                ],
+                "display_coordinates": [
+                    3770.0,
+                    1072.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-15",
+                "name": "拖车停车场工人棚屋",
+                "coordinates": [
+                    -3260.0,
+                    645.0
+                ],
+                "display_coordinates": [
+                    1860.0,
+                    3717.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-16",
+                "name": "4号仓库",
+                "coordinates": [
+                    1130.0,
+                    -865.0
+                ],
+                "display_coordinates": [
+                    6250.0,
+                    2207.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-17",
+                "name": "17号仓库",
+                "coordinates": [
+                    -1110.0,
+                    -550.0
+                ],
+                "display_coordinates": [
+                    4010.0,
+                    2522.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-18",
+                "name": "走私者的船（需要纸条）",
+                "coordinates": [
+                    -1740.0,
+                    -1930.0
+                ],
+                "display_coordinates": [
+                    3380.0,
+                    1142.0
+                ]
+            },
+            {
+                "id": "eft-customs-scav-19",
+                "name": "走私者的掩体 (ZB-1012)（需要纸条）",
+                "coordinates": [
+                    1930.0,
+                    -221.0
+                ],
+                "display_coordinates": [
+                    7050.0,
+                    2851.0
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-customs-transit-0",
+                "name": "前往立交桥",
+                "coordinates": [
+                    -3890.0,
+                    405.0
+                ],
+                "display_coordinates": [
+                    1230.0,
+                    3477.0
+                ]
+            },
+            {
+                "id": "eft-customs-transit-1",
+                "name": "前往海岸线",
+                "coordinates": [
+                    -1295.0,
+                    -2100.0
+                ],
+                "display_coordinates": [
+                    3825.0,
+                    972.0
+                ]
+            },
+            {
+                "id": "eft-customs-transit-2",
+                "name": "前往储备站",
+                "coordinates": [
+                    3305.0,
+                    -1950.0
+                ],
+                "display_coordinates": [
+                    8425.0,
+                    1122.0
+                ]
+            },
+            {
+                "id": "eft-customs-transit-3",
+                "name": "前往工厂",
+                "coordinates": [
+                    1120.0,
+                    335.0
+                ],
+                "display_coordinates": [
+                    6240.0,
+                    3407.0
+                ]
+            }
+        ]
+    }
+}

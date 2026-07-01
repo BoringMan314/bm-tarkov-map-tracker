@@ -1,0 +1,129 @@
+{
+    "name": "factory",
+    "display_name": "Factory",
+    "description": "",
+    "xmin": -65.5,
+    "xmax": 77.0,
+    "zmin": -64.5,
+    "zmax": 67.4,
+    "coordinates_rotation": 90,
+    "width": 130.81831,
+    "height": 141.23242,
+    "transform": [
+        1.629,
+        119.9,
+        1.629,
+        139.3
+    ],
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 0,
+    "tile_max_x": 15,
+    "tile_max_y": 15,
+    "tile_size": 256,
+    "points": {
+        "pmc": [
+            {
+                "id": "ffb8b37a6390d2c3b00baeee3295492ea1e19a93",
+                "name": "Cellars",
+                "coordinates": [
+                    73.89422,
+                    -29.0818882
+                ]
+            },
+            {
+                "id": "7ae0a08942ce71d8d713ef3628c86619598160f4",
+                "name": "Gate 3",
+                "coordinates": [
+                    58.43222,
+                    63.29811
+                ]
+            },
+            {
+                "id": "4f953558d3d7bca7bd7b4d40a6429adc34cc1834",
+                "name": "Gate 0",
+                "coordinates": [
+                    -63.66578,
+                    55.8781128
+                ]
+            },
+            {
+                "id": "7bb46d641d59983a58440a7a58d65933d981c211",
+                "name": "Med Tent Gate",
+                "coordinates": [
+                    -17.5257778,
+                    -61.27189
+                ]
+            },
+            {
+                "id": "1846030b40983ab096b3d1e39f72da5697f39154",
+                "name": "Courtyard Gate",
+                "coordinates": [
+                    23.7642212,
+                    68.93811
+                ]
+            },
+            {
+                "id": "3faf0c5c7f9dfe2c4ec9cf029fbe14ede9720cc1",
+                "name": "Smugglers' Passage",
+                "coordinates": [
+                    48.026,
+                    -28.8580017
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "a11f20d1f462bc4c8f39699e8a59fc0b58b71299",
+                "name": "Gate 3",
+                "coordinates": [
+                    58.709,
+                    60.86811
+                ]
+            },
+            {
+                "id": "7e582daaf3ef18c90132998441c217f246387a06",
+                "name": "Camera Bunker Door",
+                "coordinates": [
+                    -15.71578,
+                    40.1081123
+                ]
+            },
+            {
+                "id": "cbe6ccd60767142298488227e57ab554cf47cd2e",
+                "name": "Office Window",
+                "coordinates": [
+                    17.8332214,
+                    39.8851128
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "12",
+                "name": "Transit to Woods",
+                "coordinates": [
+                    23.7,
+                    61.61
+                ]
+            },
+            {
+                "id": "13",
+                "name": "Transit to Customs",
+                "coordinates": [
+                    18.51,
+                    -48.33
+                ]
+            },
+            {
+                "id": "14",
+                "name": "Transit to The Lab",
+                "coordinates": [
+                    -26.539,
+                    -42.013
+                ]
+            }
+        ]
+    }
+}

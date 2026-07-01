@@ -1,0 +1,29 @@
+{
+    "name": "factory",
+    "display_name": "Factory",
+    "description": "",
+    "xmin": -65.5,
+    "xmax": 77.0,
+    "zmin": -64.5,
+    "zmax": 67.4,
+    "coordinates_rotation": 90,
+    "transform": [
+        1.629,
+        119.9,
+        1.629,
+        139.3
+    ],
+    "width": 3917.0,
+    "height": 3733.0,
+    "stitch_width": 4096.0,
+    "stitch_height": 4096.0,
+    "map_offset_x": 0,
+    "map_offset_y": 223,
+    "tile_zoom": 4,
+    "tile_min_x": 0,
+    "tile_min_y": 0,
+    "tile_max_x": 15,
+    "tile_max_y": 15,
+    "tile_size": 256,
+    "map_asset_rev": "462ffb2b81d3e563"
+}
