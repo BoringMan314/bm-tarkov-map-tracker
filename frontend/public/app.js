@@ -536,7 +536,7 @@ const MAP_PLAYER_PROFILES = {
   customs: {
     dev_a: { headingOffset: -90 },
     dev_b: { headingOffset: -90 },
-    eftarkov: { headingOffset: 90 },
+    eftarkov: { flipY: true, headingOffset: 90 },
   },
   groundzero: {
     dev_a: { headingOffset: -90 },
@@ -544,6 +544,11 @@ const MAP_PLAYER_PROFILES = {
     eftarkov: { flipX: true, headingOffset: -90 },
   },
   interchange: {
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
+  },
+  shoreline: {
     dev_a: { headingOffset: -90 },
     dev_b: { headingOffset: -90 },
     eftarkov: { flipX: true, headingOffset: -90 },
