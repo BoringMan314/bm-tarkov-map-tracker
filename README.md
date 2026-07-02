@@ -6,13 +6,13 @@
 [![GitHub](https://img.shields.io/badge/GitHub-bm--tarkov--map--tracker-181717?logo=github)](https://github.com/BoringMan314/bm-tarkov-map-tracker)
 [![GitHub all releases](https://img.shields.io/github/downloads/BoringMan314/bm-tarkov-map-tracker/total)](https://github.com/BoringMan314/bm-tarkov-map-tracker/releases)
 
-Windows 桌面版《Escape from Tarkov》互動地圖工具，支援 **tarkov.dev（DEV A / DEV B）** 與 **eftarkov.com（COM）** 三種資料來源，可顯示撤離點、轉移點、滑鼠遊戲座標與多語系介面。
+Windows 桌面版《Escape from Tarkov》互動地圖工具，支援 **tarkov.dev（衛星圖 / 抽象圖）** 與 **eftarkov.com** 三種資料來源，可顯示撤離點、轉移點、滑鼠遊戲座標與多語系介面。
 
-*Windows 桌面版《逃离塔科夫》互动地图工具，支持 tarkov.dev（DEV A / DEV B）与 eftarkov.com（COM）三种数据源，可显示撤离点、转移点、鼠标游戏坐标与多语言界面。*
+*Windows 桌面版《逃离塔科夫》互动地图工具，支持 **tarkov.dev（卫星图 / 抽象图）** 与 **eftarkov.com** 三种数据源，可显示撤离点、转移点、鼠标游戏坐标与多语言界面。*
 
-*Windows 向け『Escape from Tarkov』インタラクティブマップ。tarkov.dev（DEV A / DEV B）と eftarkov.com（COM）の 3 データソース、撤离・Transit ポイント、マウス座標、多言語 UI に対応。*
+*Windows 向け『Escape from Tarkov』インタラクティブマップ。**tarkov.dev（衛星図 / 抽象図）** と **eftarkov.com** の 3 データソース、撤离・Transit ポイント、マウス座標、多言語 UI に対応。*
 
-*An interactive Escape from Tarkov map tracker for Windows with tarkov.dev (DEV A / B) and eftarkov.com (COM) data sources, exfil/transit markers, mouse game coordinates, and multilingual UI.*
+*An interactive Escape from Tarkov map tracker for Windows with tarkov.dev (satellite / abstract) and eftarkov.com data sources, exfil/transit markers, mouse game coordinates, and multilingual UI.*
 
 > **聲明**：本專案為第三方輔助工具，地圖與點位資料來自 [tarkov.dev](https://tarkov.dev/) 與 [eftarkov.com](https://api.eftarkov.com/)。請遵守遊戲與各資料來源之使用規範。
 
@@ -42,9 +42,9 @@ Windows 桌面版《Escape from Tarkov》互動地圖工具，支援 **tarkov.de
 ## 功能
 
 - 三種資料來源切換：
-  - **TARKOV.DEV_A**：衛星圖（`maps/*_tarkov.dev_A.png`）
-  - **TARKOV.DEV_B**：抽象圖（`maps/*_tarkov.dev_B.svg`，無 SVG 時用 `.png`）
-  - **eftarkov.com（COM）**：拼接 raster 圖（`maps/*_eftarkov.com.png`）
+  - **tarkov.dev（衛星圖）**：`maps/*_tarkov.dev_A.png`
+  - **tarkov.dev（抽象圖）**：`maps/*_tarkov.dev_B.svg`（無 SVG 時用 `.png`）
+  - **eftarkov.com**
 - 支援地圖：工廠、中心區、立交橋、實驗室、海關、海岸線、迷宮、儲備站、森林、塔科夫街區等（依 catalog 為準）。
 - 撤離點圖層：PMC / SCAV / 合作 / 轉移，可個別開關與顯示名稱。
 - 地圖縮放、拖曳、重設視角；滑鼠 X / Y 遊戲座標顯示。
@@ -100,7 +100,7 @@ build_win10.bat
 ## 檢查流程（建議）
 
 1. 啟動後主視窗是否出現於第一螢幕約 `100,100`。
-2. 切換 **TARKOV.DEV_A / DEV_B / COM**，各地圖是否能載入（非全黑）。
+2. 切換 **tarkov.dev（衛星圖 / 抽象圖）** 與 **eftarkov.com**，各地圖是否能載入（非全黑）。
 3. 工廠、海關、海岸線等曾調整座標的圖：撤離點是否落在合理位置。
 4. 語言循環、`bm-tarkov-map-tracker.json` 讀寫是否正常。
 5. 系統匣左鍵能否還原視窗；右鍵 GitHub／關於／離開是否正常。
@@ -152,7 +152,7 @@ wails3 task windows:run
 | `i18n/` | 各語系 JSON（`zh_TW.json`…）與 `catalog.json`（含 key 數量） |
 | `frontend/public/` | 前端頁面與靜態資源（`index.html`、`app.js`、`style.css`） |
 | `internal/appmeta/` | 版本、視窗標題、GitHub URL |
-| `internal/maps/` | 地圖 HTTP API、三資料來 catalog（DEV A / DEV B / COM → 根目錄 `maps/`） |
+| `internal/maps/` | 地圖 HTTP API、三資料來 catalog（tarkov.dev 衛星圖 / 抽象圖 / eftarkov.com → 根目錄 `maps/`） |
 | `internal/points/` | 撤離點 ID 名稱（`exfil_names.json`、`eftarkov_names.json`，供 i18n 注入 `exfil_*` key） |
 | `internal/i18n/` | 多語系載入邏輯（`load.go`、`exfil.go`） |
 | `tools/` | Python 地圖／點位同步腳本 |
@@ -239,4 +239,4 @@ python tools\sync_root_i18n.py
 
 ## 問題與建議
 
-歡迎使用 [GitHub Issues](https://github.com/BoringMan314/bm-tarkov-map-tracker/issues) 回報錯誤或提出建議（請附上 Windows 版本、資料來源 DEV A/B/COM、地圖名稱、重現步驟與截圖）。
+歡迎使用 [GitHub Issues](https://github.com/BoringMan314/bm-tarkov-map-tracker/issues) 回報錯誤或提出建議（請附上 Windows 版本、資料來源（tarkov.dev 衛星圖 / 抽象圖 / eftarkov.com）、地圖名稱、重現步驟與截圖）。
