@@ -4,6 +4,8 @@
 bm-tarkov-map-tracker.json
 .task
 bin
+frontend/dist
+frontend/public/dist
 frontend/node_modules
 node_modules
 build/windows/nsis/MicrosoftEdgeWebview2Setup.exe

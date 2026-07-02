@@ -4,10 +4,6 @@ import (
 	"io/fs"
 	"net/http"
 	"strings"
-
-	eftarkov "bm-tarkov-map-tracker/internal/maps_eftarkov.com"
-	tarkovdev "bm-tarkov-map-tracker/internal/maps_tarkov.dev"
-	tarkovdevb "bm-tarkov-map-tracker/internal/maps_tarkov.dev_B"
 )
 
 func NormalizeSource(source string) string {
@@ -96,130 +92,54 @@ type metaRecord struct {
 
 type tarkovdevStore struct{}
 
-func (tarkovdevStore) boundsJSON() []byte { return tarkovdev.BoundsBlob }
+func (tarkovdevStore) boundsJSON() []byte { return devACatalog.BoundsBlob }
 
-func (tarkovdevStore) catalogOrder() []string { return tarkovdev.CatalogOrder }
+func (tarkovdevStore) catalogOrder() []string { return devACatalog.Order }
 
-func (tarkovdevStore) metaByID() map[string]metaRecord {
-	out := make(map[string]metaRecord, len(tarkovdev.MetaByID))
-	for id, m := range tarkovdev.MetaByID {
-		out[id] = metaRecord{
-			Name:                m.Name,
-			DisplayName:         m.DisplayName,
-			Width:               m.Width,
-			Height:              m.Height,
-			XMin:                m.XMin,
-			XMax:                m.XMax,
-			ZMin:                m.ZMin,
-			ZMax:                m.ZMax,
-			CoordinatesRotation: m.CoordinatesRotation,
-			DisplayRotation:     m.DisplayRotation,
-			TileZoom:            m.TileZoom,
-			TileMinX:            m.TileMinX,
-			TileMinY:            m.TileMinY,
-			TileMaxX:            m.TileMaxX,
-			TileMaxY:            m.TileMaxY,
-			TileSize:            m.TileSize,
-			Transform:           m.Transform,
-			SvgXMin:             m.SvgXMin,
-			SvgXMax:             m.SvgXMax,
-			SvgZMin:             m.SvgZMin,
-			SvgZMax:             m.SvgZMax,
-			MapAssetRev:         m.MapAssetRev,
-		}
-	}
-	return out
-}
+func (tarkovdevStore) metaByID() map[string]metaRecord { return metaByIDFromCatalog(devACatalog) }
 
-func (tarkovdevStore) mapAsset(id string) ([]byte, string, error) {
-	return tarkovdev.MapAsset(id)
-}
+func (tarkovdevStore) mapAsset(id string) ([]byte, string, error) { return devAMapAsset(id) }
 
-func (tarkovdevStore) mapOverlay(id string) ([]byte, error) {
-	return tarkovdev.MapOverlayAsset(id)
-}
+func (tarkovdevStore) mapOverlay(id string) ([]byte, error) { return devAMapOverlay(id) }
 
-func (tarkovdevStore) mapExists(id string) bool { return tarkovdev.MapExists(id) }
+func (tarkovdevStore) mapExists(id string) bool { return devAMapExists(id) }
 
-func (tarkovdevStore) sanitizeMapID(id string) string { return tarkovdev.SanitizeMapID(id) }
+func (tarkovdevStore) sanitizeMapID(id string) string { return devASanitizeMapID(id) }
 
 type tarkovdevbStore struct{}
 
-func (tarkovdevbStore) boundsJSON() []byte { return tarkovdevb.BoundsBlob }
+func (tarkovdevbStore) boundsJSON() []byte { return devBCatalog.BoundsBlob }
 
-func (tarkovdevbStore) catalogOrder() []string { return tarkovdevb.CatalogOrder }
+func (tarkovdevbStore) catalogOrder() []string { return devBCatalog.Order }
 
-func (tarkovdevbStore) metaByID() map[string]metaRecord {
-	out := make(map[string]metaRecord, len(tarkovdevb.MetaByID))
-	for id, m := range tarkovdevb.MetaByID {
-		out[id] = metaRecord{
-			Name:                m.Name,
-			DisplayName:         m.DisplayName,
-			Width:               m.Width,
-			Height:              m.Height,
-			XMin:                m.XMin,
-			XMax:                m.XMax,
-			ZMin:                m.ZMin,
-			ZMax:                m.ZMax,
-			CoordinatesRotation: m.CoordinatesRotation,
-			DisplayRotation:     m.DisplayRotation,
-			TileZoom:            m.TileZoom,
-			TileMinX:            m.TileMinX,
-			TileMinY:            m.TileMinY,
-			TileMaxX:            m.TileMaxX,
-			TileMaxY:            m.TileMaxY,
-			TileSize:            m.TileSize,
-			Transform:           m.Transform,
-			SvgXMin:             m.SvgXMin,
-			SvgXMax:             m.SvgXMax,
-			SvgZMin:             m.SvgZMin,
-			SvgZMax:             m.SvgZMax,
-		}
-	}
-	return out
-}
+func (tarkovdevbStore) metaByID() map[string]metaRecord { return metaByIDFromCatalog(devBCatalog) }
 
-func (tarkovdevbStore) mapAsset(id string) ([]byte, string, error) { return tarkovdevb.MapAsset(id) }
+func (tarkovdevbStore) mapAsset(id string) ([]byte, string, error) { return devBMapAsset(id) }
 
-func (tarkovdevbStore) mapOverlay(id string) ([]byte, error) { return tarkovdevb.MapOverlayAsset(id) }
+func (tarkovdevbStore) mapOverlay(id string) ([]byte, error) { return devBMapOverlay(id) }
 
-func (tarkovdevbStore) mapExists(id string) bool { return tarkovdevb.MapExists(id) }
+func (tarkovdevbStore) mapExists(id string) bool { return devBMapExists(id) }
 
-func (tarkovdevbStore) sanitizeMapID(id string) string { return tarkovdevb.SanitizeMapID(id) }
+func (tarkovdevbStore) sanitizeMapID(id string) string { return devBSanitizeMapID(id) }
 
 type eftarkovStore struct{}
 
-func (eftarkovStore) boundsJSON() []byte { return eftarkov.BoundsBlob }
+func (eftarkovStore) boundsJSON() []byte { return comCatalog.BoundsBlob }
 
-func (eftarkovStore) catalogOrder() []string { return eftarkov.CatalogOrder }
+func (eftarkovStore) catalogOrder() []string { return comCatalog.Order }
 
-func (eftarkovStore) metaByID() map[string]metaRecord {
-	out := make(map[string]metaRecord, len(eftarkov.MetaByID))
-	for id, m := range eftarkov.MetaByID {
-		out[id] = metaRecord{
-			Name:                m.Name,
-			DisplayName:         m.DisplayName,
-			Width:               m.Width,
-			Height:              m.Height,
-			CoordinatesRotation: m.CoordinatesRotation,
-			EftarkovCols:        m.EftarkovCols,
-			EftarkovRows:        m.EftarkovRows,
-			EftarkovTileSize:    m.EftarkovTileSize,
-			MapOffsetX:          m.MapOffsetX,
-			MapOffsetY:          m.MapOffsetY,
-			MapAssetRev:         m.MapAssetRev,
-		}
-	}
-	return out
+func (eftarkovStore) metaByID() map[string]metaRecord { return comMetaByIDFromCatalog(comCatalog) }
+
+func (eftarkovStore) mapAsset(id string) ([]byte, string, error) { return comMapAsset(id) }
+
+func (eftarkovStore) mapOverlay(id string) ([]byte, error) {
+	_ = id
+	return nil, fs.ErrNotExist
 }
 
-func (eftarkovStore) mapAsset(id string) ([]byte, string, error) { return eftarkov.MapAsset(id) }
+func (eftarkovStore) mapExists(id string) bool { return comMapExists(id) }
 
-func (eftarkovStore) mapOverlay(id string) ([]byte, error) { return nil, fs.ErrNotExist }
-
-func (eftarkovStore) mapExists(id string) bool { return eftarkov.MapExists(id) }
-
-func (eftarkovStore) sanitizeMapID(id string) string { return eftarkov.SanitizeMapID(id) }
+func (eftarkovStore) sanitizeMapID(id string) string { return comSanitizeMapID(id) }
 
 func storeFor(req mapRequest) catalogProvider {
 	switch NormalizeSource(req.source) {
@@ -238,13 +158,13 @@ func storeFor(req mapRequest) catalogProvider {
 func boundsFor(req mapRequest) []byte {
 	switch NormalizeSource(req.source) {
 	case "eftarkov":
-		return eftarkov.BoundsBlob
+		return comCatalog.BoundsBlob
 	case "tarkovdev":
 		if NormalizeMapVariant(req.variant) == "B" {
-			return tarkovdevb.BoundsBlob
+			return devBCatalog.BoundsBlob
 		}
-		return tarkovdev.BoundsBlob
+		return devACatalog.BoundsBlob
 	default:
-		return tarkovdev.BoundsBlob
+		return devACatalog.BoundsBlob
 	}
 }

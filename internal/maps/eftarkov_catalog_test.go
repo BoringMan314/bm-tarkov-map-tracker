@@ -1,14 +1,10 @@
 package maps
 
-import (
-	"testing"
-
-	eftarkov "bm-tarkov-map-tracker/internal/maps_eftarkov.com"
-)
+import "testing"
 
 func TestEftarkovCatalog(t *testing.T) {
-	for _, id := range eftarkov.CatalogOrder {
-		if !eftarkov.MapExists(id) {
+	for _, id := range comCatalog.Order {
+		if !comMapExists(id) {
 			t.Errorf("%s: missing embedded map.png", id)
 		}
 	}
@@ -19,7 +15,7 @@ func TestEftarkovCatalog(t *testing.T) {
 	if len(entries) == 0 {
 		t.Fatal("eftarkov catalog empty")
 	}
-	if len(entries) != len(eftarkov.CatalogOrder) {
-		t.Fatalf("catalog count=%d want %d", len(entries), len(eftarkov.CatalogOrder))
+	if len(entries) != len(comCatalog.Order) {
+		t.Fatalf("catalog count=%d want %d", len(entries), len(comCatalog.Order))
 	}
 }

@@ -1,11 +1,11 @@
 {
   "fixed": {
-    "file_version": "0.1.0.0",
-    "product_version": "0.1.0.0"
+    "file_version": "0.1.0",
+    "product_version": "0.1.0"
   },
   "info": {
     "0409": {
-      "ProductVersion": "0.1.0.0",
+      "ProductVersion": "0.1.0",
       "CompanyName": "[B.M] 圓周率 3.14",
       "FileDescription": "[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14",
       "LegalCopyright": "[B.M] 圓周率 3.14",

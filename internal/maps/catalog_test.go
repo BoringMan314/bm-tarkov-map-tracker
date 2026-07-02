@@ -1,21 +1,17 @@
 package maps
 
-import (
-	"testing"
-
-	tarkovdev "bm-tarkov-map-tracker/internal/maps_tarkov.dev"
-)
+import "testing"
 
 func TestCatalogMapAssets(t *testing.T) {
-	for _, id := range tarkovdev.CatalogOrder {
-		if !tarkovdev.MapExists(id) {
+	for _, id := range devACatalog.Order {
+		if !devAMapExists(id) {
 			t.Fatalf("%s: missing map asset", id)
 		}
 		w, h, ok := mapDimensionsFor("tarkovdev", "A", id)
 		if !ok || w <= 0 || h <= 0 {
 			t.Fatalf("%s: could not resolve dimensions", id)
 		}
-		meta, ok := tarkovdev.MetaByID[id]
+		meta, ok := devACatalog.MetaByID[id]
 		if !ok {
 			t.Fatalf("%s: missing meta.json", id)
 		}
@@ -24,7 +20,7 @@ func TestCatalogMapAssets(t *testing.T) {
 				t.Fatalf("%s: meta dimensions mismatch file=%v×%v meta=%v×%v", id, w, h, meta.Width, meta.Height)
 			}
 		}
-		if data, mime, err := tarkovdev.MapAsset(id); err != nil || len(data) == 0 {
+		if data, mime, err := devAMapAsset(id); err != nil || len(data) == 0 {
 			t.Fatalf("%s: map asset: %v", id, err)
 		} else if mime == "image/svg+xml" {
 			pw, ph, ok := parseViewBoxFromSVG("tarkovdev", id)

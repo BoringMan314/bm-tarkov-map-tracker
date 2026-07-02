@@ -485,9 +485,6 @@ function rotateMapPixels(x, y, mapW, mapH, degrees) {
 
 const RASTER_TILE_MAPS = new Set(["factory", "labs", "labyrinth"]);
 
-/** COM player position: derive from DEV A game→pixel pipeline, then scale to COM raster size. */
-const COM_PLAYER_VIA_DEV_A = new Set(["factory", "interchange"]);
-
 const DEFAULT_DEV_COORD_PROFILE = { pointMeta: "self", coordMode: "schematic", flipY: false, flipX: false };
 
 /** Per-map coordinate rules (source + variant). Avoids global hacks that break other maps. */
@@ -533,25 +530,28 @@ const MAP_COORD_PROFILES = {
 /** Screenshot player marker — per map + source (separate from exfil MAP_COORD_PROFILES).
  *  Keys: dev_a, dev_b, eftarkov. player.png top edge = forward. */
 const MAP_PLAYER_PROFILES = {
+  factory: {
+    eftarkov: { swapGameAxes: true, flipX: true, flipY: true },
+  },
   customs: {
     dev_a: { headingOffset: -90 },
     dev_b: { headingOffset: -90 },
     eftarkov: { headingOffset: 90 },
   },
   groundzero: {
-    dev_a: { flipHeadingY: true },
-    dev_b: { flipHeadingY: true },
-    eftarkov: { flipHeadingY: true },
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
   },
   interchange: {
-    dev_a: { flipHeadingY: true, flipHeadingX: true },
-    dev_b: { flipHeadingY: true, flipHeadingX: true },
-    eftarkov: { flipHeadingY: true, flipHeadingX: true },
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
   },
   labs: {
     dev_a: { flipHeadingY: true, flipHeadingX: true },
     dev_b: { flipHeadingY: true, flipHeadingX: true },
-    eftarkov: { headingOffset: 180 },
+    eftarkov: { swapGameAxes: true, headingOffset: 180 },
   },
 };
 
@@ -561,6 +561,7 @@ function playerMapProfile(mapId = state.currentId) {
   return {
     flipY: Boolean(row?.flipY),
     flipX: Boolean(row?.flipX),
+    swapGameAxes: Boolean(row?.swapGameAxes),
     flipHeadingY: Boolean(row?.flipHeadingY),
     flipHeadingX: Boolean(row?.flipHeadingX),
     headingOffset: Number(row?.headingOffset) || 0,
@@ -584,16 +585,22 @@ function playerMarkerHeading(mapId, heading) {
 }
 
 function gameToPlayerMapPixels(gameX, gameZ, meta, mapW, mapH, mapId = state.currentId) {
+  const profile = playerMapProfile(mapId);
+  let gx = gameX;
+  let gz = gameZ;
+  if (profile.swapGameAxes) {
+    gx = gameZ;
+    gz = gameX;
+  }
   let pos = null;
   if (isEftarkovPointSource()) {
-    pos = gameToComMapPixels(gameX, gameZ, meta, mapW, mapH, mapId);
+    pos = gameToComMapPixels(gx, gz, meta, mapW, mapH, mapId);
   } else {
-    pos = gameToMapPixels(gameX, gameZ, meta, mapW, mapH, mapId);
+    pos = gameToMapPixels(gx, gz, meta, mapW, mapH, mapId);
   }
   if (!pos) {
     return null;
   }
-  const profile = playerMapProfile(mapId);
   if (profile.flipX) {
     pos.x = mapW - pos.x;
   }
@@ -719,15 +726,6 @@ function usesRasterTileCoords(mapId, meta, coordVariant = null) {
   return usesRasterTileCoordsForProfile(mapId, meta, profile);
 }
 
-function usesRasterCropPixelsForProfile(mapId, meta, profile) {
-  if (!usesRasterTileCoordsForProfile(mapId, meta, profile)) {
-    return false;
-  }
-  const stitchW = Number(meta.stitch_width);
-  const stitchH = Number(meta.stitch_height);
-  return stitchW > 0 && stitchH > 0;
-}
-
 function usesRasterCropPixels(mapId, meta, coordVariant = null) {
   if (!usesRasterTileCoords(mapId, meta, coordVariant)) {
     return false;
@@ -742,26 +740,6 @@ function usesRasterCropPixels(mapId, meta, coordVariant = null) {
     return true;
   }
   return usesDevAScaledCoords(mapId);
-}
-
-function rasterPixelFromLayerForProfile(layer, bounds, meta, profile) {
-  const spanX = bounds.maxX - bounds.minX;
-  const spanY = bounds.maxY - bounds.minY;
-  if (!spanX || !spanY) {
-    return null;
-  }
-  const nx = (layer.x - bounds.minX) / spanX;
-  const ny = (layer.y - bounds.minY) / spanY;
-  const stitchW = Number(meta.stitch_width);
-  const stitchH = Number(meta.stitch_height);
-  const offX = Number(meta.map_offset_x) || 0;
-  const offY = Number(meta.map_offset_y) || 0;
-  if (usesRasterCropPixelsForProfile(null, meta, profile)) {
-    return { x: nx * stitchW - offX, y: ny * stitchH - offY };
-  }
-  const mapW = Number(meta.width) || stitchW;
-  const mapH = Number(meta.height) || stitchH;
-  return { x: nx * mapW, y: ny * mapH };
 }
 
 
@@ -857,66 +835,6 @@ function layerNormFromMapPixels(pos, bounds, meta, mapW, mapH, mapId = state.cur
     };
   }
   return { nx: pos.x / mapW, ny: pos.y / mapH };
-}
-
-/** Same as gameToMapPixels but uses an explicit coord profile (for COM player via DEV A). */
-function gameToMapPixelsForProfile(
-  gameX,
-  gameZ,
-  meta,
-  mapW,
-  mapH,
-  mapId,
-  profile,
-  markerRotationDeg = 0
-) {
-  if (!meta || !mapW || !mapH || !profile) {
-    return null;
-  }
-  const transform = meta.transform;
-  const rot = Number(meta.coordinates_rotation) || 180;
-  let pos = null;
-  if (Array.isArray(transform) && transform.length >= 4) {
-    if (usesRasterTileCoordsForProfile(mapId, meta, profile)) {
-      const zoom = tileZoomForMap(meta, mapW);
-      const layer = gameToLayerPoint(gameX, gameZ, transform, rot, zoom, mapId);
-      const bounds = rasterLayerBounds(meta, transform, rot, zoom);
-      if (!bounds) {
-        return null;
-      }
-      pos = rasterPixelFromLayerForProfile(layer, bounds, meta, profile);
-    } else {
-      const ext = mappingExtents(meta);
-      const sw = gameToCrs(ext.xmin, ext.zmin, transform, rot, mapId);
-      const ne = gameToCrs(ext.xmax, ext.zmax, transform, rot, mapId);
-      const point = gameToCrs(gameX, gameZ, transform, rot, mapId);
-      const spanX = ne.x - sw.x;
-      const spanY = sw.y - ne.y;
-      if (!spanX || !spanY) {
-        return null;
-      }
-      pos = {
-        x: ((point.x - sw.x) / spanX) * mapW,
-        y: ((point.y - ne.y) / spanY) * mapH,
-      };
-    }
-  } else {
-    const norm = normalizedGameCoords(gameX, gameZ, meta);
-    if (!norm) {
-      return null;
-    }
-    pos = {
-      x: norm.u * mapW,
-      y: norm.v * mapH,
-    };
-  }
-  if (pos && profile.flipX) {
-    pos.x = mapW - pos.x;
-  }
-  if (pos && profile.flipY) {
-    pos.y = mapH - pos.y;
-  }
-  return rotateMapPixels(pos.x, pos.y, mapW, mapH, markerRotationDeg);
 }
 
 function gameToMapPixels(gameX, gameZ, meta, mapW, mapH, mapId = state.currentId) {
@@ -1337,48 +1255,11 @@ function gameToEftarkovMapPixels(gameX, gameZ, layout, mapW, mapH) {
   return { x: px, y: py };
 }
 
-function gameToComPlayerViaDevA(gameX, gameZ, mapId, comW, comH) {
-  const devProfileRow = MAP_COORD_PROFILES[mapId]?.dev_a;
-  const devMeta = state.tarkovDevMeta?.[mapId];
-  if (!devProfileRow || !devMeta) {
-    return null;
-  }
-  const profile = { ...DEFAULT_DEV_COORD_PROFILE, ...devProfileRow };
-  const devW = Number(devMeta.width) || 0;
-  const devH = Number(devMeta.height) || 0;
-  if (!devW || !devH || !comW || !comH) {
-    return null;
-  }
-  const posDev = gameToMapPixelsForProfile(
-    gameX,
-    gameZ,
-    devMeta,
-    devW,
-    devH,
-    mapId,
-    profile,
-    exfilMarkerRotationDegrees(mapId)
-  );
-  if (!posDev) {
-    return null;
-  }
-  return {
-    x: (posDev.x / devW) * comW,
-    y: (posDev.y / devH) * comH,
-  };
-}
-
 function gameToComMapPixels(gameX, gameZ, meta, mapW, mapH, mapId = state.currentId) {
   const profile = mapCoordProfile(mapId);
   if (profile.coordMode === "raster_tile" || profile.coordMode === "raster_crop") {
     const pm = pointMetaForMap(mapId) || meta;
     return pm ? gameToMapPixels(gameX, gameZ, pm, mapW, mapH, mapId) : null;
-  }
-  if (COM_PLAYER_VIA_DEV_A.has(mapId)) {
-    const viaDev = gameToComPlayerViaDevA(gameX, gameZ, mapId, mapW, mapH);
-    if (viaDev) {
-      return viaDev;
-    }
   }
   const layout = eftarkovLayoutForMap(mapId);
   if (!layout) {
@@ -1388,10 +1269,6 @@ function gameToComMapPixels(gameX, gameZ, meta, mapW, mapH, mapId = state.curren
 }
 
 function comPlayerOverlayReady(mapId = state.currentId) {
-  if (COM_PLAYER_VIA_DEV_A.has(mapId)) {
-    const dims = eftarkovDisplayDimensions(mapId);
-    return Boolean(state.tarkovDevMeta?.[mapId] && dims?.iw && dims?.ih);
-  }
   const profile = mapCoordProfile(mapId);
   if (profile.coordMode === "raster_tile" || profile.coordMode === "raster_crop") {
     return Boolean(pointMetaForMap(mapId) || state.mapMeta?.[mapId]);

@@ -41,7 +41,7 @@ var localeToAPILang = map[string]string{
 func loadNames() {
 	namesOnce.Do(func() {
 		namesByID = map[string]map[string]string{}
-		data, err := fs.ReadFile(namesFS, "exfil/names.json")
+		data, err := fs.ReadFile(namesFS, "exfil_names.json")
 		if err != nil || len(data) == 0 {
 			return
 		}
@@ -52,7 +52,7 @@ func loadNames() {
 func loadEftarkovNames() {
 	eftNamesOnce.Do(func() {
 		eftNamesByID = map[string]map[string]string{}
-		data, err := fs.ReadFile(namesFS, "eftarkov/names.json")
+		data, err := fs.ReadFile(namesFS, "eftarkov_names.json")
 		if err != nil || len(data) == 0 {
 			return
 		}

@@ -148,11 +148,12 @@ wails3 task windows:run
 | `build_win10.bat` | Win10 x64 建置腳本（根目錄產出 exe） |
 | `icons/` | `icon.ico`（視窗／exe）、`icon.png`（系統匣） |
 | `maps/` | 地圖主資料：`{地圖名}_tarkov.dev_A.json`、`_tarkov.dev_B.json`、`_eftarkov.com.json`（含 meta + 撤離點 `points`）及對應 PNG/SVG；**手動改請改這裡** |
-| `points/` | 撤離點／玩家圖示 PNG（`exfil-*.png`、`player.png`）；**手動改圖請改這裡** |
+| `points/` | 撤離點／玩家圖示 PNG（`exfil-*.png`、`player.png`；`player.psd` 為設計稿）；**手動改圖請改這裡** |
 | `i18n/` | 各語系 JSON（`zh_TW.json`…）與 `catalog.json`（含 key 數量） |
 | `frontend/public/` | 前端頁面與靜態資源（`index.html`、`app.js`、`style.css`） |
 | `internal/appmeta/` | 版本、視窗標題、GitHub URL |
-| `internal/points/` | 撤離點 ID 名稱來源 JSON（`names.json`，供 i18n sync 注入 `exfil_*` key） |
+| `internal/maps/` | 地圖 HTTP API、三資料來 catalog（DEV A / DEV B / COM → 根目錄 `maps/`） |
+| `internal/points/` | 撤離點 ID 名稱（`exfil_names.json`、`eftarkov_names.json`，供 i18n 注入 `exfil_*` key） |
 | `internal/i18n/` | 多語系載入邏輯（`load.go`、`exfil.go`） |
 | `tools/` | Python 地圖／點位同步腳本 |
 | `screenshot/` | README 展示截圖 |
@@ -167,7 +168,7 @@ wails3 task windows:run
 - 根層 `languages`：各語系翻譯物件；鍵集須與內建 `zh_TW` 一致，否則程式會覆寫為內建預設。
 - 內建字串來源：根目錄 **`i18n/`**（每語系一個 `<code>.json`，檔案開頭含 `_meta` 定義顯示名稱）。
 - 新增語言：複製 `i18n/en_US.json` → `i18n/<新代碼>.json`，修改 `_meta`，再執行 `python tools/sync_root_i18n.py`（會自動併入 catalog、補缺 key、注入撤離點名稱）。
-- 繁中／簡中：`zh_TW.json`、`zh_CN.json` 的 UI 與 **`exfil_*` 撤離點名稱** 已自 `internal/points/*/names.json` 注入對應翻譯；其餘語系缺譯時 fallback 英文。
+- 繁中／簡中：`zh_TW.json`、`zh_CN.json` 的 UI 與 **`exfil_*` 撤離點名稱** 已自 `internal/points/exfil_names.json`、`eftarkov_names.json` 注入對應翻譯；其餘語系缺譯時 fallback 英文。
 - 視窗標題產品名僅使用 **`project_name`**（與 `[B.M] … V0.1 By. [B.M] 圓周率 3.14` 前後綴組合）。
 
 ### 語系檔格式範例
