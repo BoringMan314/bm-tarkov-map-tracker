@@ -43,7 +43,7 @@ func ensureOverlayConfigured(win application.Window, configured *bool) {
 	style, _, _ := procGetWindowLongPtrW.Call(hwnd, gwlExStyle)
 	procSetWindowLongPtrW.Call(hwnd, gwlExStyle, style|wsExNoActivate)
 
-	m := margins{0, 0, 0, 0}
+	m := margins{-1, -1, -1, -1}
 	_, _, _ = procDwmExtendFrameIntoClientArea.Call(
 		hwnd,
 		uintptr(unsafe.Pointer(&m)),
@@ -52,6 +52,22 @@ func ensureOverlayConfigured(win application.Window, configured *bool) {
 	if configured != nil {
 		*configured = true
 	}
+}
+
+func refreshOverlayTransparency(win application.Window) {
+	if win == nil {
+		return
+	}
+	hwnd := uintptr(win.NativeWindow())
+	if hwnd == 0 || !gamewin.IsWindowValid(hwnd) {
+		return
+	}
+	m := margins{-1, -1, -1, -1}
+	_, _, _ = procDwmExtendFrameIntoClientArea.Call(
+		hwnd,
+		uintptr(unsafe.Pointer(&m)),
+	)
+	win.SetBackgroundColour(application.NewRGBA(0, 0, 0, 0))
 }
 
 func polishOverlayWindow(win application.Window) {

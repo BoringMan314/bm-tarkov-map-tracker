@@ -4,12 +4,27 @@ package embeddedmap
 
 import (
 	"github.com/wailsapp/wails/v3/pkg/application"
+	"golang.org/x/sys/windows"
 
 	"bm-tarkov-map-tracker/internal/gamewin"
 )
 
+var (
+	user32           = windows.NewLazySystemDLL("user32.dll")
+	procSetWindowPos = user32.NewProc("SetWindowPos")
+)
+
+const (
+	swpNoActivate = 0x0010
+	swpNoZOrder   = 0x0004
+)
+
 func applyOverlayBounds(win application.Window, position string, sizeDIP, offsetXDIP, offsetYDIP int, anchor gamewin.WindowInfo, last *application.Rect) {
 	if win == nil || anchor.Rect.Width() <= 0 || anchor.Rect.Height() <= 0 {
+		return
+	}
+	hwnd := uintptr(win.NativeWindow())
+	if hwnd == 0 || !gamewin.IsWindowValid(hwnd) {
 		return
 	}
 
@@ -34,7 +49,16 @@ func applyOverlayBounds(win application.Window, position string, sizeDIP, offset
 		return
 	}
 
-	win.SetBounds(application.PhysicalToDipRect(physical))
+	_, _, _ = procSetWindowPos.Call(
+		hwnd,
+		0,
+		uintptr(physX),
+		uintptr(physY),
+		uintptr(sizePhys),
+		uintptr(sizePhys),
+		uintptr(swpNoZOrder|swpNoActivate),
+	)
+	refreshOverlayTransparency(win)
 	if last != nil {
 		*last = physical
 	}
