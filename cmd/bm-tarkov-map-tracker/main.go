@@ -4,7 +4,6 @@ import (
 	"context"
 	"io/fs"
 	"log"
-	"os"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 	"github.com/wailsapp/wails/v3/pkg/events"
@@ -45,10 +44,6 @@ func main() {
 	}
 	defer watch.Stop()
 
-	singleinstance.StartPipeServer(func() {
-		os.Exit(0)
-	})
-
 	app := application.New(application.Options{
 		Name:        appmeta.AppID,
 		Description: i18n.WindowTitle(),
@@ -58,6 +53,12 @@ func main() {
 		Assets: application.AssetOptions{
 			Handler: apphttp.Handler(frontendFS()),
 		},
+	})
+
+	singleinstance.StartPipeServer(func() {
+		application.InvokeSync(func() {
+			app.Quit()
+		})
 	})
 
 	title := i18n.WindowTitle()
@@ -108,6 +109,10 @@ func main() {
 
 	systray.OnClick(func() {
 		restore()
+	})
+
+	app.OnShutdown(func() {
+		systray.Destroy()
 	})
 
 	chrome.StartUpdateCheck()

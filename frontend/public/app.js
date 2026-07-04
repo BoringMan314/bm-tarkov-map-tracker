@@ -99,6 +99,7 @@ const state = {
   },
   exfilShowNames: true,
   showPlayer: true,
+  playerCenterLock: false,
   catalogError: false,
 };
 
@@ -134,11 +135,13 @@ const exfilFilterLabels = {
   coop: document.getElementById("exfil-filter-coop-label"),
   pmcNames: document.getElementById("exfil-filter-pmc-names-label"),
   player: document.getElementById("exfil-filter-player-label"),
+  playerLock: document.getElementById("exfil-filter-player-lock-label"),
 };
 const exfilGroupToggle = document.getElementById("exfil-filter-group");
 const exfilCoopRow = document.getElementById("exfil-filter-coop-row");
 const exfilPmcNamesToggle = document.getElementById("exfil-filter-pmc-names");
 const exfilPlayerToggle = document.getElementById("exfil-filter-player");
+const exfilPlayerLockToggle = document.getElementById("exfil-filter-player-lock");
 
 function t(key, fallback = "") {
   return state.locale.strings[key] || fallback;
@@ -548,7 +551,27 @@ const MAP_PLAYER_PROFILES = {
     dev_b: { headingOffset: -90 },
     eftarkov: { flipX: true, headingOffset: -90 },
   },
+  lighthouse: {
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
+  },
   shoreline: {
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
+  },
+  reserve: {
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
+  },
+  woods: {
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
+  },
+  streets: {
     dev_a: { headingOffset: -90 },
     dev_b: { headingOffset: -90 },
     eftarkov: { flipX: true, headingOffset: -90 },
@@ -1340,6 +1363,9 @@ function refreshExfilFilterLabels() {
   if (exfilFilterLabels.player) {
     exfilFilterLabels.player.textContent = t("marker_player_position", "玩家位置");
   }
+  if (exfilFilterLabels.playerLock) {
+    exfilFilterLabels.playerLock.textContent = t("marker_player_center_lock", "玩家中心鎖定");
+  }
 }
 
 async function loadMapMeta(force = false) {
@@ -1582,6 +1608,57 @@ function refreshPointOverlays(loadToken = state.mapLoadToken) {
   }
   renderExfilOverlay();
   renderPlayerOverlay();
+  applyPlayerCenterLock();
+}
+
+function playerMapPixelPosition(mapId = state.currentId) {
+  if (!state.showPlayer) {
+    return null;
+  }
+  const loc = state.playerLocation;
+  if (!loc?.valid) {
+    return null;
+  }
+  const meta = isDevPointSource()
+    ? pointMetaForMap(mapId) || state.mapMeta?.[mapId]
+    : state.mapMeta?.[mapId];
+  const { iw, ih } = mapDimensions();
+  const ready = isEftarkovPointSource()
+    ? Boolean(comPlayerOverlayReady(mapId) && iw && ih)
+    : Boolean(meta && iw && ih);
+  if (!ready) {
+    return null;
+  }
+  return gameToPlayerMapPixels(
+    Number(loc.x),
+    Number(loc.z),
+    meta || state.mapMeta?.[mapId],
+    iw,
+    ih,
+    mapId
+  );
+}
+
+function applyPlayerCenterLock() {
+  if (!state.playerCenterLock) {
+    return;
+  }
+  const pos = playerMapPixelPosition();
+  const { iw, ih } = mapDimensions();
+  if (!pos || !iw || !ih || state.scale <= 0) {
+    return;
+  }
+  const ox = pos.x - iw / 2;
+  const oy = pos.y - ih / 2;
+  const rot = mapDisplayRotation();
+  const rad = (rot * Math.PI) / 180;
+  const cos = Math.cos(rad);
+  const sin = Math.sin(rad);
+  const rx = ox * cos - oy * sin;
+  const ry = ox * sin + oy * cos;
+  state.tx = -rx * state.scale;
+  state.ty = -ry * state.scale;
+  applyTransform();
 }
 
 async function loadTarkovDevMeta() {
@@ -2256,6 +2333,7 @@ function fitMapToView() {
 
 function resetView() {
   fitMapToView();
+  applyPlayerCenterLock();
 }
 
 function onViewportResize() {
@@ -2274,6 +2352,7 @@ function onViewportResize() {
   state.tx = 0;
   state.ty = 0;
   applyTransform();
+  applyPlayerCenterLock();
 }
 
 const MIN_ZOOM_RATIO = 0.9;
@@ -2799,12 +2878,16 @@ viewport.addEventListener(
     const delta = e.deltaY > 0 ? 0.9 : 1.1;
     state.scale = clampScale(state.scale * delta);
     applyTransform();
+    applyPlayerCenterLock();
   },
   { passive: false }
 );
 
 viewport.addEventListener("mousedown", (e) => {
   if (e.button !== 0) {
+    return;
+  }
+  if (state.playerCenterLock) {
     return;
   }
   state.dragging = true;
@@ -2816,7 +2899,7 @@ viewport.addEventListener("mousedown", (e) => {
 });
 
 window.addEventListener("mousemove", (e) => {
-  if (!state.dragging) {
+  if (!state.dragging || state.playerCenterLock) {
     return;
   }
   state.tx = state.panStartX + (e.clientX - state.dragStartX);
@@ -2947,6 +3030,16 @@ if (exfilPlayerToggle) {
   exfilPlayerToggle.addEventListener("change", () => {
     state.showPlayer = exfilPlayerToggle.checked;
     refreshPointOverlays();
+  });
+}
+
+if (exfilPlayerLockToggle) {
+  exfilPlayerLockToggle.addEventListener("mousedown", (e) => {
+    e.stopPropagation();
+  });
+  exfilPlayerLockToggle.addEventListener("change", () => {
+    state.playerCenterLock = exfilPlayerLockToggle.checked;
+    applyPlayerCenterLock();
   });
 }
 

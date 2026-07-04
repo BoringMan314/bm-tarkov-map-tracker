@@ -254,6 +254,13 @@ body {
   image-rendering: auto;
 }
 
+.exfil-filter-icon-spacer {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
 #exfil-filter-player-row .exfil-filter-icon {
   transform: rotate(90deg);
 }

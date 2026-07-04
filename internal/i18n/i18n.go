@@ -133,6 +133,7 @@ func baseUIKeys() []string {
 		"marker_exfil_group",
 		"marker_exfil_show_names",
 		"marker_player_position",
+		"marker_player_center_lock",
 		"point_source_label",
 		"point_source_tarkovdev_a",
 		"point_source_tarkovdev_b",

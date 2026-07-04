@@ -27,6 +27,7 @@
     "marker_exfil_scav": "Scav",
     "marker_exfil_show_names": "EXFIL NAME TOGGLE",
     "marker_exfil_transit": "TRANSIT",
+    "marker_player_center_lock": "Center lock on player",
     "marker_player_position": "Player position",
     "marker_points_panel": "POINTS",
     "point_source_eftarkov": "eftarkov.com",

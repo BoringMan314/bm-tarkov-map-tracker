@@ -27,6 +27,7 @@
     "marker_exfil_scav": "Scav",
     "marker_exfil_show_names": "脱出点名表示",
     "marker_exfil_transit": "転送",
+    "marker_player_center_lock": "Center lock on player",
     "marker_player_position": "プレイヤー位置",
     "marker_points_panel": "POINTS",
     "point_source_eftarkov": "eftarkov.com",
