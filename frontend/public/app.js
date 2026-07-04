@@ -98,8 +98,10 @@ const state = {
     coop: true,
   },
   exfilShowNames: true,
+  showMarkerCoords: false,
   showPlayer: true,
   playerCenterLock: false,
+  catalogDefaultMap: DEFAULT_MAP,
   catalogError: false,
 };
 
@@ -134,12 +136,14 @@ const exfilFilterLabels = {
   transit: document.getElementById("exfil-filter-transit-label"),
   coop: document.getElementById("exfil-filter-coop-label"),
   pmcNames: document.getElementById("exfil-filter-pmc-names-label"),
+  showCoords: document.getElementById("exfil-filter-show-coords-label"),
   player: document.getElementById("exfil-filter-player-label"),
   playerLock: document.getElementById("exfil-filter-player-lock-label"),
 };
 const exfilGroupToggle = document.getElementById("exfil-filter-group");
 const exfilCoopRow = document.getElementById("exfil-filter-coop-row");
 const exfilPmcNamesToggle = document.getElementById("exfil-filter-pmc-names");
+const exfilShowCoordsToggle = document.getElementById("exfil-filter-show-coords");
 const exfilPlayerToggle = document.getElementById("exfil-filter-player");
 const exfilPlayerLockToggle = document.getElementById("exfil-filter-player-lock");
 
@@ -572,6 +576,11 @@ const MAP_PLAYER_PROFILES = {
     eftarkov: { flipX: true, headingOffset: -90 },
   },
   streets: {
+    dev_a: { headingOffset: -90 },
+    dev_b: { headingOffset: -90 },
+    eftarkov: { flipX: true, headingOffset: -90 },
+  },
+  labyrinth: {
     dev_a: { headingOffset: -90 },
     dev_b: { headingOffset: -90 },
     eftarkov: { flipX: true, headingOffset: -90 },
@@ -1099,6 +1108,35 @@ function clientToGameCoords(clientX, clientY) {
   return mapPixelsToGame(pos.x, pos.y, meta, iw, ih, mapId);
 }
 
+function formatGameCoordLabel(gameX, gameZ) {
+  return `${formatCoord(gameX)}, ${formatCoord(gameZ)}`;
+}
+
+function gameCoordsForExfilEntry(entry, pos, mapId, iw, ih, meta) {
+  if (isEftarkovPointSource()) {
+    const game = mapPixelsToGame(pos.x, pos.y, meta, iw, ih, mapId);
+    if (game) {
+      return { x: game.x, z: game.z };
+    }
+    return null;
+  }
+  const coords = entry?.coordinates;
+  if (!Array.isArray(coords) || coords.length < 2) {
+    return null;
+  }
+  return { x: Number(coords[0]), z: Number(coords[1]) };
+}
+
+function appendMarkerCoordsLabel(parent, gameX, gameZ, color = null) {
+  const labelEl = document.createElement("span");
+  labelEl.className = "marker-coords-label";
+  labelEl.textContent = formatGameCoordLabel(gameX, gameZ);
+  if (color) {
+    labelEl.style.color = color;
+  }
+  parent.appendChild(labelEl);
+}
+
 function formatCoord(value) {
   if (!Number.isFinite(value)) {
     return "—";
@@ -1358,7 +1396,10 @@ function refreshExfilFilterLabels() {
     }
   }
   if (exfilFilterLabels.pmcNames) {
-    exfilFilterLabels.pmcNames.textContent = t("marker_exfil_show_names", "撤離點名稱開關");
+    exfilFilterLabels.pmcNames.textContent = t("marker_exfil_show_names", "撤離點名稱");
+  }
+  if (exfilFilterLabels.showCoords) {
+    exfilFilterLabels.showCoords.textContent = t("marker_show_coords", "顯示座標");
   }
   if (exfilFilterLabels.player) {
     exfilFilterLabels.player.textContent = t("marker_player_position", "玩家位置");
@@ -1506,8 +1547,9 @@ async function cyclePointSource() {
   } catch {
     // bounds / exfil reload is non-fatal once the catalog is valid
   }
-  const nextId =
-    state.maps.some((m) => m.id === state.currentId) ? state.currentId : state.maps[0]?.id || DEFAULT_MAP;
+  const nextId = state.maps.some((m) => m.id === state.currentId)
+    ? state.currentId
+    : pickInitialMap();
   setMap(nextId);
 }
 
@@ -1716,11 +1758,18 @@ function markerCenterTransform(mapId = state.currentId, heading = null) {
   return transform;
 }
 
-function syncExfilNameVisibility() {
-  if (!exfilOverlay) {
-    return;
+function syncMarkerLabelVisibility() {
+  if (exfilOverlay) {
+    exfilOverlay.classList.toggle("hide-exfil-names", !state.exfilShowNames);
+    exfilOverlay.classList.toggle("hide-marker-coords", !state.showMarkerCoords);
   }
-  exfilOverlay.classList.toggle("hide-exfil-names", !state.exfilShowNames);
+  if (playerOverlay) {
+    playerOverlay.classList.toggle("hide-marker-coords", !state.showMarkerCoords);
+  }
+}
+
+function syncExfilNameVisibility() {
+  syncMarkerLabelVisibility();
 }
 
 function renderExfilOverlay() {
@@ -1802,6 +1851,10 @@ function renderExfilOverlay() {
         labelEl.style.color = color;
         marker.appendChild(labelEl);
       }
+      const gameCoords = gameCoordsForExfilEntry(entry, pos, mapId, iw, ih, meta);
+      if (gameCoords) {
+        appendMarkerCoordsLabel(marker, gameCoords.x, gameCoords.z, color);
+      }
       fragment.appendChild(marker);
     }
   }
@@ -1809,7 +1862,7 @@ function renderExfilOverlay() {
     return;
   }
   exfilOverlay.replaceChildren(fragment);
-  syncExfilNameVisibility();
+  syncMarkerLabelVisibility();
 }
 
 const PLAYER_MARKER_SIZE = 28;
@@ -1877,10 +1930,12 @@ function renderPlayerOverlay() {
   img.draggable = false;
   img.style.transform = playerMarkerRotation(mapId, heading);
   marker.appendChild(img);
+  appendMarkerCoordsLabel(marker, Number(effectiveLoc.x), Number(effectiveLoc.z));
   if (gen !== state.overlayGeneration) {
     return;
   }
   playerOverlay.appendChild(marker);
+  syncMarkerLabelVisibility();
 }
 
 const SATELLITE_OVERLAY_MAPS = new Set([]);
@@ -2747,15 +2802,21 @@ function renderDropdown() {
   }
 }
 
+function defaultMapId() {
+  const id = String(state.catalogDefaultMap || DEFAULT_MAP).toLowerCase();
+  return id || DEFAULT_MAP;
+}
+
 function pickInitialMap() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved && state.maps.some((m) => m.id === saved)) {
     return saved;
   }
-  if (state.maps.some((m) => m.id === DEFAULT_MAP)) {
-    return DEFAULT_MAP;
+  const def = defaultMapId();
+  if (state.maps.some((m) => m.id === def)) {
+    return def;
   }
-  return state.maps[0]?.id || DEFAULT_MAP;
+  return state.maps[0]?.id || def;
 }
 
 async function reloadMapCatalog() {
@@ -2770,6 +2831,10 @@ async function reloadMapCatalog() {
   const items = await res.json();
   if (!Array.isArray(items) || items.length === 0) {
     throw new Error("maps-empty");
+  }
+  const catalogDefault = (res.headers.get("X-Map-Default") || "").trim().toLowerCase();
+  if (catalogDefault) {
+    state.catalogDefaultMap = catalogDefault;
   }
   state.catalogError = false;
   state.maps = items.map((item) => ({
@@ -2791,9 +2856,7 @@ async function loadCatalog() {
   const nextId =
     saved && state.maps.some((m) => m.id === saved)
       ? saved
-      : state.maps.some((m) => m.id === state.currentId)
-        ? state.currentId
-        : pickInitialMap();
+      : pickInitialMap();
   setMap(nextId);
 }
 
@@ -3019,7 +3082,17 @@ if (exfilPmcNamesToggle) {
   });
   exfilPmcNamesToggle.addEventListener("change", () => {
     state.exfilShowNames = exfilPmcNamesToggle.checked;
-    syncExfilNameVisibility();
+    syncMarkerLabelVisibility();
+  });
+}
+
+if (exfilShowCoordsToggle) {
+  exfilShowCoordsToggle.addEventListener("mousedown", (e) => {
+    e.stopPropagation();
+  });
+  exfilShowCoordsToggle.addEventListener("change", () => {
+    state.showMarkerCoords = exfilShowCoordsToggle.checked;
+    syncMarkerLabelVisibility();
   });
 }
 

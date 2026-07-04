@@ -46,6 +46,7 @@ func serveCatalog(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("X-Map-Source", NormalizeSource(req.source))
+	w.Header().Set("X-Map-Default", DefaultMapID())
 	if NormalizeSource(req.source) == "tarkovdev" {
 		w.Header().Set("X-Map-Variant", NormalizeMapVariant(req.variant))
 	}

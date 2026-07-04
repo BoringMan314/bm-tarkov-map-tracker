@@ -147,7 +147,7 @@ func mergeMissingKeys(file File) File {
 			continue
 		}
 		for key, val := range builtinTable {
-			if strings.HasPrefix(key, "map_") || strings.HasPrefix(key, "exfil_") {
+			if strings.HasPrefix(key, "map_") || strings.HasPrefix(key, "exfil_") || strings.HasPrefix(key, "marker_") {
 				table[key] = val
 				continue
 			}

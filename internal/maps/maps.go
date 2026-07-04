@@ -115,6 +115,10 @@ func MapIDs() []string {
 	return MapIDsFor("tarkovdev", "A")
 }
 
+func DefaultMapID() string {
+	return catalogFallback()
+}
+
 func mapAssetURL(id, source, variant string) string {
 	if NormalizeSource(source) == "tarkovdev" {
 		v := strings.ToLower(NormalizeMapVariant(variant))

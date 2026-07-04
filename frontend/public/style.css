@@ -29,12 +29,7 @@ body {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  cursor: grab;
   background: #000;
-}
-
-.map-viewport.is-dragging {
-  cursor: grabbing;
 }
 
 .map-stage {
@@ -185,6 +180,31 @@ body {
 
 .map-exfil-overlay.hide-exfil-names .exfil-marker-label {
   display: none;
+}
+
+.marker-coords-label {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+  color: var(--accent);
+  text-shadow: 1px 1px 2px #000;
+  -webkit-text-stroke: 0.2px #000;
+}
+
+.map-exfil-overlay.hide-marker-coords .marker-coords-label,
+.map-player-overlay.hide-marker-coords .marker-coords-label {
+  display: none;
+}
+
+.player-marker .marker-coords-label {
+  color: #fff;
 }
 
 .exfil-marker img {

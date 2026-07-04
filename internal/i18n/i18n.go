@@ -132,6 +132,7 @@ func baseUIKeys() []string {
 		"marker_exfil_coop",
 		"marker_exfil_group",
 		"marker_exfil_show_names",
+		"marker_show_coords",
 		"marker_player_position",
 		"marker_player_center_lock",
 		"point_source_label",
