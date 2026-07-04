@@ -52,5 +52,11 @@
         "cols": 79,
         "rows": 56,
         "tile_size": 256
+    },
+    "lighthouse": {
+        "level": 3,
+        "cols": 28,
+        "rows": 48,
+        "tile_size": 256
     }
 }

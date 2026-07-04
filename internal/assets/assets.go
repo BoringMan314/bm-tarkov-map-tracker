@@ -166,6 +166,7 @@ var defaultCatalogOrder = []string{
 	"factory",
 	"groundzero",
 	"interchange",
+	"lighthouse",
 	"labs",
 	"customs",
 	"shoreline",
@@ -301,9 +302,9 @@ func MapOverlaySVG(suffix, mapID string) ([]byte, error) {
 	return data, nil
 }
 
-// MapAsset returns raster PNG for most sources; DEV B prefers SVG when present.
+// MapAsset returns raster PNG for most sources; DEV A/B prefer SVG when present.
 func MapAsset(suffix, mapID string) ([]byte, string, error) {
-	if suffix == SuffixDevB {
+	if suffix == SuffixDevA || suffix == SuffixDevB {
 		if data, err := fs.ReadFile(mapsFS, mapSVGPath(mapID, suffix)); err == nil && len(data) > 0 {
 			return data, "image/svg+xml", nil
 		}
@@ -312,7 +313,7 @@ func MapAsset(suffix, mapID string) ([]byte, string, error) {
 }
 
 func MapExists(suffix, mapID string) bool {
-	if suffix == SuffixDevB {
+	if suffix == SuffixDevA || suffix == SuffixDevB {
 		if data, err := fs.ReadFile(mapsFS, mapSVGPath(mapID, suffix)); err == nil && len(data) > 0 {
 			return true
 		}

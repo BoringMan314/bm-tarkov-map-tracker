@@ -1,0 +1,156 @@
+{
+    "name": "lighthouse",
+    "display_name": "Lighthouse",
+    "description": "",
+    "xmin": -545.0,
+    "xmax": 515.0,
+    "zmin": -998.0,
+    "zmax": 725.0,
+    "coordinates_rotation": 180,
+    "width": 1059.3752,
+    "height": 1722.9499,
+    "transform": [
+        0.2,
+        0.0,
+        0.2,
+        0.0
+    ],
+    "points": {
+        "pmc": [
+            {
+                "id": "39a8452ee1c2a3b68737781843c98e69ed1a59aa",
+                "name": "Road to Military Base V-Ex",
+                "coordinates": [
+                    -328.951263,
+                    -784.3581
+                ]
+            },
+            {
+                "id": "d76677800a142f800df6709b3b22946aeff43253",
+                "name": "Mountain Pass",
+                "coordinates": [
+                    -172.35,
+                    -6.39
+                ]
+            },
+            {
+                "id": "2cdd9d1604ebe77b3fa8bf1461530ca5b3551d8f",
+                "name": "Path to Shoreline",
+                "coordinates": [
+                    -364.4,
+                    -121.4
+                ]
+            },
+            {
+                "id": "000e0a2d35821648d27c6479d9358b0d227c6804",
+                "name": "Northern Checkpoint",
+                "coordinates": [
+                    113.22,
+                    -989.23
+                ]
+            },
+            {
+                "id": "7d6c864aa862997ba573be0fcf47b118e253d1e1",
+                "name": "Southern Road",
+                "coordinates": [
+                    -295.8,
+                    420.6
+                ]
+            },
+            {
+                "id": "86689a1e06268028c220b923fd7c676d7f9497dd",
+                "name": "Passage by the Lake",
+                "coordinates": [
+                    -360.0,
+                    -564.87
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "5c81e25f20e4784c348357ce1a0eb1100ad0a417",
+                "name": "Path to Shoreline",
+                "coordinates": [
+                    -364.4,
+                    -121.4
+                ]
+            },
+            {
+                "id": "6298212fb861936bdc49e266e741b5675324642f",
+                "name": "Southern Road Landslide",
+                "coordinates": [
+                    -281.3,
+                    420.8
+                ]
+            },
+            {
+                "id": "e10a9500d83d8ccb3cc0b466179237aab352f4b3",
+                "name": "Hideout Under the Landing Stage",
+                "coordinates": [
+                    133.068,
+                    286.842
+                ]
+            },
+            {
+                "id": "91f4f4548a1dbad8913ad4178a008efa7b68a28f",
+                "name": "Scav Hideout at the Grotto",
+                "coordinates": [
+                    180.66,
+                    -485.94
+                ]
+            },
+            {
+                "id": "cc4bb53226a9cc3578662bac1a6b9dc9a0fba3bc",
+                "name": "Industrial Zone Gates",
+                "coordinates": [
+                    -152.56,
+                    -794.1
+                ]
+            }
+        ],
+        "coop": [
+            {
+                "id": "3a8cfedc77147d2e438f8a2c55a01ae3d6defb25",
+                "name": "Armored Train",
+                "coordinates": [
+                    6.27001953,
+                    -873.78
+                ]
+            },
+            {
+                "id": "a04ce346b08f0cea9faebb65d86a7b7797e2f25d",
+                "name": "Side Tunnel (Co-Op)",
+                "coordinates": [
+                    -68.3,
+                    318.11
+                ]
+            }
+        ],
+        "transit": [
+            {
+                "id": "21",
+                "name": "Transit to Shoreline",
+                "coordinates": [
+                    -338.6,
+                    -168.9
+                ]
+            },
+            {
+                "id": "22",
+                "name": "Transit to Reserve",
+                "coordinates": [
+                    -294.6,
+                    -780.1
+                ]
+            },
+            {
+                "id": "23",
+                "name": "Transit to Woods",
+                "coordinates": [
+                    106.3,
+                    -958.1
+                ]
+            }
+        ]
+    }
+}

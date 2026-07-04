@@ -1,0 +1,252 @@
+{
+    "name": "lighthouse",
+    "display_name": "Lighthouse",
+    "description": "",
+    "width": 7168.0,
+    "height": 11776.0,
+    "coordinates_rotation": 0,
+    "eftarkov_level": 3,
+    "eftarkov_cols": 28,
+    "eftarkov_rows": 48,
+    "eftarkov_tile_size": 256,
+    "map_offset_x": 0,
+    "map_offset_y": 0,
+    "points": {
+        "pmc": [
+            {
+                "id": "eft-lighthouse-pmc-0",
+                "name": "隧道（合作撤离点）",
+                "coordinates": [
+                    1550.0,
+                    4825.0
+                ],
+                "display_coordinates": [
+                    5134.0,
+                    10969.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-pmc-1",
+                "name": "通往军事基地的载具撤离点",
+                "coordinates": [
+                    1500.0,
+                    -4340.0
+                ],
+                "display_coordinates": [
+                    5084.0,
+                    1804.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-pmc-2",
+                "name": "装甲列车",
+                "coordinates": [
+                    -98.0,
+                    -4950.0
+                ],
+                "display_coordinates": [
+                    3486.0,
+                    1194.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-pmc-3",
+                "name": "山间小路",
+                "coordinates": [
+                    1100.0,
+                    1280.0
+                ],
+                "display_coordinates": [
+                    4684.0,
+                    7424.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-pmc-4",
+                "name": "通往海岸线的路",
+                "coordinates": [
+                    2400.0,
+                    320.0
+                ],
+                "display_coordinates": [
+                    5984.0,
+                    6464.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-pmc-5",
+                "name": "北部检查点",
+                "coordinates": [
+                    -890.0,
+                    -5900.0
+                ],
+                "display_coordinates": [
+                    2694.0,
+                    244.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-pmc-6",
+                "name": "南部大陆",
+                "coordinates": [
+                    2150.0,
+                    4260.0
+                ],
+                "display_coordinates": [
+                    5734.0,
+                    10404.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-pmc-7",
+                "name": "湖边小径（需要纸条）",
+                "coordinates": [
+                    2520.0,
+                    -2840.0
+                ],
+                "display_coordinates": [
+                    6104.0,
+                    3304.0
+                ]
+            }
+        ],
+        "scav": [
+            {
+                "id": "eft-lighthouse-scav-0",
+                "name": "隧道（合作撤离点）",
+                "coordinates": [
+                    1550.0,
+                    4825.0
+                ],
+                "display_coordinates": [
+                    5134.0,
+                    10969.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-scav-1",
+                "name": "装甲列车",
+                "coordinates": [
+                    -98.0,
+                    -4950.0
+                ],
+                "display_coordinates": [
+                    3486.0,
+                    1194.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-scav-2",
+                "name": "通往海岸线的路",
+                "coordinates": [
+                    2400.0,
+                    320.0
+                ],
+                "display_coordinates": [
+                    5984.0,
+                    6464.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-scav-3",
+                "name": "浮动码头下方的藏身处",
+                "coordinates": [
+                    -2800.0,
+                    1500.0
+                ],
+                "display_coordinates": [
+                    784.0,
+                    7644.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-scav-4",
+                "name": "洞穴Scav藏身处",
+                "coordinates": [
+                    -1420.0,
+                    -2250.0
+                ],
+                "display_coordinates": [
+                    2164.0,
+                    3894.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-scav-5",
+                "name": "南部大陆塌方处",
+                "coordinates": [
+                    2150.0,
+                    4260.0
+                ],
+                "display_coordinates": [
+                    5734.0,
+                    10404.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-scav-6",
+                "name": "厂区大门",
+                "coordinates": [
+                    1020.0,
+                    -4395.0
+                ],
+                "display_coordinates": [
+                    4604.0,
+                    1749.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-scav-7",
+                "name": "湖边小径（需要纸条）",
+                "coordinates": [
+                    2520.0,
+                    -2840.0
+                ],
+                "display_coordinates": [
+                    6104.0,
+                    3304.0
+                ]
+            }
+        ],
+        "coop": [],
+        "transit": [
+            {
+                "id": "eft-lighthouse-transit-0",
+                "name": "前往森林",
+                "coordinates": [
+                    -830.0,
+                    -5520.0
+                ],
+                "display_coordinates": [
+                    2754.0,
+                    624.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-transit-1",
+                "name": "前往储备站",
+                "coordinates": [
+                    1350.0,
+                    -4340.0
+                ],
+                "display_coordinates": [
+                    4934.0,
+                    1804.0
+                ]
+            },
+            {
+                "id": "eft-lighthouse-transit-2",
+                "name": "前往海岸线",
+                "coordinates": [
+                    2400.0,
+                    240.0
+                ],
+                "display_coordinates": [
+                    5984.0,
+                    6384.0
+                ]
+            }
+        ]
+    },
+    "map_asset_rev": "d190ddbe88ba7b81"
+}

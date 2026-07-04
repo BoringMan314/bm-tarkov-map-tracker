@@ -103,7 +103,7 @@ func comMetaByIDFromCatalog(cat mapCatalog) map[string]metaRecord {
 }
 
 func devAMapAsset(mapID string) ([]byte, string, error) {
-	return assets.MapPNG(assets.SuffixDevA, mapID)
+	return assets.MapAsset(assets.SuffixDevA, mapID)
 }
 
 func devAMapOverlay(mapID string) ([]byte, error) {

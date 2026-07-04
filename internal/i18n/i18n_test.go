@@ -71,8 +71,8 @@ func TestKeyCounts(t *testing.T) {
 		t.Fatalf("expected 21 locales, got %d", len(counts))
 	}
 	for code, count := range counts {
-		if count != 348 {
-			t.Fatalf("%s: expected 348 keys, got %d", code, count)
+		if count != 349 {
+			t.Fatalf("%s: expected 349 keys, got %d", code, count)
 		}
 	}
 }

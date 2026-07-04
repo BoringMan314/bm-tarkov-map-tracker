@@ -45,7 +45,7 @@ Windows 桌面版《Escape from Tarkov》互動地圖工具，支援 **tarkov.de
   - **tarkov.dev（衛星圖）**：`maps/*_tarkov.dev_A.png`
   - **tarkov.dev（抽象圖）**：`maps/*_tarkov.dev_B.svg`（無 SVG 時用 `.png`）
   - **eftarkov.com**
-- 支援地圖：工廠、中心區、立交橋、實驗室、海關、海岸線、迷宮、儲備站、森林、塔科夫街區等（依 catalog 為準）。
+- 支援地圖：工廠、中心區、立交橋、燈塔、實驗室、海關、海岸線、迷宮、儲備站、森林、塔科夫街區等（依 catalog 為準）。
 - 撤離點圖層：PMC / SCAV / 合作 / 轉移，可個別開關與顯示名稱。
 - 地圖縮放、拖曳、重設視角；滑鼠 X / Y 遊戲座標顯示。
 - 內建語言：繁體中文、簡體中文、日本語、English；可於 `bm-tarkov-map-tracker.json` 擴充其他語系。
