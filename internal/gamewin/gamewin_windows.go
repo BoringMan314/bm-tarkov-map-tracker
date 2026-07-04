@@ -3,6 +3,7 @@
 package gamewin
 
 import (
+	"os"
 	"path/filepath"
 	"strings"
 	"syscall"
@@ -191,6 +192,9 @@ func refreshWindowInfo(info WindowInfo) (WindowInfo, bool) {
 	if !isWindowValid(info.Hwnd) {
 		return WindowInfo{}, false
 	}
+	if isOwnProcessWindow(info.Hwnd) || !isCandidateGameWindow(info.Hwnd) {
+		return WindowInfo{}, false
+	}
 	updated, ok := windowInfoFromHWND(info.Hwnd)
 	if !ok {
 		return WindowInfo{}, false
@@ -227,34 +231,31 @@ func isWindowValid(hwnd uintptr) bool {
 	return ok != 0
 }
 
-func isCandidateGameWindow(hwnd uintptr) bool {
+func isOwnProcessWindow(hwnd uintptr) bool {
 	if hwnd == 0 {
+		return false
+	}
+	var pid uint32
+	procGetWindowThreadProcessId.Call(hwnd, uintptr(unsafe.Pointer(&pid)))
+	return pid == uint32(os.Getpid())
+}
+
+func isCandidateGameWindow(hwnd uintptr) bool {
+	if hwnd == 0 || isOwnProcessWindow(hwnd) {
 		return false
 	}
 	iconic, _, _ := procIsIconic.Call(hwnd)
 	if iconic != 0 {
 		return false
 	}
-
 	path := processImagePath(hwnd)
-	base := strings.ToLower(filepath.Base(path))
-	if isEFTProcessPath(base, path) {
-		return true
-	}
-
-	title := windowTitle(hwnd)
-	if isEFTTitle(title) {
-		return isWindowUsable(hwnd)
-	}
-
-	class := windowClass(hwnd)
-	if class != "UnityWndClass" {
+	if path == "" {
 		return false
 	}
-	if isEFTProcessPath(base, path) || strings.Contains(strings.ToLower(base), "tarkov") {
-		return isWindowUsable(hwnd)
+	if !isEFTProcessPath(filepath.Base(path), path) {
+		return false
 	}
-	return isEFTTitle(title) && isWindowUsable(hwnd)
+	return isWindowUsable(hwnd)
 }
 
 func isWindowUsable(hwnd uintptr) bool {
@@ -361,17 +362,3 @@ func windowClientScreenRect(hwnd uintptr) (Rect, bool) {
 	return out, true
 }
 
-func isEFTTitle(title string) bool {
-	trimmed := strings.TrimSpace(title)
-	if trimmed == "" {
-		return false
-	}
-	lower := strings.ToLower(trimmed)
-	if strings.Contains(lower, "tarkov") {
-		return true
-	}
-	if strings.Contains(trimmed, "塔科夫") {
-		return true
-	}
-	return strings.Contains(lower, "escape") && strings.Contains(lower, "tarkov")
-}

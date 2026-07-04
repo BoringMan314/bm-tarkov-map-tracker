@@ -4,32 +4,16 @@ package embeddedmap
 
 import (
 	"github.com/wailsapp/wails/v3/pkg/application"
-	"golang.org/x/sys/windows"
 
 	"bm-tarkov-map-tracker/internal/gamewin"
 )
 
-var (
-	user32           = windows.NewLazySystemDLL("user32.dll")
-	procSetWindowPos = user32.NewProc("SetWindowPos")
-)
-
-const (
-	hwndTopmost   = ^uintptr(0)
-	swpNoActivate = 0x0010
-	swpShowWindow = 0x0040
-)
-
-func applyOverlayBounds(win application.Window, position string, sizeDIP, offsetXDIP, offsetYDIP int, game gamewin.WindowInfo, alreadyVisible bool) {
-	if win == nil || game.Rect.Width() <= 0 || game.Rect.Height() <= 0 {
-		return
-	}
-	hwnd := uintptr(win.NativeWindow())
-	if hwnd == 0 {
+func applyOverlayBounds(win application.Window, position string, sizeDIP, offsetXDIP, offsetYDIP int, anchor gamewin.WindowInfo, last *application.Rect) {
+	if win == nil || anchor.Rect.Width() <= 0 || anchor.Rect.Height() <= 0 {
 		return
 	}
 
-	dpi := gamewin.WindowDPI(game)
+	dpi := gamewin.WindowDPI(anchor)
 	sizePhys := scaleDIP(sizeDIP, dpi)
 	if sizePhys <= 0 {
 		return
@@ -37,23 +21,27 @@ func applyOverlayBounds(win application.Window, position string, sizeDIP, offset
 	offsetXPhys := scaleDIP(offsetXDIP, dpi)
 	offsetYPhys := scaleDIP(offsetYDIP, dpi)
 
-	physX, physY := cornerPhysical(position, sizePhys, offsetXPhys, offsetYPhys, game.Rect)
-	physX, physY = clampOverlayPosition(physX, physY, sizePhys, game.Rect)
+	physX, physY := cornerPhysical(position, sizePhys, offsetXPhys, offsetYPhys, anchor.Rect)
+	physX, physY = clampOverlayPosition(physX, physY, sizePhys, anchor.Rect)
 
-	flags := uintptr(swpNoActivate)
-	if !alreadyVisible {
-		flags |= swpShowWindow
+	physical := application.Rect{
+		X:      physX,
+		Y:      physY,
+		Width:  sizePhys,
+		Height: sizePhys,
+	}
+	if last != nil && boundsEqual(*last, physical) {
+		return
 	}
 
-	_, _, _ = procSetWindowPos.Call(
-		hwnd,
-		hwndTopmost,
-		uintptr(physX),
-		uintptr(physY),
-		uintptr(sizePhys),
-		uintptr(sizePhys),
-		flags,
-	)
+	win.SetBounds(application.PhysicalToDipRect(physical))
+	if last != nil {
+		*last = physical
+	}
+}
+
+func boundsEqual(a, b application.Rect) bool {
+	return a.X == b.X && a.Y == b.Y && a.Width == b.Width && a.Height == b.Height
 }
 
 func cornerPhysical(position string, sizePhys, offsetXPhys, offsetYPhys int, game gamewin.Rect) (int, int) {

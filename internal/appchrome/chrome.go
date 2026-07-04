@@ -87,23 +87,21 @@ func (c *Chrome) StartUpdateCheck() {
 	c.checkStarted = true
 	c.mu.Unlock()
 
-	go c.updateCheckWorker()
-}
-
-func (c *Chrome) updateCheckWorker() {
-	curMajor, curMinor, curPatch := githubupdate.ParseTitleVersion(appmeta.TitleSuffix)
-	info, _ := githubupdate.FetchLatestUpdate(
-		appmeta.GitHubRepo,
-		appmeta.UpdateUserAgent,
-		curMajor, curMinor, curPatch,
-		githubupdate.PickTarkovMapTrackerExe,
-	)
-	if info == nil {
-		return
-	}
-	application.InvokeSync(func() {
-		c.onUpdateAvailable(info)
-	})
+	go func() {
+		curMajor, curMinor, curPatch := githubupdate.ParseTitleVersion(appmeta.TitleSuffix)
+		info, _ := githubupdate.FetchLatestUpdate(
+			appmeta.GitHubRepo,
+			appmeta.UpdateUserAgent,
+			curMajor, curMinor, curPatch,
+			githubupdate.PickTarkovMapTrackerExe,
+		)
+		if info == nil {
+			return
+		}
+		application.InvokeSync(func() {
+			c.onUpdateAvailable(info)
+		})
+	}()
 }
 
 func (c *Chrome) onUpdateAvailable(info *githubupdate.ReleaseUpdate) {
@@ -146,6 +144,10 @@ func (c *Chrome) stopTitleAlternation() {
 	c.mu.Lock()
 	c.titleAlt = false
 	c.mu.Unlock()
+}
+
+func (c *Chrome) Shutdown() {
+	c.stopTitleAlternation()
 }
 
 func (c *Chrome) BuildTrayMenu() {

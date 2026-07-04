@@ -8,7 +8,7 @@ import (
 	"bm-tarkov-map-tracker/internal/gamewin"
 )
 
-func applyOverlayBounds(win application.Window, position string, sizeDIP, offsetXDIP, offsetYDIP int, anchor gamewin.WindowInfo, _ bool) {
+func applyOverlayBounds(win application.Window, position string, sizeDIP, offsetXDIP, offsetYDIP int, anchor gamewin.WindowInfo, last *application.Rect) {
 	if win == nil || anchor.Rect.Width() <= 0 {
 		return
 	}
@@ -17,6 +17,9 @@ func applyOverlayBounds(win application.Window, position string, sizeDIP, offset
 	win.SetMinSize(sizeDIP, sizeDIP)
 	win.SetMaxSize(sizeDIP, sizeDIP)
 	win.SetPosition(x, y)
+	if last != nil {
+		*last = application.Rect{X: x, Y: y, Width: sizeDIP, Height: sizeDIP}
+	}
 }
 
 func cornerPosition(position string, size, offsetX, offsetY int, game gamewin.Rect) (int, int) {

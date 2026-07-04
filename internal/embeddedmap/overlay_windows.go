@@ -7,14 +7,17 @@ import (
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 	"golang.org/x/sys/windows"
+
+	"bm-tarkov-map-tracker/internal/gamewin"
 )
 
 var (
+	user32Overlay                    = windows.NewLazySystemDLL("user32.dll")
 	dwmapi                           = windows.NewLazySystemDLL("dwmapi.dll")
 	procDwmExtendFrameIntoClientArea = dwmapi.NewProc("DwmExtendFrameIntoClientArea")
-	procGetWindowLongPtrW            = user32.NewProc("GetWindowLongPtrW")
-	procSetWindowLongPtrW            = user32.NewProc("SetWindowLongPtrW")
-	procShowWindow                   = user32.NewProc("ShowWindow")
+	procGetWindowLongPtrW            = user32Overlay.NewProc("GetWindowLongPtrW")
+	procSetWindowLongPtrW            = user32Overlay.NewProc("SetWindowLongPtrW")
+	procShowWindow                   = user32Overlay.NewProc("ShowWindow")
 )
 
 const (
@@ -28,14 +31,15 @@ type margins struct {
 	left, right, top, bottom int32
 }
 
-func configureOverlayWindow(win application.Window) {
-	if win == nil {
+func ensureOverlayConfigured(win application.Window, configured *bool) {
+	if win == nil || (configured != nil && *configured) {
 		return
 	}
 	hwnd := uintptr(win.NativeWindow())
-	if hwnd == 0 {
+	if hwnd == 0 || !gamewin.IsWindowValid(hwnd) {
 		return
 	}
+
 	style, _, _ := procGetWindowLongPtrW.Call(hwnd, gwlExStyle)
 	procSetWindowLongPtrW.Call(hwnd, gwlExStyle, style|wsExNoActivate)
 
@@ -45,10 +49,14 @@ func configureOverlayWindow(win application.Window) {
 		uintptr(unsafe.Pointer(&m)),
 	)
 	win.SetBackgroundColour(application.NewRGBA(0, 0, 0, 0))
+	if configured != nil {
+		*configured = true
+	}
 }
 
 func polishOverlayWindow(win application.Window) {
-	configureOverlayWindow(win)
+	var configured bool
+	ensureOverlayConfigured(win, &configured)
 }
 
 func showOverlayNoActivate(win application.Window) bool {
@@ -56,10 +64,9 @@ func showOverlayNoActivate(win application.Window) bool {
 		return false
 	}
 	hwnd := uintptr(win.NativeWindow())
-	if hwnd == 0 {
+	if hwnd == 0 || !gamewin.IsWindowValid(hwnd) {
 		return false
 	}
-	configureOverlayWindow(win)
 	procShowWindow.Call(hwnd, swShowNoActivate)
 	return true
 }
@@ -68,9 +75,9 @@ func hideOverlayWindow(win application.Window) {
 	if win == nil {
 		return
 	}
+	win.Hide()
 	hwnd := uintptr(win.NativeWindow())
-	if hwnd == 0 {
-		win.Hide()
+	if hwnd == 0 || !gamewin.IsWindowValid(hwnd) {
 		return
 	}
 	procShowWindow.Call(hwnd, swHide)

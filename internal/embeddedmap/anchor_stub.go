@@ -8,6 +8,6 @@ import (
 	"bm-tarkov-map-tracker/internal/gamewin"
 )
 
-func appWindowInfo(_ application.Window) (gamewin.WindowInfo, bool) {
-	return gamewin.WindowInfo{}, false
+func screenAnchorFromMain(_ application.Window) (gamewin.WindowInfo, bool) {
+	return fallbackWorkAreaAnchor()
 }

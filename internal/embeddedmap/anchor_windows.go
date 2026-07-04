@@ -9,7 +9,7 @@ import (
 	"bm-tarkov-map-tracker/internal/winutil"
 )
 
-func appWindowInfo(win application.Window) (gamewin.WindowInfo, bool) {
+func mainWindowHWND(win application.Window) uintptr {
 	var hwnd uintptr
 	if win != nil {
 		if nw := win.NativeWindow(); nw != nil {
@@ -19,8 +19,13 @@ func appWindowInfo(win application.Window) (gamewin.WindowInfo, bool) {
 	if hwnd == 0 {
 		hwnd = winutil.FindWindowByTitle(winutil.TrackedTitle())
 	}
-	if hwnd == 0 {
-		return gamewin.WindowInfo{}, false
+	return hwnd
+}
+
+func screenAnchorFromMain(win application.Window) (gamewin.WindowInfo, bool) {
+	rc, ok := gamewin.MonitorWorkAreaForWindow(mainWindowHWND(win))
+	if !ok {
+		return fallbackWorkAreaAnchor()
 	}
-	return gamewin.WindowInfoFromHWND(hwnd)
+	return gamewin.WindowInfo{Rect: rc}, true
 }

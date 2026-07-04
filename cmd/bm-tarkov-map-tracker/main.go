@@ -124,6 +124,8 @@ func main() {
 	})
 
 	app.OnShutdown(func() {
+		embeddedmap.Default.Shutdown()
+		chrome.Shutdown()
 		systray.Destroy()
 	})
 

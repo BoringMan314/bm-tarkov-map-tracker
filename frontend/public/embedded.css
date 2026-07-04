@@ -16,9 +16,11 @@ body {
 
 .embedded-root {
   --embedded-ui-scale: 1;
+  --app-font: "Segoe UI", system-ui, sans-serif;
   width: 100%;
   height: 100%;
   background: transparent;
+  font-family: var(--app-font);
 }
 
 .embedded-viewport {

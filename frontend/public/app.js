@@ -1487,8 +1487,8 @@ function embeddedDisplayTargetText(target) {
   switch (target) {
     case "game":
       return t("embedded_display_game", "遊戲");
-    case "app":
-      return t("embedded_display_app", "主程式");
+    case "screen":
+      return t("embedded_display_screen", "主螢幕");
     default:
       return t("embedded_display_none", "—");
   }

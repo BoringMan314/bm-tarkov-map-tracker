@@ -2,6 +2,7 @@ package embeddedmap
 
 import (
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
@@ -10,7 +11,10 @@ import (
 	"bm-tarkov-map-tracker/internal/gamewin"
 )
 
-const gameMissHideThreshold = 50
+const (
+	gameMissHideThreshold = 50
+	gameScanInterval      = 500 * time.Millisecond
+)
 
 type Manager struct {
 	mu             sync.RWMutex
@@ -25,9 +29,13 @@ type Manager struct {
 	lastGame       gamewin.WindowInfo
 	lastAnchor     gamewin.WindowInfo
 	gameMiss       int
-	overlayShown   bool
-	stop           chan struct{}
-	trackerRunning bool
+	overlayShown      bool
+	overlayConfigured bool
+	lastAppliedBounds application.Rect
+	lastGameScan      time.Time
+	stop              chan struct{}
+	trackerRunning    bool
+	pendingSync       atomic.Bool
 }
 
 var Default = &Manager{
@@ -154,10 +162,37 @@ func (m *Manager) setStatus(display DisplayStatus, game GameWindowStatus) {
 }
 
 func (m *Manager) locateGame() (gamewin.WindowInfo, bool) {
+	m.mu.RLock()
+	lastScan := m.lastGameScan
+	cached := m.lastGame
+	m.mu.RUnlock()
+
+	if cached.Hwnd != 0 && time.Since(lastScan) < gameScanInterval {
+		if refreshed, ok := gamewin.RefreshWindowInfo(cached); ok {
+			m.mu.Lock()
+			m.lastGame = refreshed
+			m.gameMiss = 0
+			m.mu.Unlock()
+			return refreshed, true
+		}
+	} else if time.Since(lastScan) < gameScanInterval {
+		m.mu.Lock()
+		defer m.mu.Unlock()
+		m.gameMiss++
+		if m.lastGame.Hwnd != 0 && m.gameMiss < gameMissHideThreshold {
+			if refreshed, ok := gamewin.RefreshWindowInfo(m.lastGame); ok {
+				m.lastGame = refreshed
+				return refreshed, true
+			}
+		}
+		return gamewin.WindowInfo{}, false
+	}
+
 	if info, ok := gamewin.FindEFTWindow(); ok {
 		m.mu.Lock()
 		m.lastGame = info
 		m.gameMiss = 0
+		m.lastGameScan = time.Now()
 		m.mu.Unlock()
 		return info, true
 	}
@@ -165,6 +200,7 @@ func (m *Manager) locateGame() (gamewin.WindowInfo, bool) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.gameMiss++
+	m.lastGameScan = time.Now()
 	if m.lastGame.Hwnd != 0 && m.gameMiss < gameMissHideThreshold {
 		if refreshed, ok := gamewin.RefreshWindowInfo(m.lastGame); ok {
 			m.lastGame = refreshed
@@ -189,21 +225,14 @@ func (m *Manager) resolveAnchor() (gamewin.WindowInfo, DisplayStatus, bool) {
 	m.mu.RLock()
 	mainWin := m.mainWin
 	m.mu.RUnlock()
-	if info, ok := appWindowInfo(mainWin); ok {
-		display := DisplayStatus{Target: "app", GameFound: false}
+	if info, ok := screenAnchorFromMain(mainWin); ok {
+		display := DisplayStatus{Target: "screen", GameFound: false}
 		m.rememberAnchor(info)
 		return info, display, true
 	}
 
-	m.mu.RLock()
-	cached := m.lastAnchor
-	m.mu.RUnlock()
-	if cached.Rect.Width() > 0 && cached.Rect.Height() > 0 {
-		return cached, DisplayStatus{Target: "app", GameFound: false}, true
-	}
-
 	if info, ok := fallbackWorkAreaAnchor(); ok {
-		return info, DisplayStatus{Target: "app", GameFound: false}, true
+		return info, DisplayStatus{Target: "screen", GameFound: false}, true
 	}
 
 	return gamewin.WindowInfo{}, DisplayStatus{Target: "none", GameFound: false}, false
@@ -226,6 +255,9 @@ func (m *Manager) syncWindow(active bool) {
 		m.mu.Lock()
 		m.lastGame = gamewin.WindowInfo{}
 		m.gameMiss = 0
+		m.lastGameScan = time.Time{}
+		m.lastAppliedBounds = application.Rect{}
+		m.overlayConfigured = false
 		m.mu.Unlock()
 		m.setStatus(DisplayStatus{Target: "none", GameFound: false}, GameWindowStatus{})
 		hideOverlayWindow(m.win)
@@ -236,6 +268,8 @@ func (m *Manager) syncWindow(active bool) {
 	m.mu.RLock()
 	s := m.settings
 	m.mu.RUnlock()
+
+	ensureOverlayConfigured(m.win, &m.overlayConfigured)
 
 	anchor, display, ok := m.resolveAnchor()
 	gameStatus := GameWindowStatus{Found: display.GameFound}
@@ -251,14 +285,13 @@ func (m *Manager) syncWindow(active bool) {
 	if !ok {
 		hideOverlayWindow(m.win)
 		m.overlayShown = false
+		m.lastAppliedBounds = application.Rect{}
 		return
 	}
-	m.win.SetFrameless(true)
-	m.win.SetIgnoreMouseEvents(true)
 	if showOverlayNoActivate(m.win) {
 		m.overlayShown = true
 	}
-	applyOverlayBounds(m.win, s.Position, s.Size, s.OffsetX, s.OffsetY, anchor, m.overlayShown)
+	applyOverlayBounds(m.win, s.Position, s.Size, s.OffsetX, s.OffsetY, anchor, &m.lastAppliedBounds)
 }
 
 func (m *Manager) syncWindowPosition() {
@@ -284,15 +317,19 @@ func (m *Manager) syncWindowPosition() {
 	if !ok {
 		hideOverlayWindow(m.win)
 		m.overlayShown = false
+		m.lastAppliedBounds = application.Rect{}
 		return
 	}
 
+	if !m.overlayConfigured {
+		ensureOverlayConfigured(m.win, &m.overlayConfigured)
+	}
 	if !m.overlayShown {
 		if showOverlayNoActivate(m.win) {
 			m.overlayShown = true
 		}
 	}
-	applyOverlayBounds(m.win, s.Position, s.Size, s.OffsetX, s.OffsetY, anchor, m.overlayShown)
+	applyOverlayBounds(m.win, s.Position, s.Size, s.OffsetX, s.OffsetY, anchor, &m.lastAppliedBounds)
 }
 
 func (m *Manager) restartTracker() {
@@ -319,7 +356,11 @@ func (m *Manager) startTracker() {
 			case <-stop:
 				return
 			case <-ticker.C:
-				application.InvokeSync(func() {
+				if !m.pendingSync.CompareAndSwap(false, true) {
+					continue
+				}
+				application.InvokeAsync(func() {
+					defer m.pendingSync.Store(false)
 					m.syncWindowPosition()
 				})
 			}
@@ -340,4 +381,15 @@ func (m *Manager) stopTracker() {
 	if ch != nil {
 		close(ch)
 	}
+}
+
+func (m *Manager) Shutdown() {
+	m.stopTracker()
+	application.InvokeSync(func() {
+		if m.win == nil {
+			return
+		}
+		hideOverlayWindow(m.win)
+		m.overlayShown = false
+	})
 }
