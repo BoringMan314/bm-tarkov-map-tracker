@@ -171,7 +171,6 @@ wails3 task windows:run
 | `internal/i18n/` | 多語系載入邏輯（`load.go`、`exfil.go`） |
 | `tools/` | Python 地圖／點位同步腳本 |
 | `screenshot/` | README 展示截圖（`screenshot_01.png`～`screenshot_03.png`） |
-| `Exe.txt` | 需求與規格備忘 |
 
 ---
 
