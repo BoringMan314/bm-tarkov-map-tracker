@@ -117,7 +117,6 @@ type mapBundle struct {
 	Points              mapPoints `json:"points"`
 }
 
-// MapMeta is the metadata embedded in each maps/*_{suffix}.json bundle (without points).
 type MapMeta struct {
 	Name                string    `json:"name"`
 	DisplayName         string    `json:"display_name"`
@@ -260,7 +259,6 @@ func bundleToMeta(b mapBundle) MapMeta {
 	}
 }
 
-// LoadMapCatalog loads catalog order and meta for maps that exist under suffix.
 func LoadMapCatalog(suffix string) (order []string, metaByID map[string]MapMeta, boundsJSON []byte) {
 	metaByID = map[string]MapMeta{}
 	for _, id := range catalogOrder {
@@ -302,7 +300,6 @@ func MapOverlaySVG(suffix, mapID string) ([]byte, error) {
 	return data, nil
 }
 
-// MapAsset returns raster PNG for most sources; DEV A/B prefer SVG when present.
 func MapAsset(suffix, mapID string) ([]byte, string, error) {
 	if suffix == SuffixDevA || suffix == SuffixDevB {
 		if data, err := fs.ReadFile(mapsFS, mapSVGPath(mapID, suffix)); err == nil && len(data) > 0 {
@@ -359,7 +356,6 @@ var exfilKindField = map[string]func(mapPoints) json.RawMessage{
 	"transit": func(p mapPoints) json.RawMessage { return p.Transit },
 }
 
-// AggregatedExfilJSON builds { "factory": [...], ... } from per-map bundles.
 func AggregatedExfilJSON(suffix, kind string) ([]byte, error) {
 	pick, ok := exfilKindField[kind]
 	if !ok {

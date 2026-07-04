@@ -12,6 +12,7 @@ import (
 	"bm-tarkov-map-tracker/internal/appmeta"
 	"bm-tarkov-map-tracker/internal/apphttp"
 	"bm-tarkov-map-tracker/internal/config"
+	"bm-tarkov-map-tracker/internal/embeddedmap"
 	"bm-tarkov-map-tracker/internal/i18n"
 	"bm-tarkov-map-tracker/internal/icons"
 	"bm-tarkov-map-tracker/internal/localehttp"
@@ -53,6 +54,9 @@ func main() {
 		Assets: application.AssetOptions{
 			Handler: apphttp.Handler(frontendFS()),
 		},
+		Windows: application.WindowsOptions{
+			DisableQuitOnLastWindowClosed: true,
+		},
 	})
 
 	singleinstance.StartPipeServer(func() {
@@ -82,9 +86,17 @@ func main() {
 		winOpts.Screen = primary
 	}
 	window := app.Window.NewWithOptions(winOpts)
+	embeddedmap.Default.Init(app)
+	embeddedmap.Default.SetMainWindow(window)
+	embeddedmap.PersistSettings = config.SaveEmbeddedMapSettings
+	embeddedmap.Default.SetSettingsQuiet(config.StoredEmbeddedMapSettings())
 
 	window.RegisterHook(events.Common.WindowMinimise, func(e *application.WindowEvent) {
 		window.Hide()
+	})
+
+	window.RegisterHook(events.Common.WindowClosing, func(e *application.WindowEvent) {
+		app.Quit()
 	})
 
 	systray := app.SystemTray.New()
@@ -95,7 +107,7 @@ func main() {
 	systray.SetTooltip(title)
 
 	restore := func() {
-		winutil.RestoreMainWindow(window, app, winutil.TrackedTitle())
+		winutil.RestoreMainWindow(window, app)
 	}
 
 	chrome := appchrome.New(app, window, systray, restore)

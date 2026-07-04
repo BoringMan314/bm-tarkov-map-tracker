@@ -11,7 +11,8 @@ import (
 )
 
 type Settings struct {
-	Languages string `json:"languages"`
+	Languages string                  `json:"languages"`
+	Embedded  EmbeddedMapFileSettings `json:"embedded,omitempty"`
 }
 
 type File struct {
@@ -72,6 +73,7 @@ func Defaults() File {
 	return File{
 		Settings: Settings{
 			Languages: "zh_TW",
+			Embedded:  defaultEmbeddedMapFileSettings(),
 		},
 		Languages: tables,
 	}
@@ -147,7 +149,7 @@ func mergeMissingKeys(file File) File {
 			continue
 		}
 		for key, val := range builtinTable {
-			if strings.HasPrefix(key, "map_") || strings.HasPrefix(key, "exfil_") || strings.HasPrefix(key, "marker_") {
+			if strings.HasPrefix(key, "map_") || strings.HasPrefix(key, "exfil_") || strings.HasPrefix(key, "marker_") || strings.HasPrefix(key, "embedded_") {
 				table[key] = val
 				continue
 			}

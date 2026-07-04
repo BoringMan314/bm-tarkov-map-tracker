@@ -118,7 +118,6 @@ func ExfilNamesForLocale(locale string) map[string]string {
 	return out
 }
 
-// AllExfilEnglishNames returns every known exfil/transit id with its English label.
 func AllExfilEnglishNames() map[string]string {
 	loadNames()
 	loadEftarkovNames()

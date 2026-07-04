@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Embedded Map</title>
+  <link rel="stylesheet" href="/embedded.css" />
+</head>
+<body>
+  <div id="embedded-root" class="embedded-root">
+    <div id="embedded-viewport" class="embedded-viewport">
+      <div id="embedded-stage" class="embedded-stage">
+        <div id="embedded-content" class="embedded-content">
+          <img id="embedded-map" class="embedded-map" alt="" draggable="false" />
+          <div id="embedded-markers" class="embedded-markers" aria-hidden="false"></div>
+          <div id="embedded-player" class="embedded-player hidden" aria-hidden="true">
+            <img src="/api/points/icons/player.png" alt="" draggable="false" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/embedded.js"></script>
+</body>
+</html>

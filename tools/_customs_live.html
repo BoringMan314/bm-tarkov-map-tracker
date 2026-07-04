@@ -1,0 +1,2492 @@
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+//                            _ooOoo_                             //
+//                           o8888888o                            //
+//                           88" . "88                            //
+//                           (| ^_^ |)                            //
+//                           O\  =  /O                            //
+//                        ____/`---'\____                         //
+//                      .'  \\|     |//  `.                       //
+//                     /  \\|||  :  |||//  \                      //
+//                    /  _||||| -:- |||||-  \                     //
+//                    |   | \\\  -  /// |   |                     //
+//                    | \_|  ''\---/''  |   |                     //
+//                    \  .-\__  `-`  ___/-. /                     //
+//                  ___`. .'  /--.--\  `. . ___                   //
+//                ."" '<  `.___\_<|>_/___.'  >'"".                //
+//              | | :  `- \`.;`\ _ /`;.`/ - ` : | |               //
+//              \  \ `-.   \_ __\ /__ _/   .-` /  /               //
+//        ========`-.____`-.___\_____/___.-`____.-'========       //
+//                             `=---='                            //
+//        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^      //
+//        佛祖保佑             永无BUG              永不修改      //
+////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+                          盗版抄袭死全家
+
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						 
+
+
+
+
+
+
+
+
+--> 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>海关地图-大傻制作</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            overflow: hidden;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        #mapCanvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: grab;
+            image-rendering: pixelated;
+        }
+        
+        #mapCanvas.dragging {
+            cursor: grabbing;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            min-width: 200px;
+        }
+        
+        .legend-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            min-width: 220px;
+            max-height: 1200px;
+            overflow-y: auto;
+        }
+        
+        .legend-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .legend-toggle-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .legend-toggle-btn:hover {
+            background: #555;
+        }
+        
+        .legend-category {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+        }
+        
+        .legend-category-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 8px;
+            padding: 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        
+        .legend-category-header:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .legend-checkbox {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .legend-category-name {
+            font-weight: bold;
+            flex: 1;
+        }
+        
+        .legend-count {
+            font-size: 10px;
+            color: #888;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        .legend-items {
+            margin-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .legend-items.expanded {
+            max-height: 100%;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            padding: 8px 6px;
+            font-size: 11px;
+            color: #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            user-select: none;
+        }
+        
+        .legend-item:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            margin-right: 6px;
+            border: 1px solid #666;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            background: rgba(0,0,0,0.9);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 2000;
+            max-width: 400px;
+        }
+        
+        .loading-bar {
+            width: 300px;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00b285, #00d4aa);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .performance-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .instructions {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .annotation-info {
+            position: fixed;
+            top: 280px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loadingScreen">
+        <div>🎮 地图加载中...</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+        <div id="loadingText">准备加载...</div>
+    </div>
+    
+    <div class="controls" id="controls" style="display: none;">
+        <div><strong>🗺️ 缩放级别:</strong> <span id="zoomLevel">1/4</span></div>
+        <div><strong>📍 位置:</strong> <span id="viewportPos">(0, 0)</span></div>
+        <div><strong>🖱️ 鼠标:</strong> <span id="mousePos">(0, 0)</span></div>
+        
+        <div class="performance-info">
+            <div><strong>⚡ FPS:</strong> <span id="fpsCounter">60</span></div>
+            <div><strong>🖼️ 已加载级别:</strong> <span id="loadedLevels">0/4</span></div>
+        </div>
+        
+        <div class="instructions">
+            <strong>🎮 操作说明:</strong><br>
+            • 拖拽: 按住鼠标左键移动地图<br>
+            • 滚轮: 地图缩放 (以鼠标为中心)<br>
+            • R: 重置到地图中心位置<br>
+            • +/-: 键盘缩放地图大小<br>
+            • 左键图例: 定位并显示名称<br>
+            • 右键图例: 切换范围显示<br>
+        </div>
+    </div>
+    
+    <div class="legend-panel" id="legendPanel" style="display: none;">
+        <div class="legend-header">
+            <strong>🏷️ 地图图例</strong>
+            <button class="legend-toggle-btn" onclick="map.toggleAllLegends()">全部隐藏</button>
+        </div>
+        
+        <div id="legendCategories">
+            <!-- 图例分类将在这里动态生成 -->
+        </div>
+    </div>
+    
+    <div class="annotation-info" id="annotationInfo" style="display: none;">
+        <div><strong>🏷️ 地图概括</strong></div>
+        <div style="margin-top: 8px; font-size: 10px; opacity: 0.9;">
+            <div>📍 PMC数量: <span style="color: #DEB887">10-12</span></div>
+            <div>💧 战局时间: <span style="color: #87CEEB">40分钟</span></div>
+        </div>
+    </div>
+    
+    <canvas id="mapCanvas"></canvas>
+
+    <script>
+        // 配置
+        const config = {
+            basePaths: ['images/', 'images1/', 'images2/', 'images3/'],
+            totalFolders: [5, 10, 20, 40],
+            imagesPerFolder: [3, 6, 12, 24],
+            tileSize: 256
+        };
+		
+        // 地图注释数据 - 每个缩放级别都有独立的坐标
+        const MAP_ANNOTATIONS = {
+            // 主要地标
+            landmarks: [
+                {
+                    name: '测试',
+                    color: '#DEB887',
+                    fontSize: 14,
+                    fontWeight: 'normal',
+                    positions: [
+                        { level: 0, mapX: 50000, mapY: -20 },
+                        { level: 1, mapX: 50000, mapY: 76 },
+                        { level: 2, mapX: 50000, mapY: 155 },
+                        { level: 3, mapX: 50000, mapY: 420 }
+                    ]
+                }
+            ]
+        };
+
+        // 图例数据
+        const LEGEND_DATA = {
+            PMCfuhuodian: {
+                name: 'PMC复活点',
+                color: '#ff6b6b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: 'PMC复活点#1', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -477, mapY: 73, rangeSize: 10 },
+                            { level: 1, mapX: -953, mapY: 147, rangeSize: 10 },
+                            { level: 2, mapX: -1905, mapY: 295, rangeSize: 10 },
+                            { level: 3, mapX: -3810, mapY: 590, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#2', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -368, mapY: 150, rangeSize: 10 },
+                            { level: 1, mapX: -735, mapY: 300, rangeSize: 10 },
+                            { level: 2, mapX: -1470, mapY: 600, rangeSize: 10 },
+                            { level: 3, mapX: -2940, mapY: 1200, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#3', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -300, mapY: 60, rangeSize: 10 },
+                            { level: 1, mapX: -600, mapY: 120, rangeSize: 10 },
+                            { level: 2, mapX: -1200, mapY: 240, rangeSize: 10 },
+                            { level: 3, mapX: -2400, mapY: 480, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#4', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -324, mapY: -19, rangeSize: 10 },
+                            { level: 1, mapX: -647, mapY: -38, rangeSize: 10 },
+                            { level: 2, mapX: -1294, mapY: -75, rangeSize: 10 },
+                            { level: 3, mapX: -2587, mapY: -150, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#5', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -432, mapY: -8, rangeSize: 10 },
+                            { level: 1, mapX: -863, mapY: -15, rangeSize: 10 },
+                            { level: 2, mapX: -1725, mapY: -30, rangeSize: 10 },
+                            { level: 3, mapX: -3450, mapY: -60, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#6', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -467, mapY: -52, rangeSize: 10 },
+                            { level: 1, mapX: -934, mapY: -104, rangeSize: 10 },
+                            { level: 2, mapX: -1868, mapY: -208, rangeSize: 10 },
+                            { level: 3, mapX: -3735, mapY: -415, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#7', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -420, mapY: -63, rangeSize: 10 },
+                            { level: 1, mapX: -840, mapY: -125, rangeSize: 10 },
+                            { level: 2, mapX: -1680, mapY: -250, rangeSize: 10 },
+                            { level: 3, mapX: -3360, mapY: -500, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#8', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -342, mapY: -100, rangeSize: 10 },
+                            { level: 1, mapX: -683, mapY: -200, rangeSize: 10 },
+                            { level: 2, mapX: -1365, mapY: -400, rangeSize: 10 },
+                            { level: 3, mapX: -2730, mapY: -800, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#9', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -294, mapY: -165, rangeSize: 10 },
+                            { level: 1, mapX: -588, mapY: -330, rangeSize: 10 },
+                            { level: 2, mapX: -1175, mapY: -660, rangeSize: 10 },
+                            { level: 3, mapX: -2350, mapY: -1320, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#10', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -194, mapY: -248, rangeSize: 10 },
+                            { level: 1, mapX: -388, mapY: -495, rangeSize: 10 },
+                            { level: 2, mapX: -775, mapY: -990, rangeSize: 10 },
+                            { level: 3, mapX: -1550, mapY: -1980, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#11', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 180, mapY: -290, rangeSize: 10 },
+                            { level: 1, mapX: 360, mapY: -580, rangeSize: 10 },
+                            { level: 2, mapX: 720, mapY: -1160, rangeSize: 10 },
+                            { level: 3, mapX: 1440, mapY: -2320, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#12', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 346, mapY: -247, rangeSize: 10 },
+                            { level: 1, mapX: 692, mapY: -493, rangeSize: 10 },
+                            { level: 2, mapX: 1385, mapY: -985, rangeSize: 10 },
+                            { level: 3, mapX: 2770, mapY: -1970, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#13', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 418, mapY: -193, rangeSize: 10 },
+                            { level: 1, mapX: 837, mapY: -385, rangeSize: 10 },
+                            { level: 2, mapX: 1675, mapY: -770, rangeSize: 10 },
+                            { level: 3, mapX: 3350, mapY: -1540, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#14', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 425, mapY: -85, rangeSize: 10 },
+                            { level: 1, mapX: 850, mapY: -169, rangeSize: 10 },
+                            { level: 2, mapX: 1700, mapY: -338, rangeSize: 10 },
+                            { level: 3, mapX: 3400, mapY: -675, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#15', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 386, mapY: -45, rangeSize: 10 },
+                            { level: 1, mapX: 773, mapY: -89, rangeSize: 10 },
+                            { level: 2, mapX: 1547, mapY: -178, rangeSize: 10 },
+                            { level: 3, mapX: 3095, mapY: -355, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#16', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 408, mapY: 72, rangeSize: 10 },
+                            { level: 1, mapX: 816, mapY: 145, rangeSize: 10 },
+                            { level: 2, mapX: 1632, mapY: 290, rangeSize: 10 },
+                            { level: 3, mapX: 3265, mapY: 580, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#17', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 368, mapY: 45, rangeSize: 10 },
+                            { level: 1, mapX: 737, mapY: 90, rangeSize: 10 },
+                            { level: 2, mapX: 1475, mapY: 180, rangeSize: 10 },
+                            { level: 3, mapX: 2950, mapY: 360, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#18', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 252, mapY: -70, rangeSize: 10 },
+                            { level: 1, mapX: 505, mapY: -140, rangeSize: 10 },
+                            { level: 2, mapX: 1010, mapY: -280, rangeSize: 10 },
+                            { level: 3, mapX: 2020, mapY: -560, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#19', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 182, mapY: -22, rangeSize: 10 },
+                            { level: 1, mapX: 365, mapY: -43, rangeSize: 10 },
+                            { level: 2, mapX: 730, mapY: -85, rangeSize: 10 },
+                            { level: 3, mapX: 1460, mapY: -170, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#20', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 107, mapY: -42, rangeSize: 10 },
+                            { level: 1, mapX: 215, mapY: -83, rangeSize: 10 },
+                            { level: 2, mapX: 430, mapY: -165, rangeSize: 10 },
+                            { level: 3, mapX: 860, mapY: -330, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#21', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 85, mapY: 48, rangeSize: 10 },
+                            { level: 1, mapX: 170, mapY: 97, rangeSize: 10 },
+                            { level: 2, mapX: 340, mapY: 195, rangeSize: 10 },
+                            { level: 3, mapX: 680, mapY: 390, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#22', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -145, mapY: -33, rangeSize: 10 },
+                            { level: 1, mapX: -290, mapY: -65, rangeSize: 10 },
+                            { level: 2, mapX: -580, mapY: -130, rangeSize: 10 },
+                            { level: 3, mapX: -1160, mapY: -260, rangeSize: 10 }
+                        ]
+                    }
+                ]
+            },
+            
+            BOSSshuaxinquyu: {
+                name: 'BOSS刷新区域',
+                color: '#51cf66',
+                visible: false,
+                expanded: false,  
+                items: [
+                    { 
+                        name: 'Reshala-刷新点#1', 
+                        color: '#ff0000',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 3, mapY: -275, rangeSize: 45 },
+                            { level: 1, mapX: 7, mapY: -550, rangeSize: 90 },
+                            { level: 2, mapX: 15, mapY: -1100, rangeSize: 180 },
+                            { level: 3, mapX: 30, mapY: -2200, rangeSize: 350 }
+                        ]
+                    },
+					{ 
+                        name: 'Reshala-刷新点#2', 
+                        color: '#ff0000',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 200, mapY: -163, rangeSize: 35 },
+                            { level: 1, mapX: 400, mapY: -325, rangeSize: 70},
+                            { level: 2, mapX: 800, mapY: -650, rangeSize: 140 },
+                            { level: 3, mapX: 1600, mapY: -1300, rangeSize: 300 }
+                        ]
+                    },
+					{ 
+                        name: 'Reshala-刷新点#3', 
+                        color: '#ff0000',
+                        rangeShape: 'ellipse',
+                        positions: [
+                            { level: 0, mapX: 3, mapY: -13, rangeSize: 35 },
+                            { level: 1, mapX: 7, mapY: -25, rangeSize: 70 },
+                            { level: 2, mapX: 15, mapY: -50, rangeSize: 140 },
+                            { level: 3, mapX: 30, mapY: -100, rangeSize: 280 }
+                        ]
+                    },
+					{ 
+                        name: 'Knight、Birdeye、Big Pipe', 
+                        color: '#000000',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 17, mapY: -38, rangeSize: 65 },
+                            { level: 1, mapX: 35, mapY: -75, rangeSize: 130 },
+                            { level: 2, mapX: 70, mapY: -150, rangeSize: 280 },
+                            { level: 3, mapX: 140, mapY: -300, rangeSize: 550 }
+                        ]
+                    },
+                    { 
+                        name: '邪教徒', 
+                        color: '#000000',
+                        rangeShape: 'ellipse1',
+                        positions: [
+                            { level: 0, mapX: -38, mapY: -25, rangeSize: 100 },
+                            { level: 1, mapX: -75, mapY: -50, rangeSize: 200 },
+                            { level: 2, mapX: -150, mapY: -100, rangeSize: 400 },
+                            { level: 3, mapX: -300, mapY: -200, rangeSize: 850 }
+                        ]
+                    }
+                ]
+            },
+            
+            yaoshikaisuodidian: {
+                name: '钥匙开锁地点',
+                color: '#ffd43b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: '符号钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -354, mapY: -367, rangeSize: 10 },
+                            { level: 1, mapX: -707, mapY: -733, rangeSize: 10 },
+                            { level: 2, mapX: -1414, mapY: -1466, rangeSize: 10 },
+                            { level: 3, mapX: -2827, mapY: -2932, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '海关办公室钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -340, mapY: 117, rangeSize: 10 },
+                            { level: 1, mapX: -680, mapY: 234, rangeSize: 10 },
+                            { level: 2, mapX: -1360, mapY: 468, rangeSize: 10 },
+                            { level: 3, mapX: -2720, mapY: 936, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '公司主管办公室钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -111, mapY: 266, rangeSize: 10 },
+                            { level: 1, mapX: -222, mapY: 532, rangeSize: 10 },
+                            { level: 2, mapX: -443, mapY: 1065, rangeSize: 10 },
+                            { level: 3, mapX: -886, mapY: 2130, rangeSize: 10 }
+                        ]
+                    },
+                                        { 
+                        name: '隔间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 197, mapY: -170, rangeSize: 10 },
+                            { level: 1, mapX: 395, mapY: -340, rangeSize: 10 },
+                            { level: 2, mapX: 791, mapY: -680, rangeSize: 10 },
+                            { level: 3, mapX: 1583, mapY: -1360, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '加油站储藏室钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 197, mapY: -167, rangeSize: 10 },
+                            { level: 1, mapX: 394, mapY: -333, rangeSize: 10 },
+                            { level: 2, mapX: 789, mapY: -665, rangeSize: 10 },
+                            { level: 3, mapX: 1579, mapY: -1330, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'USEC 仓库钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 403, mapY: 62, rangeSize: 10 },
+                            { level: 1, mapX: 806, mapY: 125, rangeSize: 10 },
+                            { level: 2, mapX: 1612, mapY: 250, rangeSize: 10 },
+                            { level: 3, mapX: 3225, mapY: 500, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '机械钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -89, mapY: -128, rangeSize: 10 },
+                            { level: 1, mapX: -178, mapY: -255, rangeSize: 10 },
+                            { level: 2, mapX: -355, mapY: -509, rangeSize: 10 },
+                            { level: 3, mapX: -710, mapY: -1018, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '未知钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 155, mapY: -87, rangeSize: 10 },
+                            { level: 1, mapX: 310, mapY: -174, rangeSize: 10 },
+                            { level: 2, mapX: 621, mapY: -347, rangeSize: 10 },
+                            { level: 3, mapX: 1243, mapY: -693, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '简易工棚钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -412, mapY: 69, rangeSize: 10 },
+                            { level: 1, mapX: -823, mapY: 138, rangeSize: 10 },
+                            { level: 2, mapX: -1645, mapY: 277, rangeSize: 10 },
+                            { level: 3, mapX: -3290, mapY: 555, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '海关工厂区简易工棚钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 3, mapY: -145, rangeSize: 10 },
+                            { level: 1, mapX: 6, mapY: -290, rangeSize: 10 },
+                            { level: 2, mapX: 13, mapY: -579, rangeSize: 10 },
+                            { level: 3, mapX: 27, mapY: -1157, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '拖车停车场工棚钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -361, mapY: 56, rangeSize: 10 },
+                            { level: 1, mapX: -721, mapY: 113, rangeSize: 10 },
+                            { level: 2, mapX: -1442, mapY: 227, rangeSize: 10 },
+                            { level: 3, mapX: -2883, mapY: 455, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '军事基地检查站钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 347, mapY: -138, rangeSize: 10 },
+                            { level: 1, mapX: 695, mapY: -275, rangeSize: 10 },
+                            { level: 2, mapX: 1390, mapY: -550, rangeSize: 10 },
+                            { level: 3, mapX: 2780, mapY: -1100, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '工厂出口钥匙-1', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 146, mapY: -126, rangeSize: 10 },
+                            { level: 1, mapX: 293, mapY: -252, rangeSize: 10 },
+                            { level: 2, mapX: 587, mapY: -503, rangeSize: 10 },
+                            { level: 3, mapX: 1175, mapY: -1005, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '工厂出口钥匙-2', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 145, mapY: -120, rangeSize: 10 },
+                            { level: 1, mapX: 291, mapY: -239, rangeSize: 10 },
+                            { level: 2, mapX: 583, mapY: -477, rangeSize: 10 },
+                            { level: 3, mapX: 1167, mapY: -953, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '工厂出口钥匙-3', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 133, mapY: 258, rangeSize: 10 },
+                            { level: 1, mapX: 266, mapY: 516, rangeSize: 10 },
+                            { level: 2, mapX: 532, mapY: 1033, rangeSize: 10 },
+                            { level: 3, mapX: 1065, mapY: 2067, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍门卫室钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -603, mapY: -117, rangeSize: 10 },
+                            { level: 1, mapX: -1205, mapY: -233, rangeSize: 10 },
+                            { level: 2, mapX: -2409, mapY: -465, rangeSize: 10 },
+                            { level: 3, mapX: -4817, mapY: -930, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍104房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -591, mapY: -110, rangeSize: 10 },
+                            { level: 1, mapX: -1181, mapY: -219, rangeSize: 10 },
+                            { level: 2, mapX: -2361, mapY: -437, rangeSize: 10 },
+                            { level: 3, mapX: -4722, mapY: -873, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍105房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -598, mapY: -110, rangeSize: 10 },
+                            { level: 1, mapX: -1195, mapY: -219, rangeSize: 10 },
+                            { level: 2, mapX: -2390, mapY: -438, rangeSize: 10 },
+                            { level: 3, mapX: -4780, mapY: -875, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍110房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -598, mapY: -184, rangeSize: 10 },
+                            { level: 1, mapX: -1195, mapY: -368, rangeSize: 10 },
+                            { level: 2, mapX: -2390, mapY: -735, rangeSize: 10 },
+                            { level: 3, mapX: -4780, mapY: -1470, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍114房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -591, mapY: -184, rangeSize: 10 },
+                            { level: 1, mapX: -1181, mapY: -368, rangeSize: 10 },
+                            { level: 2, mapX: -2361, mapY: -735, rangeSize: 10 },
+                            { level: 3, mapX: -4722, mapY: -1468, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍206房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -518, mapY: -119, rangeSize: 10 },
+                            { level: 1, mapX: -1035, mapY: -237, rangeSize: 10 },
+                            { level: 2, mapX: -2070, mapY: -473, rangeSize: 10 },
+                            { level: 3, mapX: -4140, mapY: -946, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍103房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -528, mapY: -268, rangeSize: 10 },
+                            { level: 1, mapX: -1055, mapY: -535, rangeSize: 10 },
+                            { level: 2, mapX: -2109, mapY: -1069, rangeSize: 10 },
+                            { level: 3, mapX: -4218, mapY: -2137, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍108房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -537, mapY: -350, rangeSize: 10 },
+                            { level: 1, mapX: -1074, mapY: -699, rangeSize: 10 },
+                            { level: 2, mapX: -2147, mapY: -1397, rangeSize: 10 },
+                            { level: 3, mapX: -4293, mapY: -2794, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍118房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -487, mapY: -344, rangeSize: 10 },
+                            { level: 1, mapX: -974, mapY: -688, rangeSize: 10 },
+                            { level: 2, mapX: -1948, mapY: -1376, rangeSize: 10 },
+                            { level: 3, mapX: -3895, mapY: -2752, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍203房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -441, mapY: -268, rangeSize: 10 },
+                            { level: 1, mapX: -882, mapY: -535, rangeSize: 10 },
+                            { level: 2, mapX: -1763, mapY: -1069, rangeSize: 10 },
+                            { level: 3, mapX: -3525, mapY: -2137, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍204房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -450, mapY: -268, rangeSize: 10 },
+                            { level: 1, mapX: -899, mapY: -536, rangeSize: 10 },
+                            { level: 2, mapX: -1798, mapY: -1072, rangeSize: 10 },
+                            { level: 3, mapX: -3596, mapY: -2143, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍214房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -450, mapY: -367, rangeSize: 10 },
+                            { level: 1, mapX: -899, mapY: -733, rangeSize: 10 },
+                            { level: 2, mapX: -1798, mapY: -1466, rangeSize: 10 },
+                            { level: 3, mapX: -3596, mapY: -2934, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍218房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -409, mapY: -344, rangeSize: 10 },
+                            { level: 1, mapX: -818, mapY: -688, rangeSize: 10 },
+                            { level: 2, mapX: -1636, mapY: -1376, rangeSize: 10 },
+                            { level: 3, mapX: -3272, mapY: -2752, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍220房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -400, mapY: -344, rangeSize: 10 },
+                            { level: 1, mapX: -800, mapY: -688, rangeSize: 10 },
+                            { level: 2, mapX: -1600, mapY: -1376, rangeSize: 10 },
+                            { level: 3, mapX: -3200, mapY: -2752, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍303房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -354, mapY: -267, rangeSize: 10 },
+                            { level: 1, mapX: -707, mapY: -534, rangeSize: 10 },
+                            { level: 2, mapX: -1414, mapY: -1068, rangeSize: 10 },
+                            { level: 3, mapX: -2827, mapY: -2137, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍306房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -363, mapY: -285, rangeSize: 10 },
+                            { level: 1, mapX: -725, mapY: -570, rangeSize: 10 },
+                            { level: 2, mapX: -1450, mapY: -1140, rangeSize: 10 },
+                            { level: 3, mapX: -2900, mapY: -2280, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍308房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -363, mapY: -350, rangeSize: 10 },
+                            { level: 1, mapX: -725, mapY: -699, rangeSize: 10 },
+                            { level: 2, mapX: -1450, mapY: -1398, rangeSize: 10 },
+                            { level: 3, mapX: -2900, mapY: -2795, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍315房间钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -354, mapY: -340, rangeSize: 10 },
+                            { level: 1, mapX: -707, mapY: -679, rangeSize: 10 },
+                            { level: 2, mapX: -1414, mapY: -1358, rangeSize: 10 },
+                            { level: 3, mapX: -2827, mapY: -2715, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '公寓管理员钥匙', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -441, mapY: -313, rangeSize: 10 },
+                            { level: 1, mapX: -882, mapY: -625, rangeSize: 10 },
+                            { level: 2, mapX: -1763, mapY: -1250, rangeSize: 10 },
+                            { level: 3, mapX: -3525, mapY: -2500, rangeSize: 10 }
+                        ]
+                    }
+                ]
+            },
+			
+            PMCchelidian: {
+                name: 'PMC撤离点',
+                color: '#ffd43b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: '地下室锅炉房（合作撤离）', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -72, mapY: 165, rangeSize: 10 },
+                            { level: 1, mapX: -143, mapY: 330, rangeSize: 10 },
+                            { level: 2, mapX: -285, mapY: 660, rangeSize: 10 },
+                            { level: 3, mapX: -570, mapY: 1320, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '十字路口', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -482, mapY: -58, rangeSize: 10 },
+                            { level: 1, mapX: -963, mapY: -115, rangeSize: 10 },
+                            { level: 2, mapX: -1925, mapY: -230, rangeSize: 10 },
+                            { level: 3, mapX: -3850, mapY: -460, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: 'RUAF路障', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -194, mapY: -1, rangeSize: 10 },
+                            { level: 1, mapX: -388, mapY: -2, rangeSize: 10 },
+                            { level: 2, mapX: -775, mapY: -3, rangeSize: 10 },
+                            { level: 3, mapX: -1550, mapY: -5, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: '宿舍载具撤离点', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -17, mapY: -330, rangeSize: 10 },
+                            { level: 1, mapX: -33, mapY: -660, rangeSize: 10 },
+                            { level: 2, mapX: -65, mapY: -1320, rangeSize: 10 },
+                            { level: 3, mapX: -130, mapY: -2640, rangeSize: 20 }
+                        ]
+                    },
+					{ 
+                        name: '老加油站', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 100, mapY: 30, rangeSize: 10 },
+                            { level: 1, mapX: 200, mapY: 61, rangeSize: 10 },
+                            { level: 2, mapX: 400, mapY: 122, rangeSize: 10 },
+                            { level: 3, mapX: 800, mapY: 245, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '拖车停车场', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -472, mapY: 75, rangeSize: 10 },
+                            { level: 1, mapX: -943, mapY: 150, rangeSize: 20 },
+                            { level: 2, mapX: -1885, mapY: 300, rangeSize: 40 },
+                            { level: 3, mapX: -3770, mapY: 600, rangeSize: 80 }
+                        ]
+                    },
+                    { 
+                        name: 'ZB-013', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 137, mapY: 258, rangeSize: 10 },
+                            { level: 1, mapX: 275, mapY: 516, rangeSize: 10 },
+                            { level: 2, mapX: 550, mapY: 1033, rangeSize: 10 },
+                            { level: 3, mapX: 1100, mapY: 2067, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: 'ZB-1011', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 397, mapY: -14, rangeSize: 10 },
+                            { level: 1, mapX: 795, mapY: -27, rangeSize: 10 },
+                            { level: 2, mapX: 1590, mapY: -54, rangeSize: 10 },
+                            { level: 3, mapX: 3180, mapY: -107, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '铁路通道', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 3, mapY: 93, rangeSize: 10 },
+                            { level: 1, mapX: 6, mapY: 187, rangeSize: 15 },
+                            { level: 2, mapX: 12, mapY: 375, rangeSize: 30 },
+                            { level: 3, mapX: 25, mapY: 750, rangeSize: 60 }
+                        ]
+                    },
+					{ 
+                        name: '走私者的船（需要纸条）', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -218, mapY: -242, rangeSize: 10 },
+                            { level: 1, mapX: -435, mapY: -483, rangeSize: 10 },
+                            { level: 2, mapX: -870, mapY: -965, rangeSize: 10 },
+                            { level: 3, mapX: -1740, mapY: -1930, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '走私者的掩体 (ZB-1012)（需要纸条）', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 241, mapY: -28, rangeSize: 10 },
+                            { level: 1, mapX: 482, mapY: -56, rangeSize: 10 },
+                            { level: 2, mapX: 965, mapY: -111, rangeSize: 10 },
+                            { level: 3, mapX: 1930, mapY: -221, rangeSize: 10 }
+                        ]
+                    }
+                ]
+            },
+			
+            Scavchelidian: {
+                name: 'Scav撤离点',
+                color: '#ffd43b',
+                visible: false ,
+                expanded: false,
+                items: [
+                    { 
+                        name: '地下室锅炉房（合作撤离）', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -72, mapY: 165, rangeSize: 10 },
+                            { level: 1, mapX: -143, mapY: 330, rangeSize: 10 },
+                            { level: 2, mapX: -285, mapY: 660, rangeSize: 10 },
+                            { level: 3, mapX: -570, mapY: 1320, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '十字路口', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -482, mapY: -58, rangeSize: 10 },
+                            { level: 1, mapX: -963, mapY: -115, rangeSize: 10 },
+                            { level: 2, mapX: -1925, mapY: -230, rangeSize: 10 },
+                            { level: 3, mapX: -3850, mapY: -460, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: 'RUAF路障', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -194, mapY: -1, rangeSize: 10 },
+                            { level: 1, mapX: -388, mapY: -2, rangeSize: 10 },
+                            { level: 2, mapX: -775, mapY: -3, rangeSize: 10 },
+                            { level: 3, mapX: -1550, mapY: -5, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: '行政区大门', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 430, mapY: -84, rangeSize: 10 },
+                            { level: 1, mapX: 860, mapY: -168, rangeSize: 10 },
+                            { level: 2, mapX: 1720, mapY: -335, rangeSize: 10 },
+                            { level: 3, mapX: 3440, mapY: -670, rangeSize: 25 }
+                        ]
+                    },
+					{ 
+                        name: '工厂远角', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 415, mapY: 17, rangeSize: 10 },
+                            { level: 1, mapX: 831, mapY: 35, rangeSize: 10 },
+                            { level: 2, mapX: 1662, mapY: 70, rangeSize: 10 },
+                            { level: 3, mapX: 3325, mapY: 140, rangeSize: 25 }
+                        ]
+                    },
+                    { 
+                        name: '工厂棚屋', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 2, mapY: -142, rangeSize: 10 },
+                            { level: 1, mapX: 4, mapY: -283, rangeSize: 10 },
+                            { level: 2, mapX: 9, mapY: -566, rangeSize: 10 },
+                            { level: 3, mapX: 18, mapY: -1132, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '军事基地检查站', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 408, mapY: -244, rangeSize: 10 },
+                            { level: 1, mapX: 817, mapY: -488, rangeSize: 10 },
+                            { level: 2, mapX: 1635, mapY: -975, rangeSize: 10 },
+                            { level: 3, mapX: 3270, mapY: -1950, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '老加油站', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 98, mapY: 48, rangeSize: 10 },
+                            { level: 1, mapX: 197, mapY: 96, rangeSize: 10 },
+                            { level: 2, mapX: 395, mapY: 192, rangeSize: 10 },
+                            { level: 3, mapX: 790, mapY: 385, rangeSize: 30 }
+                        ]
+                    },
+					{ 
+                        name: '老路大门', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -17, mapY: -330, rangeSize: 10 },
+                            { level: 1, mapX: -33, mapY: -660, rangeSize: 10 },
+                            { level: 2, mapX: -65, mapY: -1320, rangeSize: 10 },
+                            { level: 3, mapX: -130, mapY: -2640, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '石间小道', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 318, mapY: -312, rangeSize: 10 },
+                            { level: 1, mapX: 637, mapY: -623, rangeSize: 10 },
+                            { level: 2, mapX: 1275, mapY: -1245, rangeSize: 10 },
+                            { level: 3, mapX: 2550, mapY: -2490, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '通往军事基地的铁路', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 272, mapY: -335, rangeSize: 10 },
+                            { level: 1, mapX: 545, mapY: -670, rangeSize: 10 },
+                            { level: 2, mapX: 1090, mapY: -1340, rangeSize: 20 },
+                            { level: 3, mapX: 2180, mapY: -2680, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: '通往港口的铁路', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -312, mapY: -175, rangeSize: 10 },
+                            { level: 1, mapX: -623, mapY: -350, rangeSize: 10 },
+                            { level: 2, mapX: -1246, mapY: -700, rangeSize: 10 },
+                            { level: 3, mapX: -2492, mapY: -1400, rangeSize: 20 }
+                        ]
+                    },
+					{ 
+                        name: '通往塔科夫的铁路', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -334, mapY: 66, rangeSize: 10 },
+                            { level: 1, mapX: -668, mapY: 132, rangeSize: 10 },
+                            { level: 2, mapX: -1335, mapY: 265, rangeSize: 20 },
+                            { level: 3, mapX: -2670, mapY: 530, rangeSize: 40 }
+                        ]
+                    },
+                    { 
+                        name: 'Scav检查站', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 413, mapY: -110, rangeSize: 10 },
+                            { level: 1, mapX: 827, mapY: -220, rangeSize: 10 },
+                            { level: 2, mapX: 1655, mapY: -440, rangeSize: 10 },
+                            { level: 3, mapX: 3310, mapY: -880, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '狙击手路障', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -169, mapY: -250, rangeSize: 10 },
+                            { level: 1, mapX: -338, mapY: -500, rangeSize: 10 },
+                            { level: 2, mapX: -675, mapY: -1000, rangeSize: 10 },
+                            { level: 3, mapX: -1350, mapY: -2000, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: '拖车停车场工人棚屋', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -408, mapY: 80, rangeSize: 10 },
+                            { level: 1, mapX: -815, mapY: 161, rangeSize: 10 },
+                            { level: 2, mapX: -1630, mapY: 322, rangeSize: 10 },
+                            { level: 3, mapX: -3260, mapY: 645, rangeSize: 20 }
+                        ]
+                    },
+					{ 
+                        name: '4号仓库', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 141, mapY: -109, rangeSize: 10 },
+                            { level: 1, mapX: 282, mapY: -217, rangeSize: 10 },
+                            { level: 2, mapX: 565, mapY: -433, rangeSize: 20 },
+                            { level: 3, mapX: 1130, mapY: -865, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: '17号仓库', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -139, mapY: -69, rangeSize: 10 },
+                            { level: 1, mapX: -278, mapY: -138, rangeSize: 10 },
+                            { level: 2, mapX: -555, mapY: -275, rangeSize: 10 },
+                            { level: 3, mapX: -1110, mapY: -550, rangeSize: 20 }
+                        ]
+                    },
+					{ 
+                        name: '走私者的船（需要纸条）', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -218, mapY: -242, rangeSize: 10 },
+                            { level: 1, mapX: -435, mapY: -483, rangeSize: 10 },
+                            { level: 2, mapX: -870, mapY: -965, rangeSize: 10 },
+                            { level: 3, mapX: -1740, mapY: -1930, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '走私者的掩体 (ZB-1012)（需要纸条）', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 241, mapY: -28, rangeSize: 10 },
+                            { level: 1, mapX: 482, mapY: -56, rangeSize: 10 },
+                            { level: 2, mapX: 965, mapY: -111, rangeSize: 10 },
+                            { level: 3, mapX: 1930, mapY: -221, rangeSize: 10 }
+                        ]
+                    }
+                ]
+            },
+			
+            malasongzhuanyidian: {
+                name: '马拉松转移点',
+                color: '#ffd43b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: '前往立交桥', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -487, mapY: 50, rangeSize: 10 },
+                            { level: 1, mapX: -973, mapY: 101, rangeSize: 10 },
+                            { level: 2, mapX: -1945, mapY: 202, rangeSize: 10 },
+                            { level: 3, mapX: -3890, mapY: 405, rangeSize: 30 }
+                        ]
+                    },
+                    { 
+                        name: '前往海岸线', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -162, mapY: -263, rangeSize: 10 },
+                            { level: 1, mapX: -324, mapY: -525, rangeSize: 10 },
+                            { level: 2, mapX: -648, mapY: -1050, rangeSize: 10 },
+                            { level: 3, mapX: -1295, mapY: -2100, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '前往储备站', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 413, mapY: -244, rangeSize: 10 },
+                            { level: 1, mapX: 826, mapY: -488, rangeSize: 10 },
+                            { level: 2, mapX: 1652, mapY: -975, rangeSize: 10 },
+                            { level: 3, mapX: 3305, mapY: -1950, rangeSize: 30 }
+                        ]
+                    },
+					{ 
+                        name: '前往工厂', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 140, mapY: 41, rangeSize: 10 },
+                            { level: 1, mapX: 280, mapY: 83, rangeSize: 10 },
+                            { level: 2, mapX: 560, mapY: 167, rangeSize: 10 },
+                            { level: 3, mapX: 1120, mapY: 335, rangeSize: 30 }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Canvas地图类
+        class CanvasMap {
+            constructor() {
+                console.log('海关地图初始化中...请等待...');
+                
+                // DOM元素
+                this.canvas = document.getElementById('mapCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.loadingScreen = document.getElementById('loadingScreen');
+                this.controls = document.getElementById('controls');
+                this.legendPanel = document.getElementById('legendPanel');
+                this.annotationInfo = document.getElementById('annotationInfo');
+                
+                // 状态
+                this.currentZoom = 0;
+                this.viewX = 0;
+                this.viewY = 0;
+                this.isDragging = false;
+                this.lastMouseX = 0;
+                this.lastMouseY = 0;
+                
+                // 图片存储
+                this.images = {}; // [level][col][row] = Image
+                this.loadedLevels = new Set();
+                this.totalImages = 0;
+                this.loadedCount = 0;
+                
+                // 图例系统
+                this.legendData = JSON.parse(JSON.stringify(LEGEND_DATA)); // 深拷贝
+                this.hoveredLegend = null;
+                this.selectedLegend = null; // 当前选中的图例（显示范围）
+                this.rangeDisplays = new Set(); // 显示范围的图例集合
+                
+                // 性能监控
+                this.fps = 60;
+                this.frameCount = 0;
+                this.lastTime = performance.now();
+                
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    this.setupCanvas();
+                    await this.loadAllImages();
+                    this.hideLoading();
+                    this.bindEvents();
+                    this.setupLegendPanel();
+                    this.startRenderLoop();
+                    console.log('初始化完成！');
+                } catch (error) {
+                    console.error('初始化失败:', error);
+                    this.showError(error);
+                }
+            }
+            
+            setupCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.canvas.style.width = window.innerWidth + 'px';
+                this.canvas.style.height = window.innerHeight + 'px';
+                
+                this.ctx.imageSmoothingEnabled = false;
+                console.log('Canvas设置完成');
+            }
+            
+            async loadAllImages() {
+                // 计算总图片数
+                this.totalImages = config.basePaths.reduce((sum, _, i) => 
+                    sum + config.totalFolders[i] * config.imagesPerFolder[i], 0);
+                
+                console.log(`开始加载 ${this.totalImages} 张图片`);
+                
+                // 按大小排序，先加载小的
+                const levels = config.basePaths.map((_, i) => ({
+                    index: i,
+                    size: config.totalFolders[i] * config.imagesPerFolder[i]
+                })).sort((a, b) => a.size - b.size);
+                
+                // 逐级加载
+                for (const level of levels) {
+                    await this.loadLevel(level.index);
+                    this.loadedLevels.add(level.index);
+                    
+                    // 第一个级别加载完就显示   默认级别
+                    if (this.loadedLevels.size === 1) {
+                        this.currentZoom = level.index;
+                        this.hideLoading();
+                        this.bindEvents();
+                        this.setupLegendPanel();
+                        this.startRenderLoop();
+                    }
+                }
+            }
+            
+            async loadLevel(levelIndex) {
+                return new Promise((resolve, reject) => {
+                    console.log(`加载级别 ${levelIndex + 1}...`);
+                    
+                    const cols = config.totalFolders[levelIndex];
+                    const rows = config.imagesPerFolder[levelIndex];
+                    let loaded = 0;
+                    const total = cols * rows;
+                    
+                    // 初始化存储
+                    if (!this.images[levelIndex]) {
+                        this.images[levelIndex] = {};
+                    }
+                    
+                    const timeout = setTimeout(() => {
+                        reject(new Error(`级别 ${levelIndex} 加载超时`));
+                    }, 30000);
+                    
+                    for (let col = 0; col < cols; col++) {
+                        if (!this.images[levelIndex][col]) {
+                            this.images[levelIndex][col] = {};
+                        }
+                        
+                        for (let row = 0; row < rows; row++) {
+                            const img = new Image();
+                            const path = `${config.basePaths[levelIndex]}${col}/${row}.webp`;
+                            
+                            img.onload = () => {
+                                this.images[levelIndex][col][row] = img;
+                                loaded++;
+                                this.loadedCount++;
+                                this.updateProgress();
+                                
+                                if (loaded === total) {
+                                    clearTimeout(timeout);
+                                    console.log(`级别 ${levelIndex + 1} 加载完成`);
+                                    resolve();
+                                }
+                            };
+                            
+                            img.onerror = () => {
+                                console.warn(`图片加载失败: ${path}`);
+                                // 创建占位符
+                                const placeholder = this.createPlaceholder();
+                                this.images[levelIndex][col][row] = placeholder;
+                                loaded++;
+                                this.loadedCount++;
+                                this.updateProgress();
+                                
+                                if (loaded === total) {
+                                    clearTimeout(timeout);
+                                    resolve();
+                                }
+                            };
+                            
+                            img.src = path;
+                        }
+                    }
+                });
+            }
+            
+            createPlaceholder() {
+                const canvas = document.createElement('canvas');
+                canvas.width = config.tileSize;
+                canvas.height = config.tileSize;
+                const ctx = canvas.getContext('2d');
+                
+                ctx.fillStyle = '#333';
+                ctx.fillRect(0, 0, config.tileSize, config.tileSize);
+                
+                const img = new Image();
+                img.src = canvas.toDataURL();
+                return img;
+            }
+            
+            updateProgress() {
+                const progress = (this.loadedCount / this.totalImages) * 100;
+                document.getElementById('loadingProgress').style.width = `${progress}%`;
+                document.getElementById('loadingText').textContent = 
+                    `已加载: ${this.loadedCount}/${this.totalImages} (${Math.round(progress)}%)`;
+                document.getElementById('loadedLevels').textContent = `${this.loadedLevels.size}/4`;
+            }
+            
+            hideLoading() {
+                this.loadingScreen.style.display = 'none';
+                this.controls.style.display = 'block';
+                this.legendPanel.style.display = 'block';
+                this.annotationInfo.style.display = 'block';
+            }
+            
+            showError(error) {
+                const errorDiv = document.createElement('div');
+                errorDiv.style.cssText = 'color: #ff6b6b; background: rgba(255,107,107,0.1); padding: 10px; border-radius: 4px; margin-top: 10px;';
+                errorDiv.innerHTML = `<strong>加载错误:</strong><br>${error.message}`;
+                this.loadingScreen.appendChild(errorDiv);
+            }
+            
+            startRenderLoop() {
+                const render = (time) => {
+                    this.render();
+                    
+                    // 计算FPS
+                    this.frameCount++;
+                    if (time - this.lastTime >= 1000) {
+                        this.fps = Math.round(this.frameCount * 1000 / (time - this.lastTime));
+                        this.frameCount = 0;
+                        this.lastTime = time;
+                        document.getElementById('fpsCounter').textContent = this.fps;
+                    }
+                    
+                    requestAnimationFrame(render);
+                };
+                requestAnimationFrame(render);
+            }
+            
+            render() {
+                const ctx = this.ctx;
+                
+                // 清空画布
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // 检查级别是否加载
+                if (!this.loadedLevels.has(this.currentZoom)) {
+                    ctx.fillStyle = 'white';
+                    ctx.font = '20px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`级别 ${this.currentZoom + 1} 加载中...`, 
+                        this.canvas.width / 2, this.canvas.height / 2);
+                    return;
+                }
+                
+                const images = this.images[this.currentZoom];
+                if (!images) return;
+                
+                const cols = config.totalFolders[this.currentZoom];
+                const rows = config.imagesPerFolder[this.currentZoom];
+                const tileSize = config.tileSize;
+                
+                // 计算渲染起点
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                const startX = centerX + this.viewX - (cols * tileSize) / 2;
+                const startY = centerY + this.viewY - (rows * tileSize) / 2;
+                
+                // 只渲染可见瓦片
+                const visibleCols = Math.ceil(this.canvas.width / tileSize) + 2;
+                const visibleRows = Math.ceil(this.canvas.height / tileSize) + 2;
+                const startCol = Math.max(0, Math.floor(-startX / tileSize));
+                const startRow = Math.max(0, Math.floor(-startY / tileSize));
+                const endCol = Math.min(cols - 1, startCol + visibleCols);
+                const endRow = Math.min(rows - 1, startRow + visibleRows);
+                
+                 // 渲染瓦片
+                for (let col = startCol; col <= endCol; col++) {
+                    if (!images[col]) continue;
+                    for (let row = startRow; row <= endRow; row++) {
+                        const img = images[col][row];
+                        if (!img) continue;
+                        
+                        const x = Math.floor(startX + col * tileSize);
+                        const y = Math.floor(startY + row * tileSize);
+                        
+                        // 绘制图片
+                        ctx.drawImage(img, x, y, tileSize, tileSize);
+                    }
+                }
+                
+                // 渲染地图注释
+                this.renderMapAnnotations();
+                
+                // 渲染图例标记
+                this.renderLegends();
+            }
+            
+            // 渲染地图注释
+            renderMapAnnotations() {
+                const ctx = this.ctx;
+                
+                // 遍历所有注释分类
+                Object.values(MAP_ANNOTATIONS).forEach(category => {
+                    category.forEach(annotation => {
+                        // 获取当前缩放级别的位置
+                        const pos = this.getAnnotationPosition(annotation, this.currentZoom);
+                        const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                        
+                        // 检查是否在屏幕范围内
+                        if (screenPos.x < -100 || screenPos.x > this.canvas.width + 100 ||
+                            screenPos.y < -50 || screenPos.y > this.canvas.height + 50) {
+                            return;
+                        }
+                        
+                        // 绘制注释文字
+                        ctx.save();
+                        
+                        // 设置字体样式
+                        const fontSize = annotation.fontSize || 12;
+                        const fontWeight = annotation.fontWeight || 'normal';
+                        ctx.font = `${fontWeight} ${fontSize}px Arial, "Microsoft YaHei", sans-serif`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        
+                        // 绘制文字阴影（增强可读性）
+                        ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+                        ctx.lineWidth = 3;
+                        ctx.strokeText(annotation.name, screenPos.x, screenPos.y);
+                        
+                        // 绘制文字
+                        ctx.fillStyle = annotation.color;
+                        ctx.fillText(annotation.name, screenPos.x, screenPos.y);
+                        
+                        // 为重要地标添加下划线
+                        if (annotation.fontWeight === 'bold') {
+                            const textWidth = ctx.measureText(annotation.name).width;
+                            ctx.strokeStyle = annotation.color;
+                            ctx.lineWidth = 2;
+                            ctx.beginPath();
+                            ctx.moveTo(screenPos.x - textWidth/2, screenPos.y + fontSize/2 + 2);
+                            ctx.lineTo(screenPos.x + textWidth/2, screenPos.y + fontSize/2 + 2);
+                            ctx.stroke();
+                        }
+                        
+                        ctx.restore();
+                    });
+                });
+            }
+            
+            // 获取当前缩放级别下注释的位置
+            getAnnotationPosition(annotation, zoomLevel) {
+                const position = annotation.positions.find(p => p.level === zoomLevel);
+                if (position) {
+                    return { 
+                        mapX: position.mapX, 
+                        mapY: position.mapY
+                    };
+                }
+                // 如果没找到对应级别，返回第一个位置作为默认值
+                return { 
+                    mapX: annotation.positions[0].mapX, 
+                    mapY: annotation.positions[0].mapY
+                };
+            }
+            
+            // 图例渲染方法
+            renderLegends() {
+                const ctx = this.ctx;
+                
+                // 先渲染范围
+                this.renderLegendRanges();
+                
+                // 再渲染图例标记点
+                Object.values(this.legendData).forEach(category => {
+                    if (!category.visible) return;
+                    
+                    // 遍历分类下的所有标记点
+                    category.items.forEach(item => {
+                        // 获取当前缩放级别的位置
+                        const pos = this.getLegendPosition(item, this.currentZoom);
+                        const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                        
+                        // 检查是否在屏幕范围内
+                        if (screenPos.x < -30 || screenPos.x > this.canvas.width + 30 ||
+                            screenPos.y < -30 || screenPos.y > this.canvas.height + 30) {
+                            return;
+                        }
+                        
+                        // 绘制标记
+                        ctx.save();
+                        
+                        // 外圈（白色边框）
+                        ctx.beginPath();
+                        ctx.arc(screenPos.x, screenPos.y, 8, 0, Math.PI * 2);
+                        ctx.fillStyle = 'white';
+                        ctx.fill();
+                        
+                        // 内圈（颜色）
+                        ctx.beginPath();
+                        ctx.arc(screenPos.x, screenPos.y, 6, 0, Math.PI * 2);
+                        ctx.fillStyle = item.color;
+                        ctx.fill();
+                        
+                        // 如果被选中显示范围，添加高亮边框
+                        if (this.rangeDisplays.has(item)) {
+                            ctx.beginPath();
+                            ctx.arc(screenPos.x, screenPos.y, 10, 0, Math.PI * 2);
+                            ctx.strokeStyle = item.color;
+                            ctx.lineWidth = 3;
+                            ctx.setLineDash([5, 5]);
+                            ctx.stroke();
+                            ctx.setLineDash([]);
+                        }
+                        
+                        // 鼠标悬停效果
+                        if (item === this.hoveredLegend) {
+                            ctx.shadowColor = item.color;
+                            ctx.shadowBlur = 15;
+                            ctx.beginPath();
+                            ctx.arc(screenPos.x, screenPos.y, 10, 0, Math.PI * 2);
+                            ctx.strokeStyle = item.color;
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                            
+                            // 显示标签
+                            this.drawLegendTooltip(screenPos.x, screenPos.y, item);
+                        }
+                        
+                        ctx.restore();
+                    });
+                });
+            }
+            
+            // 渲染图例范围
+            renderLegendRanges() {
+                const ctx = this.ctx;
+                
+                this.rangeDisplays.forEach(item => {
+                    const pos = this.getLegendPosition(item, this.currentZoom);
+                    const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                    const rangeSize = pos.rangeSize || 50;
+                    
+                    // 检查是否在屏幕范围内（扩大检查范围以包含可能的大范围）
+                    if (screenPos.x < -rangeSize - 50 || screenPos.x > this.canvas.width + rangeSize + 50 ||
+                        screenPos.y < -rangeSize - 50 || screenPos.y > this.canvas.height + rangeSize + 50) {
+                        return;
+                    }
+                    
+                    ctx.save();
+                    ctx.globalAlpha = 0.3;
+                    ctx.fillStyle = item.color;
+                    ctx.strokeStyle = item.color;
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([10, 5]);
+                    
+                    // 根据形状类型绘制范围
+                    switch (item.rangeShape) {
+                        case 'circle':
+                            // 圆形
+                            ctx.beginPath();
+                            ctx.arc(screenPos.x, screenPos.y, rangeSize, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.globalAlpha = 0.8;
+                            ctx.stroke();
+                            break;
+                            
+                        case 'square':
+                            // 正方形
+                            const halfSize = rangeSize;
+                            ctx.fillRect(screenPos.x - halfSize, screenPos.y - halfSize, halfSize * 2, halfSize * 2);
+                            ctx.globalAlpha = 0.8;
+                            ctx.strokeRect(screenPos.x - halfSize, screenPos.y - halfSize, halfSize * 2, halfSize * 2);
+                            break;
+                            
+                        case 'ellipse':
+                            // 竖向椭圆形
+                            ctx.beginPath();
+                            ctx.ellipse(screenPos.x, screenPos.y, rangeSize * 0.8, rangeSize * 1.2, 0, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.globalAlpha = 0.8;
+                            ctx.stroke();
+                            break;
+							
+                        case 'ellipse1':
+                            // 横向椭圆形
+                            ctx.beginPath();
+                            ctx.ellipse(screenPos.x, screenPos.y, rangeSize * 1.2, rangeSize * 0.8, 0, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.globalAlpha = 0.8;
+                            ctx.stroke();
+                            break;
+                    }
+                    
+                    // 在范围中心显示名称
+                    ctx.restore();
+                    ctx.save();
+                    ctx.fillStyle = item.color;
+                    ctx.font = 'bold 12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 3;
+                    ctx.strokeText(item.name, screenPos.x, screenPos.y - 15);
+                    ctx.fillText(item.name, screenPos.x, screenPos.y - 15);
+                    ctx.restore();
+                });
+            }
+            
+            drawLegendTooltip(x, y, item) {
+                const ctx = this.ctx;
+                const text = item.name;
+                
+                ctx.save();
+                ctx.font = '12px Arial';
+                
+                const textWidth = ctx.measureText(text).width;
+                const padding = 8;
+                const tooltipWidth = textWidth + padding * 2;
+                const tooltipHeight = 25;
+                
+                // 调整位置避免超出屏幕
+                let tooltipX = x + 15;
+                let tooltipY = y - tooltipHeight / 2;
+                
+                if (tooltipX + tooltipWidth > this.canvas.width) {
+                    tooltipX = x - tooltipWidth - 15;
+                }
+                if (tooltipY < 0) tooltipY = 0;
+                if (tooltipY + tooltipHeight > this.canvas.height) {
+                    tooltipY = this.canvas.height - tooltipHeight;
+                }
+                
+                // 绘制背景
+                ctx.fillStyle = 'rgba(0,0,0,0.9)';
+                ctx.fillRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
+                
+                // 绘制边框
+                ctx.strokeStyle = item.color;
+                ctx.lineWidth = 2;
+                ctx.strokeRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
+                
+                // 绘制文字
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'left';
+                ctx.fillText(text, tooltipX + padding, tooltipY + 16);
+                
+                ctx.restore();
+            }
+            
+            // 获取当前缩放级别下图例的位置和范围大小
+            getLegendPosition(item, zoomLevel) {
+                const position = item.positions.find(p => p.level === zoomLevel);
+                if (position) {
+                    return { 
+                        mapX: position.mapX, 
+                        mapY: position.mapY,
+                        rangeSize: position.rangeSize || 50
+                    };
+                }
+                // 如果没找到对应级别，返回第一个位置作为默认值
+                return { 
+                    mapX: item.positions[0].mapX, 
+                    mapY: item.positions[0].mapY,
+                    rangeSize: item.positions[0].rangeSize || 50
+                };
+            }
+            
+            // 切换图例范围显示
+            toggleLegendRange(item) {
+                if (this.rangeDisplays.has(item)) {
+                    this.rangeDisplays.delete(item);
+                } else {
+                    this.rangeDisplays.add(item);
+                }
+            }
+            
+            // 简化的坐标转换方法（不再需要复杂的缩放计算）
+            mapToScreen(mapX, mapY) {
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                
+                return {
+                    x: centerX + this.viewX + mapX,
+                    y: centerY + this.viewY + mapY
+                };
+            }
+            
+            screenToMap(screenX, screenY) {
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                
+                return {
+                    x: screenX - centerX - this.viewX,
+                    y: screenY - centerY - this.viewY
+                };
+            }
+            
+            // 检查鼠标是否悬停在图例上
+            getLegendAtPosition(screenX, screenY) {
+                for (let category of Object.values(this.legendData)) {
+                    if (!category.visible) continue;
+                    
+                    for (let item of category.items) {
+                        // 获取当前缩放级别的位置
+                        const pos = this.getLegendPosition(item, this.currentZoom);
+                        const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                        const distance = Math.sqrt(
+                            Math.pow(screenX - screenPos.x, 2) + 
+                            Math.pow(screenY - screenPos.y, 2)
+                        );
+                        
+                        if (distance <= 10) {
+                            return item;
+                        }
+                    }
+                }
+                return null;
+            }
+            
+            // 图例面板设置
+            setupLegendPanel() {
+                const container = document.getElementById('legendCategories');
+                container.innerHTML = '';
+                
+                Object.entries(this.legendData).forEach(([key, category]) => {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'legend-category';
+                    
+                    // 分类标题
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'legend-category-header';
+                    headerDiv.innerHTML = `
+                        <input type="checkbox" class="legend-checkbox" ${category.visible ? 'checked' : ''}>
+                        <span class="legend-category-name">${category.name}</span>
+                        <span class="legend-count">${category.items.length}</span>
+                    `;
+                    
+                    // 点击标题处理
+                    headerDiv.addEventListener('click', (e) => {
+                        if (e.target.type === 'checkbox') {
+                            // 只点击复选框时，切换显示状态
+                            category.visible = e.target.checked;
+                            this.updateToggleButton();
+                        } else {
+                            // 点击其他区域时，展开/折叠详情
+                            category.expanded = !category.expanded;
+                            const itemsDiv = categoryDiv.querySelector('.legend-items');
+                            itemsDiv.classList.toggle('expanded', category.expanded);
+                        }
+                    });
+                    
+                    // 分类项目列表
+                    const itemsDiv = document.createElement('div');
+                    itemsDiv.className = 'legend-items';
+                    if (category.expanded) {
+                        itemsDiv.classList.add('expanded');
+                    }
+                    
+                    category.items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'legend-item';
+                        itemDiv.innerHTML = `
+                            <div class="legend-color" style="background-color: ${item.color}"></div>
+                            <span>${item.name}</span>
+                        `;
+                        
+                        // 点击定位到图例位置并显示名称，右键切换范围显示
+                        itemDiv.addEventListener('click', (e) => {
+                            // 获取当前缩放级别的位置
+                            const pos = this.getLegendPosition(item, this.currentZoom);
+                            const targetX = -pos.mapX;
+                            const targetY = -pos.mapY;
+                            
+                            // 移动到目标位置
+                            this.animateViewTo(targetX, targetY, 1000);
+                            
+            
+        
+            // 显示图例名称提示
+                            this.showLegendNameToast(item.name, item.color);
+                        });
+                        
+                        // 右键点击切换范围显示
+                        itemDiv.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+                            this.toggleLegendRange(item);
+                            
+                            // 显示范围切换提示
+                            const isShowing = this.rangeDisplays.has(item);
+                            this.showRangeToggleToast(item.name, isShowing);
+                        });
+                        
+                        itemsDiv.appendChild(itemDiv);
+                    });
+                    
+                    categoryDiv.appendChild(headerDiv);
+                    categoryDiv.appendChild(itemsDiv);
+                    container.appendChild(categoryDiv);
+                });
+                
+                this.updateToggleButton();
+            }
+            
+            // 更新全部切换按钮状态
+            updateToggleButton() {
+                const button = document.querySelector('.legend-toggle-btn');
+                const visibleCount = Object.values(this.legendData).filter(c => c.visible).length;
+                const totalCount = Object.keys(this.legendData).length;
+                
+                if (visibleCount === 0) {
+                    button.textContent = '全部显示';
+                } else if (visibleCount === totalCount) {
+                    button.textContent = '全部隐藏';
+                } else {
+                    button.textContent = `${visibleCount}/${totalCount} 显示`;
+                }
+            }
+            
+            // 切换所有图例显示状态
+            toggleAllLegends() {
+                const visibleCount = Object.values(this.legendData).filter(c => c.visible).length;
+                const shouldShow = visibleCount === 0;
+                
+                Object.values(this.legendData).forEach(category => {
+                    category.visible = shouldShow;
+                });
+                
+                // 更新UI
+                document.querySelectorAll('.legend-checkbox').forEach(checkbox => {
+                    checkbox.checked = shouldShow;
+                });
+                
+                this.updateToggleButton();
+            }
+
+            // 显示范围切换提示
+            showRangeToggleToast(name, isShowing) {
+                // 移除之前的提示
+                const existingToast = document.querySelector('.range-toggle-toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                const toast = document.createElement('div');
+                toast.className = 'range-toggle-toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20%;
+                    right: 45%;
+                    transform: translateY(-50%);
+                    background: rgba(0,0,0,0.9);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    z-index: 3000;
+                    font-size: 14px;
+                    border: 2px solid ${isShowing ? '#00b285' : '#666'};
+                    animation: rangeToastSlide 0.3s ease-out;
+                `;
+                
+                toast.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <span style="margin-right: 8px;">${isShowing ? '✅' : '❌'}</span>
+                        <span>${name} 范围 ${isShowing ? '已显示' : '已隐藏'}</span>
+                    </div>
+                `;
+                
+                // 添加动画样式
+                if (!document.querySelector('#rangeToastStyles')) {
+                    const style = document.createElement('style');
+                    style.id = 'rangeToastStyles';
+                    style.textContent = `
+                        @keyframes rangeToastSlide {
+                            0% {
+                                opacity: 0;
+                                transform: translateY(-50%) translateX(100px);
+                            }
+                            100% {
+                                opacity: 1;
+                                transform: translateY(-50%) translateX(0);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                document.body.appendChild(toast);
+                
+                // 2秒后移除提示
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.transition = 'opacity 0.3s, transform 0.3s';
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translateY(-50%) translateX(100px)';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
+                    }
+                }, 2000);
+            }
+            
+            // 显示图例名称提示
+            showLegendNameToast(name, color) {
+                // 移除之前的提示
+                const existingToast = document.querySelector('.legend-name-toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                // 创建新的提示
+                const toast = document.createElement('div');
+                toast.className = 'legend-name-toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0,0,0,0.9);
+                    color: white;
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    z-index: 3000;
+                    font-size: 18px;
+                    font-weight: bold;
+                    text-align: center;
+                    border: 3px solid ${color};
+                    box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 40px ${color}40;
+                    animation: legendToastShow 0.5s ease-out;
+                `;
+                
+                toast.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <div style="width: 16px; height: 16px; background: ${color}; border-radius: 50%; margin-right: 12px; border: 2px solid white;"></div>
+                        <span>${name}</span>
+                    </div>
+                `;
+                
+                // 添加动画样式
+                if (!document.querySelector('#legendToastStyles')) {
+                    const style = document.createElement('style');
+                    style.id = 'legendToastStyles';
+                    style.textContent = `
+                        @keyframes legendToastShow {
+                            0% {
+                                opacity: 0;
+                                transform: translate(-50%, -50%) scale(0.8);
+                            }
+                            100% {
+                                opacity: 1;
+                                transform: translate(-50%, -50%) scale(1);
+                            }
+                        }
+                        @keyframes legendToastHide {
+                            0% {
+                                opacity: 1;
+                                transform: translate(-50%, -50%) scale(1);
+                            }
+                            100% {
+                                opacity: 0;
+                                transform: translate(-50%, -50%) scale(0.8);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                document.body.appendChild(toast);
+                
+                // 3秒后移除提示
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.animation = 'legendToastHide 0.3s ease-in forwards';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
+                    }
+                }, 1800);
+            }
+            
+            animateViewTo(targetX, targetY, duration = 800) {
+                const startX = this.viewX;
+                const startY = this.viewY;
+                const startTime = performance.now();
+                
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // 使用easeInOutCubic缓动函数
+                    const easeProgress = progress < 0.5 
+                        ? 4 * progress * progress * progress
+                        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+                    
+                    this.viewX = startX + (targetX - startX) * easeProgress;
+                    this.viewY = startY + (targetY - startY) * easeProgress;
+                    this.updateUI();
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+            
+            switchZoom(newZoom, mouseX, mouseY) {
+                if (newZoom < 0 || newZoom >= config.basePaths.length || newZoom === this.currentZoom) {
+                    return;
+                }
+                
+                if (!this.loadedLevels.has(newZoom)) {
+                    console.log(`级别 ${newZoom + 1} 尚未加载`);
+                    return;
+                }
+                
+                // 鼠标中心缩放
+                if (mouseX !== undefined && mouseY !== undefined) {
+                    const oldCols = config.totalFolders[this.currentZoom];
+                    const oldRows = config.imagesPerFolder[this.currentZoom];
+                    const newCols = config.totalFolders[newZoom];
+                    const newRows = config.imagesPerFolder[newZoom];
+                    
+                    const scaleX = newCols / oldCols;
+                    const scaleY = newRows / oldRows;
+                    const scale = (scaleX + scaleY) / 2;
+                    
+                    const centerX = this.canvas.width / 2;
+                    const centerY = this.canvas.height / 2;
+                    const mouseDeltaX = mouseX - centerX;
+                    const mouseDeltaY = mouseY - centerY;
+                    
+                    this.viewX = this.viewX * scale - mouseDeltaX * (scale - 1);
+                    this.viewY = this.viewY * scale - mouseDeltaY * (scale - 1);
+                }
+                
+                this.currentZoom = newZoom;
+                this.updateUI();
+                console.log(`切换到级别 ${newZoom + 1}`);
+            }
+            
+            resetView() {
+                this.viewX = 0;
+                this.viewY = 0;
+                this.updateUI();
+            }
+            
+            updateUI() {
+                document.getElementById('zoomLevel').textContent = `${this.currentZoom + 1}/4`;
+                document.getElementById('viewportPos').textContent = `(${Math.round(this.viewX)}, ${Math.round(this.viewY)})`;
+            }
+            
+            bindEvents() {
+                // 鼠标事件
+                this.canvas.addEventListener('mousedown', (e) => {
+                    this.isDragging = true;
+                    this.canvas.classList.add('dragging');
+                    this.lastMouseX = e.clientX;
+                    this.lastMouseY = e.clientY;
+                    this.dragStartX = this.viewX;
+                    this.dragStartY = this.viewY;
+                });
+                
+                document.addEventListener('mousemove', (e) => {
+                    document.getElementById('mousePos').textContent = `(${e.clientX}, ${e.clientY})`;
+                    
+                    // 检查鼠标是否悬停在图例上
+                    this.hoveredLegend = this.getLegendAtPosition(e.clientX, e.clientY);
+                    
+                    if (this.isDragging) {
+                        const dx = e.clientX - this.lastMouseX;
+                        const dy = e.clientY - this.lastMouseY;
+                        this.viewX = this.dragStartX + dx;
+                        this.viewY = this.dragStartY + dy;
+                        this.updateUI();
+                    }
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    this.isDragging = false;
+                    this.canvas.classList.remove('dragging');
+                });
+                
+                // 滚轮缩放
+                this.canvas.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const newZoom = e.deltaY < 0 ? 
+                        Math.min(this.currentZoom + 1, 5) : 
+                        Math.max(this.currentZoom - 1, 0);
+                    this.switchZoom(newZoom, e.clientX, e.clientY);
+                }, { passive: false });
+                
+                // 键盘事件
+                window.addEventListener('keydown', (e) => {
+                    switch(e.key.toLowerCase()) {
+                        case 'r':
+                            this.resetView();
+                            break;
+                        case '+':
+                        case '=':
+                            this.switchZoom(Math.min(this.currentZoom + 1, 5));
+                            break;
+                        case '-':
+                            this.switchZoom(Math.max(this.currentZoom - 1, 0));
+                            break;
+                        case 'l':
+                            this.toggleAllLegends();
+                            break;
+                    }
+                });
+                
+                // 窗口大小变化
+                window.addEventListener('resize', () => {
+                    this.setupCanvas();
+                });
+            }
+        }
+        
+        // 启动地图
+        let map;
+        try {
+            map = new CanvasMap();
+        } catch (error) {
+            console.error('启动失败:', error);
+            document.body.innerHTML = `
+                <div style="color: white; text-align: center; margin-top: 100px;">
+                    <h2>启动失败</h2>
+                    <p>${error.message}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -21,7 +21,7 @@ func PlaceOnPrimary(window application.Window, app *application.App) {
 	window.SetPosition(px, py)
 }
 
-func RestoreMainWindow(window application.Window, app *application.App, title string) {
+func RestoreMainWindow(window application.Window, app *application.App) {
 	application.InvokeSync(func() {
 		if window.IsMinimised() {
 			window.UnMinimise()
@@ -29,6 +29,5 @@ func RestoreMainWindow(window application.Window, app *application.App, title st
 		window.Show()
 		PlaceOnPrimary(window, app)
 		window.Focus()
-		ActivateTracked(appmeta.WindowX, appmeta.WindowY)
 	})
 }

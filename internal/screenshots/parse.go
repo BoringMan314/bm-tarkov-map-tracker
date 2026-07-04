@@ -31,11 +31,9 @@ func ParsePath(path string) (Data, bool) {
 	var posStr, viewStr string
 	switch {
 	case strings.Contains(parts[0], "[") && strings.Contains(parts[0], "]"):
-		// YYYY-MM-DD[HH-MM]_X,Y,Z_Qx,Qy,Qz,Qw_...
 		posStr = parts[1]
 		viewStr = parts[2]
 	case len(parts) >= 4:
-		// YYYY-MM-DD_HH-MM_X,Y,Z_Qx,Qy,Qz,Qw
 		posStr = parts[2]
 		viewStr = parts[3]
 	default:

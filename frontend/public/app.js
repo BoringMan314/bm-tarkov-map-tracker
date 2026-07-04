@@ -101,6 +101,13 @@ const state = {
   showMarkerCoords: false,
   showPlayer: true,
   playerCenterLock: false,
+  embeddedPosition: "none",
+  embeddedRange: 10,
+  embeddedSize: 300,
+  embeddedOffsetX: 250,
+  embeddedOffsetY: 0,
+  embeddedOpacity: 50,
+  embeddedDisplayTarget: "none",
   catalogDefaultMap: DEFAULT_MAP,
   catalogError: false,
 };
@@ -146,6 +153,28 @@ const exfilPmcNamesToggle = document.getElementById("exfil-filter-pmc-names");
 const exfilShowCoordsToggle = document.getElementById("exfil-filter-show-coords");
 const exfilPlayerToggle = document.getElementById("exfil-filter-player");
 const exfilPlayerLockToggle = document.getElementById("exfil-filter-player-lock");
+const embeddedSelectRoot = document.getElementById("embedded-select");
+const embeddedSelectBtn = document.getElementById("embedded-select-btn");
+const embeddedSelectLabel = document.getElementById("embedded-select-label");
+const embeddedPanel = document.getElementById("embedded-panel");
+const embeddedPositionSelect = document.getElementById("embedded-position");
+const embeddedRangeSelect = document.getElementById("embedded-range");
+const embeddedSizeSelect = document.getElementById("embedded-size");
+const embeddedOffsetXSelect = document.getElementById("embedded-offset-x");
+const embeddedOffsetYSelect = document.getElementById("embedded-offset-y");
+const embeddedOpacitySelect = document.getElementById("embedded-opacity");
+const embeddedDisplayTargetLabel = document.getElementById("embedded-display-target-label");
+const embeddedDisplayTargetValue = document.getElementById("embedded-display-target-value");
+const embeddedFilterLabels = {
+  panel: embeddedSelectLabel,
+  displayTarget: embeddedDisplayTargetLabel,
+  position: document.getElementById("embedded-position-label"),
+  range: document.getElementById("embedded-range-label"),
+  size: document.getElementById("embedded-size-label"),
+  offsetX: document.getElementById("embedded-offset-x-label"),
+  offsetY: document.getElementById("embedded-offset-y-label"),
+  opacity: document.getElementById("embedded-opacity-label"),
+};
 
 function t(key, fallback = "") {
   return state.locale.strings[key] || fallback;
@@ -203,6 +232,7 @@ function applyLocale(payload) {
   document.title = t("project_name", document.title);
   refreshMapLabels();
   refreshExfilFilterLabels();
+  refreshEmbeddedLabels();
   refreshPointOverlays();
   renderLangDropdown();
   refreshPointSourceLabel();
@@ -235,7 +265,6 @@ async function setLocale(code) {
 }
 
 const mapContentCache = new Map();
-// WebView2 struggles with 8192px textures; stay under GPU limits.
 const RASTER_MAX_DIMENSION = 7680;
 const COM_RASTER_MAX_DIMENSION = 7680;
 
@@ -279,7 +308,6 @@ async function awaitMapImageReady(img) {
       }
     }
   } catch {
-    // WebView2 decode() often rejects while onload still succeeds.
   }
   await waitForImageElement(img);
 }
@@ -333,7 +361,6 @@ async function prepareRasterDisplayUrl(blob, maxDimension = RASTER_MAX_DIMENSION
       });
       return URL.createObjectURL(outBlob);
     } catch {
-      // fall through to canvas draw from probe
     }
   }
 
@@ -364,7 +391,6 @@ async function prepareMapDisplayBlob(blob) {
   }
 }
 
-/** Prefer same-origin /api/map URLs in WebView2; blob URLs are fallback when downscaling is required. */
 async function resolveRasterDisplaySrc(fetchUrl, blob) {
   const maxDim = isEftarkovPointSource() ? COM_RASTER_MAX_DIMENSION : RASTER_MAX_DIMENSION;
   const objectUrl = URL.createObjectURL(blob);
@@ -420,7 +446,6 @@ async function loadRasterImageSoft(img) {
     await awaitMapImageReady(img);
     return;
   } catch {
-    // WebView2 may reject decode() while the image still paints via onload.
   }
   for (let i = 0; i < 20; i += 1) {
     if (img.naturalWidth > 0 && img.naturalHeight > 0) {
@@ -494,7 +519,6 @@ const RASTER_TILE_MAPS = new Set(["factory", "labs", "labyrinth"]);
 
 const DEFAULT_DEV_COORD_PROFILE = { pointMeta: "self", coordMode: "schematic", flipY: false, flipX: false };
 
-/** Per-map coordinate rules (source + variant). Avoids global hacks that break other maps. */
 const MAP_COORD_PROFILES = {
   factory: {
     dev_a: { pointMeta: "a", coordMode: "raster_crop" },
@@ -534,8 +558,6 @@ const MAP_COORD_PROFILES = {
   },
 };
 
-/** Screenshot player marker — per map + source (separate from exfil MAP_COORD_PROFILES).
- *  Keys: dev_a, dev_b, eftarkov. player.png top edge = forward. */
 const MAP_PLAYER_PROFILES = {
   factory: {
     eftarkov: { swapGameAxes: true, flipX: true, flipY: true },
@@ -719,7 +741,6 @@ function sizeMetaForMap(mapId = state.currentId) {
   return pointMetaForMap(mapId);
 }
 
-/** DEV A display size always from A assets; coord pointMeta may still use B on satellite maps. */
 function devDisplayMeta(mapId = state.currentId) {
   if (!isDevPointSource()) {
     return state.mapMeta?.[mapId] || null;
@@ -780,7 +801,6 @@ function usesRasterCropPixels(mapId, meta, coordVariant = null) {
 }
 
 
-/** Leaflet CRS latLngToPoint at native tile zoom (matches tarkov.dev getCRS). */
 function gameToLayerPoint(gameX, gameZ, transform, rotation, zoom, mapId = state.currentId) {
   const point = gameToCrs(gameX, gameZ, transform, rotation, mapId);
   const factor = 2 ** zoom;
@@ -1245,7 +1265,6 @@ function invalidateMapContentCacheIfStale(mapId) {
   }
 }
 
-/** @deprecated use pointMetaForMap */
 function devPointMetaForMap(mapId = state.currentId) {
   return pointMetaForMap(mapId);
 }
@@ -1297,7 +1316,6 @@ function eftarkovMapPixelsToGame(px, py, layout, mapW, mapH) {
   return { x: mapX, z: mapY };
 }
 
-/** Forward of eftarkovMapPixelsToGame; matches tools/sync_points_from_eftarkov.py eftarkov_to_display_px. */
 function gameToEftarkovMapPixels(gameX, gameZ, layout, mapW, mapH) {
   if (!layout || !mapW || !mapH) {
     return null;
@@ -1406,6 +1424,383 @@ function refreshExfilFilterLabels() {
   }
   if (exfilFilterLabels.playerLock) {
     exfilFilterLabels.playerLock.textContent = t("marker_player_center_lock", "玩家中心鎖定");
+  }
+}
+
+function refreshEmbeddedLabels() {
+  if (embeddedFilterLabels.panel) {
+    embeddedFilterLabels.panel.textContent = t("embedded_panel_label", "內嵌地圖");
+  }
+  if (embeddedFilterLabels.displayTarget) {
+    embeddedFilterLabels.displayTarget.textContent = t("embedded_display_target", "顯示於");
+  }
+  if (embeddedFilterLabels.position) {
+    embeddedFilterLabels.position.textContent = t("embedded_position", "位置");
+  }
+  if (embeddedFilterLabels.range) {
+    embeddedFilterLabels.range.textContent = t("embedded_range", "顯示範圍");
+  }
+  if (embeddedFilterLabels.size) {
+    embeddedFilterLabels.size.textContent = t("embedded_size", "顯示尺寸");
+  }
+  if (embeddedFilterLabels.offsetX) {
+    embeddedFilterLabels.offsetX.textContent = t("embedded_offset_x", "偏移 X");
+  }
+  if (embeddedFilterLabels.offsetY) {
+    embeddedFilterLabels.offsetY.textContent = t("embedded_offset_y", "偏移 Y");
+  }
+  if (embeddedFilterLabels.opacity) {
+    embeddedFilterLabels.opacity.textContent = t("embedded_opacity", "透明度");
+  }
+  if (embeddedPositionSelect) {
+    for (const opt of embeddedPositionSelect.options) {
+      opt.textContent = t(`embedded_position_${opt.value.replace(/-/g, "_")}`, opt.textContent);
+    }
+  }
+  if (embeddedRangeSelect) {
+    for (const opt of embeddedRangeSelect.options) {
+      opt.textContent = t(`embedded_range_${opt.value}x`, opt.textContent);
+    }
+  }
+  if (embeddedSizeSelect) {
+    for (const opt of embeddedSizeSelect.options) {
+      opt.textContent = t(`embedded_size_${opt.value}`, opt.textContent);
+    }
+  }
+  for (const select of [embeddedOffsetXSelect, embeddedOffsetYSelect]) {
+    if (!select) {
+      continue;
+    }
+    for (const opt of select.options) {
+      opt.textContent = t(`embedded_offset_${opt.value}`, opt.textContent);
+    }
+  }
+  if (embeddedOpacitySelect) {
+    for (const opt of embeddedOpacitySelect.options) {
+      opt.textContent = t(`embedded_opacity_${opt.value}`, opt.textContent);
+    }
+  }
+  refreshEmbeddedDisplayStatus();
+}
+
+function embeddedDisplayTargetText(target) {
+  switch (target) {
+    case "game":
+      return t("embedded_display_game", "遊戲");
+    case "app":
+      return t("embedded_display_app", "主程式");
+    default:
+      return t("embedded_display_none", "—");
+  }
+}
+
+function applyEmbeddedDisplayStatus(data) {
+  const target = data?.display?.target || "none";
+  state.embeddedDisplayTarget = target;
+  if (embeddedDisplayTargetValue) {
+    embeddedDisplayTargetValue.textContent = embeddedDisplayTargetText(target);
+    embeddedDisplayTargetValue.dataset.target = target;
+  }
+}
+
+async function refreshEmbeddedDisplayStatus() {
+  try {
+    const res = await fetch("/api/embedded/state", { cache: "no-store" });
+    if (!res.ok) {
+      return;
+    }
+    applyEmbeddedDisplayStatus(await res.json());
+  } catch {
+  }
+}
+
+let embeddedStatusTimer = null;
+
+function startEmbeddedStatusPoll() {
+  refreshEmbeddedDisplayStatus();
+  if (embeddedStatusTimer) {
+    window.clearInterval(embeddedStatusTimer);
+  }
+  embeddedStatusTimer = window.setInterval(refreshEmbeddedDisplayStatus, 500);
+}
+
+function stopEmbeddedStatusPoll() {
+  if (embeddedStatusTimer) {
+    window.clearInterval(embeddedStatusTimer);
+    embeddedStatusTimer = null;
+  }
+}
+
+function syncEmbeddedStatusPolling() {
+  if (state.embeddedPosition !== "none") {
+    startEmbeddedStatusPoll();
+    return;
+  }
+  if (embeddedPanel && !embeddedPanel.classList.contains("hidden")) {
+    startEmbeddedStatusPoll();
+    return;
+  }
+  stopEmbeddedStatusPoll();
+  refreshEmbeddedDisplayStatus();
+}
+
+function readEmbeddedControls() {
+  state.embeddedPosition = embeddedPositionSelect?.value || "none";
+  state.embeddedRange = Number(embeddedRangeSelect?.value) || 10;
+  state.embeddedSize = Number(embeddedSizeSelect?.value) || 300;
+  state.embeddedOffsetX = Number(embeddedOffsetXSelect?.value) || 250;
+  state.embeddedOffsetY = Number(embeddedOffsetYSelect?.value) || 0;
+  state.embeddedOpacity = Number(embeddedOpacitySelect?.value) || 50;
+}
+
+function syncEmbeddedControlsFromState() {
+  if (embeddedPositionSelect) {
+    embeddedPositionSelect.value = state.embeddedPosition;
+  }
+  if (embeddedRangeSelect) {
+    embeddedRangeSelect.value = String(state.embeddedRange);
+  }
+  if (embeddedSizeSelect) {
+    embeddedSizeSelect.value = String(state.embeddedSize);
+  }
+  if (embeddedOffsetXSelect) {
+    embeddedOffsetXSelect.value = String(state.embeddedOffsetX);
+  }
+  if (embeddedOffsetYSelect) {
+    embeddedOffsetYSelect.value = String(state.embeddedOffsetY);
+  }
+  if (embeddedOpacitySelect) {
+    embeddedOpacitySelect.value = String(state.embeddedOpacity);
+  }
+}
+
+function syncEmbeddedPlayerLockUI() {
+  const active = state.embeddedPosition !== "none";
+  if (active) {
+    state.playerCenterLock = true;
+    if (exfilPlayerLockToggle) {
+      exfilPlayerLockToggle.checked = true;
+      exfilPlayerLockToggle.disabled = true;
+    }
+    applyPlayerCenterLock();
+  } else if (exfilPlayerLockToggle) {
+    exfilPlayerLockToggle.disabled = false;
+  }
+}
+
+function embeddedPlayerMapPixelPosition(mapId = state.currentId) {
+  const loc = state.playerLocation;
+  if (!loc?.valid) {
+    return null;
+  }
+  const meta = isDevPointSource()
+    ? pointMetaForMap(mapId) || state.mapMeta?.[mapId]
+    : state.mapMeta?.[mapId];
+  const { iw, ih } = mapDimensions();
+  const ready = isEftarkovPointSource()
+    ? Boolean(comPlayerOverlayReady(mapId) && iw && ih)
+    : Boolean(meta && iw && ih);
+  if (!ready) {
+    return null;
+  }
+  return gameToPlayerMapPixels(
+    Number(loc.x),
+    Number(loc.z),
+    meta || state.mapMeta?.[mapId],
+    iw,
+    ih,
+    mapId
+  );
+}
+
+function computeEmbeddedExfilMarkers(mapId, iw, ih) {
+  const markers = [];
+  const meta = state.mapMeta?.[mapId] || pointMetaForMap(mapId);
+  const eftReady =
+    isEftarkovPointSource() &&
+    Boolean(eftarkovLayoutForMap(mapId) || state.mapMeta?.[mapId]?.width);
+  if ((!meta && !eftReady) || !iw || !ih) {
+    return markers;
+  }
+  const exfilData = syncActiveExfilData();
+  if (!exfilData) {
+    return markers;
+  }
+  const coordMeta = pointMetaForMap(mapId) || meta || {};
+  for (const { kind, icon, color } of EXFIL_KINDS) {
+    if (!state.exfilFilters[kind]) {
+      continue;
+    }
+    if (kind === "coop" && exfilCountForMap("coop", mapId) === 0) {
+      continue;
+    }
+    const points = (exfilData[kind] || {})[mapId] || [];
+    for (const entry of points) {
+      const coords = entry?.coordinates;
+      if (!Array.isArray(coords) || coords.length < 2) {
+        continue;
+      }
+      let pos = isEftarkovPointSource() ? comPointToMapPixels(entry, iw, ih) : null;
+      if (!pos) {
+        pos = pointToMapPixels(coords, coordMeta, iw, ih, mapId);
+      }
+      if (!pos) {
+        continue;
+      }
+      const rawName = entry.name ? String(entry.name).trim() : "";
+      const exfilId = entry.id ? String(entry.id).trim() : "";
+      const name = exfilLabel(exfilId, rawName);
+      const gameCoords = gameCoordsForExfilEntry(entry, pos, mapId, iw, ih, meta);
+      const marker = {
+        kind,
+        x: pos.x,
+        y: pos.y,
+        icon,
+        color,
+        zIndex: EXFIL_LAYER_Z[kind] || 0,
+      };
+      if (name) {
+        marker.name = name.toUpperCase();
+      }
+      if (gameCoords) {
+        marker.gameX = gameCoords.x;
+        marker.gameZ = gameCoords.z;
+      }
+      markers.push(marker);
+    }
+  }
+  return markers;
+}
+
+function computeEmbeddedViewport() {
+  if (state.embeddedPosition === "none") {
+    return null;
+  }
+  const size = state.embeddedSize;
+  const range = state.embeddedRange;
+  const mapId = state.currentId;
+  const pos = embeddedPlayerMapPixelPosition();
+  const { iw, ih } = mapDimensions();
+  if (!pos || !iw || !ih || !size || !range) {
+    return null;
+  }
+  const fitScale = size / Math.max(iw, ih);
+  const scale = fitScale * range;
+  const rot = mapDisplayRotation();
+  const ox = pos.x - iw / 2;
+  const oy = pos.y - ih / 2;
+  const rad = (rot * Math.PI) / 180;
+  const cos = Math.cos(rad);
+  const sin = Math.sin(rad);
+  const rx = ox * cos - oy * sin;
+  const ry = ox * sin + oy * cos;
+  const entry = currentMapEntry();
+  const mapUrl = entry ? mapFetchUrl(entry) : "";
+  const loc = state.playerLocation;
+  const rawHeading = loc?.valid ? Number(loc.rotation) : 0;
+  const heading = loc?.valid ? playerMarkerHeading(state.currentId, rawHeading) : 0;
+  const imgRot = rot ? heading - rot : heading;
+  let player = null;
+  if (state.showPlayer && pos) {
+    player = {
+      x: pos.x,
+      y: pos.y,
+      heading,
+      imgRot,
+    };
+    if (loc?.valid) {
+      player.gameX = Number(loc.x);
+      player.gameZ = Number(loc.z);
+    }
+  }
+  return {
+    scale,
+    tx: -rx * scale,
+    ty: -ry * scale,
+    rotation: rot,
+    iw,
+    ih,
+    mapUrl,
+    showNames: state.exfilShowNames,
+    showCoords: state.showMarkerCoords,
+    showPlayer: state.showPlayer,
+    markers: computeEmbeddedExfilMarkers(mapId, iw, ih),
+    player,
+  };
+}
+
+async function pushEmbeddedContext() {
+  if (state.embeddedPosition === "none") {
+    return;
+  }
+  try {
+    await fetch("/api/embedded/context", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mapId: state.currentId,
+        pointSource: state.pointSource,
+      }),
+    });
+  } catch {
+  }
+}
+
+async function pushEmbeddedSettings() {
+  readEmbeddedControls();
+  syncEmbeddedPlayerLockUI();
+  try {
+    await fetch("/api/embedded/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        position: state.embeddedPosition,
+        range: state.embeddedRange,
+        size: state.embeddedSize,
+        offsetX: state.embeddedOffsetX,
+        offsetY: state.embeddedOffsetY,
+        opacity: state.embeddedOpacity,
+      }),
+    });
+  } catch {
+  }
+  await pushEmbeddedContext();
+  pushEmbeddedViewport();
+  syncEmbeddedStatusPolling();
+}
+
+function pushEmbeddedViewport() {
+  if (state.embeddedPosition === "none") {
+    return;
+  }
+  const viewport = computeEmbeddedViewport();
+  if (!viewport) {
+    return;
+  }
+  fetch("/api/embedded/viewport", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(viewport),
+  }).catch(() => {});
+}
+
+async function loadEmbeddedSettings() {
+  try {
+    const res = await fetch("/api/embedded/settings", { cache: "no-store" });
+    if (!res.ok) {
+      return;
+    }
+    const data = await res.json();
+    state.embeddedPosition = data.position || "none";
+    state.embeddedRange = Number(data.range) || 10;
+    state.embeddedSize = Number(data.size) || 300;
+    state.embeddedOffsetX = Number(data.offsetX ?? data.offset) || 250;
+    state.embeddedOffsetY = Number(data.offsetY) || 0;
+    state.embeddedOpacity = Number(data.opacity) || 50;
+    syncEmbeddedControlsFromState();
+    syncEmbeddedPlayerLockUI();
+    syncEmbeddedStatusPolling();
+  } catch {
   }
 }
 
@@ -1545,7 +1940,6 @@ async function cyclePointSource() {
     await Promise.all([loadMapMeta(true), loadEftarkovMeta(true), loadExfilData(true)]);
     syncActiveExfilData();
   } catch {
-    // bounds / exfil reload is non-fatal once the catalog is valid
   }
   const nextId = state.maps.some((m) => m.id === state.currentId)
     ? state.currentId
@@ -1651,6 +2045,7 @@ function refreshPointOverlays(loadToken = state.mapLoadToken) {
   renderExfilOverlay();
   renderPlayerOverlay();
   applyPlayerCenterLock();
+  pushEmbeddedViewport();
 }
 
 function playerMapPixelPosition(mapId = state.currentId) {
@@ -1766,6 +2161,9 @@ function syncMarkerLabelVisibility() {
   if (playerOverlay) {
     playerOverlay.classList.toggle("hide-marker-coords", !state.showMarkerCoords);
   }
+  if (state.embeddedPosition !== "none") {
+    pushEmbeddedViewport();
+  }
 }
 
 function syncExfilNameVisibility() {
@@ -1867,7 +2265,6 @@ function renderExfilOverlay() {
 
 const PLAYER_MARKER_SIZE = 28;
 
-/** player.png: image top edge = player forward. Yaw 0 = map north, increases clockwise. */
 function playerMarkerRotation(mapId, heading) {
   const rot = displayRotationForMap(mapId);
   const adjusted = playerMarkerHeading(mapId, heading);
@@ -2461,7 +2858,6 @@ async function loadMapImage(entry) {
     try {
       await ensureComPointData();
     } catch {
-      // point meta / exfil preload must not block the map image
     }
   }
   invalidateOverlays();
@@ -2660,6 +3056,7 @@ function setMap(id) {
     el.classList.toggle("is-active", el.dataset.mapId === entry.id);
   });
   loadMapImage(entry);
+  pushEmbeddedContext();
 }
 
 function closeDropdown() {
@@ -2675,6 +3072,7 @@ function openDropdown() {
 function toggleDropdown() {
   if (dropdown.classList.contains("hidden")) {
     closePointsPanel();
+    closeEmbeddedPanel();
     openDropdown();
   } else {
     closeDropdown();
@@ -2708,9 +3106,46 @@ function togglePointsPanel() {
   if (pointsPanel.classList.contains("hidden")) {
     closeDropdown();
     closeLangDropdown();
+    closeEmbeddedPanel();
     openPointsPanel();
   } else {
     closePointsPanel();
+  }
+}
+
+function closeEmbeddedPanel() {
+  if (!embeddedPanel) {
+    return;
+  }
+  embeddedPanel.classList.add("hidden");
+  if (embeddedSelectBtn) {
+    embeddedSelectBtn.setAttribute("aria-expanded", "false");
+  }
+  syncEmbeddedStatusPolling();
+}
+
+function openEmbeddedPanel() {
+  if (!embeddedPanel) {
+    return;
+  }
+  embeddedPanel.classList.remove("hidden");
+  if (embeddedSelectBtn) {
+    embeddedSelectBtn.setAttribute("aria-expanded", "true");
+  }
+  syncEmbeddedStatusPolling();
+}
+
+function toggleEmbeddedPanel() {
+  if (!embeddedPanel) {
+    return;
+  }
+  if (embeddedPanel.classList.contains("hidden")) {
+    closeDropdown();
+    closeLangDropdown();
+    closePointsPanel();
+    openEmbeddedPanel();
+  } else {
+    closeEmbeddedPanel();
   }
 }
 
@@ -2741,6 +3176,7 @@ function toggleLangDropdown() {
   if (langDropdown.classList.contains("hidden")) {
     closeDropdown();
     closePointsPanel();
+    closeEmbeddedPanel();
     openLangDropdown();
   } else {
     closeLangDropdown();
@@ -2912,6 +3348,9 @@ document.addEventListener("mousedown", (e) => {
   if (pointsSelectRoot && !pointsSelectRoot.contains(e.target)) {
     closePointsPanel();
   }
+  if (embeddedSelectRoot && !embeddedSelectRoot.contains(e.target)) {
+    closeEmbeddedPanel();
+  }
   if (langSelectRoot && !langSelectRoot.contains(e.target)) {
     closeLangDropdown();
   }
@@ -3013,6 +3452,7 @@ function startPlayerPoll() {
 async function init() {
   await loadLocale();
   refreshPointSourceLabel();
+  await loadEmbeddedSettings();
   try {
     await Promise.allSettled([
       loadMapMeta(),
@@ -3022,12 +3462,14 @@ async function init() {
       loadExfilData(),
     ]);
   } catch {
-    // meta / exfil preload must not block the map catalog
   }
   try {
     await loadCatalog();
     refreshExfilFilterVisibility();
     startPlayerPoll();
+    if (state.embeddedPosition !== "none") {
+      await pushEmbeddedSettings();
+    }
   } catch {
     setSelectErrorLabel();
   }
@@ -3111,8 +3553,50 @@ if (exfilPlayerLockToggle) {
     e.stopPropagation();
   });
   exfilPlayerLockToggle.addEventListener("change", () => {
+    if (!exfilPlayerLockToggle.checked && state.embeddedPosition !== "none") {
+      state.embeddedPosition = "none";
+      syncEmbeddedControlsFromState();
+      pushEmbeddedSettings();
+      return;
+    }
     state.playerCenterLock = exfilPlayerLockToggle.checked;
     applyPlayerCenterLock();
+  });
+}
+
+function bindEmbeddedSelect(selectEl) {
+  if (!selectEl) {
+    return;
+  }
+  selectEl.addEventListener("mousedown", (e) => {
+    e.stopPropagation();
+  });
+  selectEl.addEventListener("change", (e) => {
+    e.stopPropagation();
+    pushEmbeddedSettings();
+  });
+}
+
+bindEmbeddedSelect(embeddedPositionSelect);
+bindEmbeddedSelect(embeddedRangeSelect);
+bindEmbeddedSelect(embeddedSizeSelect);
+bindEmbeddedSelect(embeddedOffsetXSelect);
+bindEmbeddedSelect(embeddedOffsetYSelect);
+bindEmbeddedSelect(embeddedOpacitySelect);
+
+if (embeddedSelectBtn) {
+  embeddedSelectBtn.addEventListener("mousedown", (e) => {
+    e.stopPropagation();
+  });
+  embeddedSelectBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleEmbeddedPanel();
+  });
+}
+
+if (embeddedPanel) {
+  embeddedPanel.addEventListener("mousedown", (e) => {
+    e.stopPropagation();
   });
 }
 

@@ -1,5 +1,3 @@
-// Package rootembed embeds repo-root assets for Go build.
-// Canonical files live only under maps/, points/, icons/, i18n/, frontend/public/.
 package rootembed
 
 import (

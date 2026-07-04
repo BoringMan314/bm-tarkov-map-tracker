@@ -1,0 +1,1846 @@
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+//                            _ooOoo_                             //
+//                           o8888888o                            //
+//                           88" . "88                            //
+//                           (| ^_^ |)                            //
+//                           O\  =  /O                            //
+//                        ____/`---'\____                         //
+//                      .'  \\|     |//  `.                       //
+//                     /  \\|||  :  |||//  \                      //
+//                    /  _||||| -:- |||||-  \                     //
+//                    |   | \\\  -  /// |   |                     //
+//                    | \_|  ''\---/''  |   |                     //
+//                    \  .-\__  `-`  ___/-. /                     //
+//                  ___`. .'  /--.--\  `. . ___                   //
+//                ."" '<  `.___\_<|>_/___.'  >'"".                //
+//              | | :  `- \`.;`\ _ /`;.`/ - ` : | |               //
+//              \  \ `-.   \_ __\ /__ _/   .-` /  /               //
+//        ========`-.____`-.___\_____/___.-`____.-'========       //
+//                             `=---='                            //
+//        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^      //
+//        佛祖保佑             永无BUG              永不修改      //
+////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+                          盗版抄袭死全家
+
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						 
+
+
+
+
+
+
+
+
+--> 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>工厂地图-大傻制作</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            overflow: hidden;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        #mapCanvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: grab;
+            image-rendering: pixelated;
+        }
+        
+        #mapCanvas.dragging {
+            cursor: grabbing;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            min-width: 200px;
+        }
+        
+        .legend-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            min-width: 220px;
+            max-height: 1200px;
+            overflow-y: auto;
+        }
+        
+        .legend-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .legend-toggle-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .legend-toggle-btn:hover {
+            background: #555;
+        }
+        
+        .legend-category {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+        }
+        
+        .legend-category-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 8px;
+            padding: 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        
+        .legend-category-header:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .legend-checkbox {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .legend-category-name {
+            font-weight: bold;
+            flex: 1;
+        }
+        
+        .legend-count {
+            font-size: 10px;
+            color: #888;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        .legend-items {
+            margin-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .legend-items.expanded {
+            max-height: 100%;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            padding: 8px 6px;
+            font-size: 11px;
+            color: #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            user-select: none;
+        }
+        
+        .legend-item:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            margin-right: 6px;
+            border: 1px solid #666;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            background: rgba(0,0,0,0.9);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 2000;
+            max-width: 400px;
+        }
+        
+        .loading-bar {
+            width: 300px;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00b285, #00d4aa);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .performance-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .instructions {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .annotation-info {
+            position: fixed;
+            top: 280px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loadingScreen">
+        <div>🎮 地图加载中...</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+        <div id="loadingText">准备加载...</div>
+    </div>
+    
+    <div class="controls" id="controls" style="display: none;">
+        <div><strong>🗺️ 缩放级别:</strong> <span id="zoomLevel">1/5</span></div>
+        <div><strong>📍 位置:</strong> <span id="viewportPos">(0, 0)</span></div>
+        <div><strong>🖱️ 鼠标:</strong> <span id="mousePos">(0, 0)</span></div>
+        
+        <div class="performance-info">
+            <div><strong>⚡ FPS:</strong> <span id="fpsCounter">60</span></div>
+            <div><strong>🖼️ 已加载级别:</strong> <span id="loadedLevels">0/5</span></div>
+        </div>
+        
+        <div class="instructions">
+            <strong>🎮 操作说明:</strong><br>
+            • 拖拽: 按住鼠标左键移动地图<br>
+            • 滚轮: 地图缩放 (以鼠标为中心)<br>
+            • R: 重置到地图中心位置<br>
+            • +/-: 键盘缩放地图大小<br>
+            • 左键图例: 定位并显示名称<br>
+            • 右键图例: 切换范围显示<br>
+        </div>
+    </div>
+    
+    <div class="legend-panel" id="legendPanel" style="display: none;">
+        <div class="legend-header">
+            <strong>🏷️ 地图图例</strong>
+            <button class="legend-toggle-btn" onclick="map.toggleAllLegends()">全部隐藏</button>
+        </div>
+        
+        <div id="legendCategories">
+            <!-- 图例分类将在这里动态生成 -->
+        </div>
+    </div>
+    
+    <div class="annotation-info" id="annotationInfo" style="display: none;">
+        <div><strong>🏷️ 地图概括</strong></div>
+        <div style="margin-top: 8px; font-size: 10px; opacity: 0.9;">
+            <div>📍 PMC数量: <span style="color: #DEB887">6</span></div>
+            <div>💧 战局时间: <span style="color: #87CEEB">白图：20分钟</span></div>
+			<div>💧 战局时间: <span style="color: #87CEEB">夜图：25分钟</span></div>
+        </div>
+    </div>
+    
+    <canvas id="mapCanvas"></canvas>
+
+    <script>
+        // 配置
+        const config = {
+            basePaths: ['images/', 'images1/', 'images2/', 'images3/', 'images4/'],
+            totalFolders: [4, 7, 14, 26, 54],
+            imagesPerFolder: [2, 4, 8, 15, 30],
+            tileSize: 256
+        };
+		
+        // 地图注释数据 - 每个缩放级别都有独立的坐标
+        const MAP_ANNOTATIONS = {
+            // 主要地标
+            landmarks: [
+                {
+                    name: '测试',
+                    color: '#DEB887',
+                    fontSize: 14,
+                    fontWeight: 'normal',
+                    positions: [
+                        { level: 0, mapX: 50000, mapY: -20 },
+                        { level: 1, mapX: 50000, mapY: 76 },
+                        { level: 2, mapX: 50000, mapY: 155 },
+                        { level: 3, mapX: 50000, mapY: 420 },
+                        { level: 4, mapX: 50000, mapY: 850 }
+                    ]
+                }
+            ]
+        };
+
+        // 图例数据
+        const LEGEND_DATA = {
+            PMCfuhuodian: {
+                name: 'PMC复活点',
+                color: '#ff6b6b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: 'PMC复活点#1', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -189, mapY: -77, rangeSize: 10 },
+                            { level: 1, mapX: -250, mapY: -152, rangeSize: 10 },
+                            { level: 2, mapX: -505, mapY: -300, rangeSize: 10 },
+                            { level: 3, mapX: -755, mapY: -475, rangeSize: 10 },
+                            { level: 4, mapX: -1770, mapY: -950, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#2', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 50, mapY: -102, rangeSize: 10 },
+                            { level: 1, mapX: 225, mapY: -205, rangeSize: 10 },
+                            { level: 2, mapX: 450, mapY: -410, rangeSize: 10 },
+                            { level: 3, mapX: 1150, mapY: -700, rangeSize: 10 },
+                            { level: 4, mapX: 2050, mapY: -1400, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#3', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -205, mapY: 11, rangeSize: 10 },
+                            { level: 1, mapX: -285, mapY: 30, rangeSize: 10 },
+                            { level: 2, mapX: -575, mapY: 60, rangeSize: 10 },
+                            { level: 3, mapX: -890, mapY: 250, rangeSize: 10 },
+                            { level: 4, mapX: -2050, mapY: 500, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#4', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -130, mapY: -17, rangeSize: 10 },
+                            { level: 1, mapX: -132, mapY: -34, rangeSize: 10 },
+                            { level: 2, mapX: -264, mapY: -67, rangeSize: 10 },
+                            { level: 3, mapX: -272, mapY: -8, rangeSize: 10 },
+                            { level: 4, mapX: -800, mapY: -15, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#5', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -25, mapY: -27, rangeSize: 10 },
+                            { level: 1, mapX: 80, mapY: -53, rangeSize: 10 },
+                            { level: 2, mapX: 159, mapY: -106, rangeSize: 10 },
+                            { level: 3, mapX: 575, mapY: -85, rangeSize: 10 },
+                            { level: 4, mapX: 890, mapY: -170, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#6', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -6, mapY: 20, rangeSize: 10 },
+                            { level: 1, mapX: 116, mapY: 37, rangeSize: 10 },
+                            { level: 2, mapX: 235, mapY: 73, rangeSize: 10 },
+                            { level: 3, mapX: 723, mapY: 275, rangeSize: 10 },
+                            { level: 4, mapX: 1190, mapY: 550, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#7', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -6, mapY: 73, rangeSize: 10 },
+                            { level: 1, mapX: 117, mapY: 146, rangeSize: 10 },
+                            { level: 2, mapX: 235, mapY: 293, rangeSize: 10 },
+                            { level: 3, mapX: 720, mapY: 715, rangeSize: 10 },
+                            { level: 4, mapX: 1180, mapY: 1430, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#8', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -106, mapY: 122, rangeSize: 10 },
+                            { level: 1, mapX: -84, mapY: 246, rangeSize: 10 },
+                            { level: 2, mapX: -167, mapY: 490, rangeSize: 10 },
+                            { level: 3, mapX: -79, mapY: 1125, rangeSize: 10 },
+                            { level: 4, mapX: -410, mapY: 2250, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#9', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -201, mapY: 133, rangeSize: 10 },
+                            { level: 1, mapX: -275, mapY: 265, rangeSize: 10 },
+                            { level: 2, mapX: -550, mapY: 525, rangeSize: 10 },
+                            { level: 3, mapX: -845, mapY: 1185, rangeSize: 10 },
+                            { level: 4, mapX: -1945, mapY: 2370, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: 'PMC复活点#10', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 189, mapY: -70, rangeSize: 10 },
+                            { level: 1, mapX: 505, mapY: -140, rangeSize: 10 },
+                            { level: 2, mapX: 1010, mapY: -285, rangeSize: 10 },
+                            { level: 3, mapX: 2275, mapY: -440, rangeSize: 10 },
+                            { level: 4, mapX: 4295, mapY: -880, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#11', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 220, mapY: -38, rangeSize: 10 },
+                            { level: 1, mapX: 562, mapY: -78, rangeSize: 10 },
+                            { level: 2, mapX: 1120, mapY: -155, rangeSize: 10 },
+                            { level: 3, mapX: 2505, mapY: -185, rangeSize: 10 },
+                            { level: 4, mapX: 4750, mapY: -370, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#12', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 232, mapY: 3, rangeSize: 10 },
+                            { level: 1, mapX: 592, mapY: 6, rangeSize: 10 },
+                            { level: 2, mapX: 1180, mapY: 15, rangeSize: 10 },
+                            { level: 3, mapX: 2620, mapY: 150, rangeSize: 10 },
+                            { level: 4, mapX: 4970, mapY: 300, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#13', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 231, mapY: 50, rangeSize: 10 },
+                            { level: 1, mapX: 583, mapY: 95, rangeSize: 10 },
+                            { level: 2, mapX: 1170, mapY: 193, rangeSize: 10 },
+                            { level: 3, mapX: 2595, mapY: 500, rangeSize: 10 },
+                            { level: 4, mapX: 4950, mapY: 1000, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#14', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 169, mapY: 51, rangeSize: 10 },
+                            { level: 1, mapX: 464, mapY: 98, rangeSize: 10 },
+                            { level: 2, mapX: 929, mapY: 196, rangeSize: 10 },
+                            { level: 3, mapX: 2112, mapY: 520, rangeSize: 10 },
+                            { level: 4, mapX: 3967, mapY: 1040, rangeSize: 10 }
+                        ]
+                    },
+					{ 
+                        name: 'PMC复活点#15', 
+                        color: '#4169E1',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 103, mapY: 38, rangeSize: 10 },
+                            { level: 1, mapX: 335, mapY: 78, rangeSize: 10 },
+                            { level: 2, mapX: 672, mapY: 161, rangeSize: 10 },
+                            { level: 3, mapX: 1600, mapY: 455, rangeSize: 10 },
+                            { level: 4, mapX: 2950, mapY: 910, rangeSize: 10 }
+                        ]
+                    }
+                ]
+            },
+            
+            BOSSshuaxinquyu: {
+                name: 'BOSS刷新区域',
+                color: '#51cf66',
+                visible: false,
+                expanded: false,  
+                items: [
+                    { 
+                        name: 'Tagilla（全图刷新）', 
+                        color: '#ff0000',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -78, mapY: 24, rangeSize: 10 },
+                            { level: 1, mapX: -28, mapY: 48, rangeSize: 10 },
+                            { level: 2, mapX: -57, mapY: 95, rangeSize: 10 },
+                            { level: 3, mapX: 145, mapY: 325, rangeSize: 10 },
+                            { level: 4, mapX: 30, mapY: 650, rangeSize: 10 }
+                        ]
+                    },
+                    { 
+                        name: '邪教徒（全图刷新）', 
+                        color: '#000000',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -70, mapY: 24, rangeSize: 10 },
+                            { level: 1, mapX: -5, mapY: 48, rangeSize: 10 },
+                            { level: 2, mapX: -18, mapY: 95, rangeSize: 10 },
+                            { level: 3, mapX: 230, mapY: 325, rangeSize: 10 },
+                            { level: 4, mapX: 200, mapY: 650, rangeSize: 10 }
+                        ]
+                    }
+                ]
+            },
+            
+            yaoshikaisuodidian: {
+                name: '钥匙开锁地点',
+                color: '#ffd43b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: '工厂出口钥匙-1', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -362, mapY: -35, rangeSize: 10 },
+                            { level: 1, mapX: -596, mapY: -70, rangeSize: 10 },
+                            { level: 2, mapX: -1192, mapY: -145, rangeSize: 10 },
+                            { level: 3, mapX: -2126, mapY: -160, rangeSize: 10 },
+                            { level: 4, mapX: -4509, mapY: -318, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '工厂出口钥匙-2', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 258, mapY: -90, rangeSize: 10 },
+                            { level: 1, mapX: 645, mapY: -182, rangeSize: 10 },
+                            { level: 2, mapX: 1291, mapY: -367, rangeSize: 10 },
+                            { level: 3, mapX: 2836, mapY: -607, rangeSize: 10 },
+                            { level: 4, mapX: 5417, mapY: -1214, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: '工厂出口钥匙-3', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 8, mapY: 74, rangeSize: 10 },
+                            { level: 1, mapX: 141, mapY: 150, rangeSize: 10 },
+                            { level: 2, mapX: 283, mapY: 305, rangeSize: 10 },
+                            { level: 3, mapX: 822, mapY: 736, rangeSize: 10 },
+                            { level: 4, mapX: 1388, mapY: 1473, rangeSize: 20 }
+                        ]
+                    },
+                    { 
+                        name: 'TerraGroup 仓库钥匙卡', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 113, mapY: 82, rangeSize: 10 },
+                            { level: 1, mapX: 354, mapY: 162, rangeSize: 10 },
+                            { level: 2, mapX: 710, mapY: 325, rangeSize: 10 },
+                            { level: 3, mapX: 1675, mapY: 771, rangeSize: 10 },
+                            { level: 4, mapX: 3095, mapY: 1543, rangeSize: 20 }
+                        ]
+                    }
+                ]
+            },
+			
+            PMCchelidian: {
+                name: 'PMC撤离点',
+                color: '#ffd43b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: '3号门', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -213, mapY: -77, rangeSize: 10 },
+                            { level: 1, mapX: -300, mapY: -155, rangeSize: 12 },
+                            { level: 2, mapX: -612, mapY: -310, rangeSize: 23 },
+                            { level: 3, mapX: -960, mapY: -492, rangeSize: 50 },
+                            { level: 4, mapX: -2180, mapY: -983, rangeSize: 93 }
+                        ]
+                    },
+                    { 
+                        name: '地下室', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 263, mapY: -110, rangeSize: 10 },
+                            { level: 1, mapX: 651, mapY: -220, rangeSize: 10 },
+                            { level: 2, mapX: 1300, mapY: -440, rangeSize: 10 },
+                            { level: 3, mapX: 2860, mapY: -752, rangeSize: 10 },
+                            { level: 4, mapX: 5448, mapY: -1504, rangeSize: 28 }
+                        ]
+                    },
+                    { 
+                        name: '0号门', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -202, mapY: 157, rangeSize: 10 },
+                            { level: 1, mapX: -275, mapY: 315, rangeSize: 10 },
+                            { level: 2, mapX: -550, mapY: 630, rangeSize: 25 },
+                            { level: 3, mapX: -845, mapY: 1375, rangeSize: 50 },
+                            { level: 4, mapX: -1945, mapY: 2750, rangeSize: 100 }
+                        ]
+                    },
+                    { 
+                        name: '医疗帐篷大门', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 25, mapY: 74, rangeSize: 10 },
+                            { level: 1, mapX: 167, mapY: 146, rangeSize: 10 },
+                            { level: 2, mapX: 332, mapY: 293, rangeSize: 25 },
+                            { level: 3, mapX: 920, mapY: 712, rangeSize: 50 },
+                            { level: 4, mapX: 1600, mapY: 1425, rangeSize: 100 }
+                        ]
+                    },
+					{ 
+                        name: '庭院大门', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -220, mapY: -8, rangeSize: 10 },
+                            { level: 1, mapX: -310, mapY: -17, rangeSize: 10 },
+                            { level: 2, mapX: -620, mapY: -35, rangeSize: 25 },
+                            { level: 3, mapX: -980, mapY: 50, rangeSize: 50 },
+                            { level: 4, mapX: -2230, mapY: 100, rangeSize: 100 }
+                        ]
+                    },
+					{ 
+                        name: '走私者小道（需要纸条）', 
+                        color: '#32CD32',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 260, mapY: -55, rangeSize: 10 },
+                            { level: 1, mapX: 645, mapY: -110, rangeSize: 10 },
+                            { level: 2, mapX: 1290, mapY: -220, rangeSize: 15 },
+                            { level: 3, mapX: 2845, mapY: -310, rangeSize: 25 },
+                            { level: 4, mapX: 5440, mapY: -620, rangeSize: 50 }
+                        ]
+                    }
+                ]
+            },
+			
+            Scavchelidian: {
+                name: 'Scav撤离点',
+                color: '#ffd43b',
+                visible: false ,
+                expanded: false,
+                items: [
+                    { 
+                        name: '3号门', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -213, mapY: -77, rangeSize: 10 },
+                            { level: 1, mapX: -300, mapY: -155, rangeSize: 12 },
+                            { level: 2, mapX: -612, mapY: -310, rangeSize: 23 },
+                            { level: 3, mapX: -960, mapY: -492, rangeSize: 50 },
+                            { level: 4, mapX: -2180, mapY: -983, rangeSize: 93 }
+                        ]
+                    },
+                    { 
+                        name: '监控地堡大门', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 118, mapY: 68, rangeSize: 10 },
+                            { level: 1, mapX: 360, mapY: 138, rangeSize: 10 },
+                            { level: 2, mapX: 726, mapY: 280, rangeSize: 20 },
+                            { level: 3, mapX: 1695, mapY: 675, rangeSize: 40 },
+                            { level: 4, mapX: 3140, mapY: 1350, rangeSize: 80 }
+                        ]
+                    },
+                    { 
+                        name: '办公室窗户', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -373, mapY: 8, rangeSize: 10 },
+                            { level: 1, mapX: -623, mapY: 16, rangeSize: 10 },
+                            { level: 2, mapX: -1245, mapY: 33, rangeSize: 15 },
+                            { level: 3, mapX: -2240, mapY: 200, rangeSize: 30 },
+                            { level: 4, mapX: -4740, mapY: 400, rangeSize: 60 }
+                        ]
+                    },
+                    { 
+                        name: '走私者小道（需要纸条）', 
+                        color: '#D2691E',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 260, mapY: -55, rangeSize: 10 },
+                            { level: 1, mapX: 645, mapY: -110, rangeSize: 10 },
+                            { level: 2, mapX: 1290, mapY: -220, rangeSize: 15 },
+                            { level: 3, mapX: 2845, mapY: -310, rangeSize: 25 },
+                            { level: 4, mapX: 5440, mapY: -620, rangeSize: 50 }
+                        ]
+                    }
+                ]
+            },
+			
+            malasongzhuanyidian: {
+                name: '马拉松转移点',
+                color: '#ffd43b',
+                visible: false,
+                expanded: false,
+                items: [
+                    { 
+                        name: '前往海关', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 8, mapY: 2, rangeSize: 10 },
+                            { level: 1, mapX: 136, mapY: 7, rangeSize: 15 },
+                            { level: 2, mapX: 275, mapY: 13, rangeSize: 30 },
+                            { level: 3, mapX: 810, mapY: 153, rangeSize: 60 },
+                            { level: 4, mapX: 1365, mapY: 307, rangeSize: 120 }
+                        ]
+                    },
+                    { 
+                        name: '前往森林', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: -210, mapY: -8, rangeSize: 10 },
+                            { level: 1, mapX: -288, mapY: -17, rangeSize: 18 },
+                            { level: 2, mapX: -570, mapY: -35, rangeSize: 35 },
+                            { level: 3, mapX: -895, mapY: 50, rangeSize: 75 },
+                            { level: 4, mapX: -2050, mapY: 100, rangeSize: 150 }
+                        ]
+                    },
+                    { 
+                        name: '前往实验室', 
+                        color: '#FF4500',
+                        rangeShape: 'circle',
+                        positions: [
+                            { level: 0, mapX: 280, mapY: 94, rangeSize: 10 },
+                            { level: 1, mapX: 690, mapY: 188, rangeSize: 10 },
+                            { level: 2, mapX: 1380, mapY: 375, rangeSize: 15 },
+                            { level: 3, mapX: 3020, mapY: 880, rangeSize: 36 },
+                            { level: 4, mapX: 5800, mapY: 1760, rangeSize: 70 }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Canvas地图类
+        class CanvasMap {
+            constructor() {
+                console.log('工厂地图初始化中...请等待...');
+                
+                // DOM元素
+                this.canvas = document.getElementById('mapCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.loadingScreen = document.getElementById('loadingScreen');
+                this.controls = document.getElementById('controls');
+                this.legendPanel = document.getElementById('legendPanel');
+                this.annotationInfo = document.getElementById('annotationInfo');
+                
+                // 状态
+                this.currentZoom = 0;
+                this.viewX = 0;
+                this.viewY = 0;
+                this.isDragging = false;
+                this.lastMouseX = 0;
+                this.lastMouseY = 0;
+                
+                // 图片存储
+                this.images = {}; // [level][col][row] = Image
+                this.loadedLevels = new Set();
+                this.totalImages = 0;
+                this.loadedCount = 0;
+                
+                // 图例系统
+                this.legendData = JSON.parse(JSON.stringify(LEGEND_DATA)); // 深拷贝
+                this.hoveredLegend = null;
+                this.selectedLegend = null; // 当前选中的图例（显示范围）
+                this.rangeDisplays = new Set(); // 显示范围的图例集合
+                
+                // 性能监控
+                this.fps = 60;
+                this.frameCount = 0;
+                this.lastTime = performance.now();
+                
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    this.setupCanvas();
+                    await this.loadAllImages();
+                    this.hideLoading();
+                    this.bindEvents();
+                    this.setupLegendPanel();
+                    this.startRenderLoop();
+                    console.log('初始化完成！');
+                } catch (error) {
+                    console.error('初始化失败:', error);
+                    this.showError(error);
+                }
+            }
+            
+            setupCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.canvas.style.width = window.innerWidth + 'px';
+                this.canvas.style.height = window.innerHeight + 'px';
+                
+                this.ctx.imageSmoothingEnabled = false;
+                console.log('Canvas设置完成');
+            }
+            
+            async loadAllImages() {
+                // 计算总图片数
+                this.totalImages = config.basePaths.reduce((sum, _, i) => 
+                    sum + config.totalFolders[i] * config.imagesPerFolder[i], 0);
+                
+                console.log(`开始加载 ${this.totalImages} 张图片`);
+                
+                // 按大小排序，先加载小的
+                const levels = config.basePaths.map((_, i) => ({
+                    index: i,
+                    size: config.totalFolders[i] * config.imagesPerFolder[i]
+                })).sort((a, b) => a.size - b.size);
+                
+                // 逐级加载
+                for (const level of levels) {
+                    await this.loadLevel(level.index);
+                    this.loadedLevels.add(level.index);
+                    
+                    // 第一个级别加载完就显示   默认级别
+                    if (this.loadedLevels.size === 1) {
+                        this.currentZoom = level.index;
+                        this.hideLoading();
+                        this.bindEvents();
+                        this.setupLegendPanel();
+                        this.startRenderLoop();
+                    }
+                }
+            }
+            
+            async loadLevel(levelIndex) {
+                return new Promise((resolve, reject) => {
+                    console.log(`加载级别 ${levelIndex + 1}...`);
+                    
+                    const cols = config.totalFolders[levelIndex];
+                    const rows = config.imagesPerFolder[levelIndex];
+                    let loaded = 0;
+                    const total = cols * rows;
+                    
+                    // 初始化存储
+                    if (!this.images[levelIndex]) {
+                        this.images[levelIndex] = {};
+                    }
+                    
+                    const timeout = setTimeout(() => {
+                        reject(new Error(`级别 ${levelIndex} 加载超时`));
+                    }, 30000);
+                    
+                    for (let col = 0; col < cols; col++) {
+                        if (!this.images[levelIndex][col]) {
+                            this.images[levelIndex][col] = {};
+                        }
+                        
+                        for (let row = 0; row < rows; row++) {
+                            const img = new Image();
+                            const path = `${config.basePaths[levelIndex]}${col}/${row}.webp`;
+                            
+                            img.onload = () => {
+                                this.images[levelIndex][col][row] = img;
+                                loaded++;
+                                this.loadedCount++;
+                                this.updateProgress();
+                                
+                                if (loaded === total) {
+                                    clearTimeout(timeout);
+                                    console.log(`级别 ${levelIndex + 1} 加载完成`);
+                                    resolve();
+                                }
+                            };
+                            
+                            img.onerror = () => {
+                                console.warn(`图片加载失败: ${path}`);
+                                // 创建占位符
+                                const placeholder = this.createPlaceholder();
+                                this.images[levelIndex][col][row] = placeholder;
+                                loaded++;
+                                this.loadedCount++;
+                                this.updateProgress();
+                                
+                                if (loaded === total) {
+                                    clearTimeout(timeout);
+                                    resolve();
+                                }
+                            };
+                            
+                            img.src = path;
+                        }
+                    }
+                });
+            }
+            
+            createPlaceholder() {
+                const canvas = document.createElement('canvas');
+                canvas.width = config.tileSize;
+                canvas.height = config.tileSize;
+                const ctx = canvas.getContext('2d');
+                
+                ctx.fillStyle = '#333';
+                ctx.fillRect(0, 0, config.tileSize, config.tileSize);
+                
+                const img = new Image();
+                img.src = canvas.toDataURL();
+                return img;
+            }
+            
+            updateProgress() {
+                const progress = (this.loadedCount / this.totalImages) * 100;
+                document.getElementById('loadingProgress').style.width = `${progress}%`;
+                document.getElementById('loadingText').textContent = 
+                    `已加载: ${this.loadedCount}/${this.totalImages} (${Math.round(progress)}%)`;
+                document.getElementById('loadedLevels').textContent = `${this.loadedLevels.size}/5`;
+            }
+            
+            hideLoading() {
+                this.loadingScreen.style.display = 'none';
+                this.controls.style.display = 'block';
+                this.legendPanel.style.display = 'block';
+                this.annotationInfo.style.display = 'block';
+            }
+            
+            showError(error) {
+                const errorDiv = document.createElement('div');
+                errorDiv.style.cssText = 'color: #ff6b6b; background: rgba(255,107,107,0.1); padding: 10px; border-radius: 4px; margin-top: 10px;';
+                errorDiv.innerHTML = `<strong>加载错误:</strong><br>${error.message}`;
+                this.loadingScreen.appendChild(errorDiv);
+            }
+            
+            startRenderLoop() {
+                const render = (time) => {
+                    this.render();
+                    
+                    // 计算FPS
+                    this.frameCount++;
+                    if (time - this.lastTime >= 1000) {
+                        this.fps = Math.round(this.frameCount * 1000 / (time - this.lastTime));
+                        this.frameCount = 0;
+                        this.lastTime = time;
+                        document.getElementById('fpsCounter').textContent = this.fps;
+                    }
+                    
+                    requestAnimationFrame(render);
+                };
+                requestAnimationFrame(render);
+            }
+            
+            render() {
+                const ctx = this.ctx;
+                
+                // 清空画布
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // 检查级别是否加载
+                if (!this.loadedLevels.has(this.currentZoom)) {
+                    ctx.fillStyle = 'white';
+                    ctx.font = '20px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`级别 ${this.currentZoom + 1} 加载中...`, 
+                        this.canvas.width / 2, this.canvas.height / 2);
+                    return;
+                }
+                
+                const images = this.images[this.currentZoom];
+                if (!images) return;
+                
+                const cols = config.totalFolders[this.currentZoom];
+                const rows = config.imagesPerFolder[this.currentZoom];
+                const tileSize = config.tileSize;
+                
+                // 计算渲染起点
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                const startX = centerX + this.viewX - (cols * tileSize) / 2;
+                const startY = centerY + this.viewY - (rows * tileSize) / 2;
+                
+                // 只渲染可见瓦片
+                const visibleCols = Math.ceil(this.canvas.width / tileSize) + 2;
+                const visibleRows = Math.ceil(this.canvas.height / tileSize) + 2;
+                const startCol = Math.max(0, Math.floor(-startX / tileSize));
+                const startRow = Math.max(0, Math.floor(-startY / tileSize));
+                const endCol = Math.min(cols - 1, startCol + visibleCols);
+                const endRow = Math.min(rows - 1, startRow + visibleRows);
+                
+                 // 渲染瓦片
+                for (let col = startCol; col <= endCol; col++) {
+                    if (!images[col]) continue;
+                    for (let row = startRow; row <= endRow; row++) {
+                        const img = images[col][row];
+                        if (!img) continue;
+                        
+                        const x = Math.floor(startX + col * tileSize);
+                        const y = Math.floor(startY + row * tileSize);
+                        
+                        // 绘制图片
+                        ctx.drawImage(img, x, y, tileSize, tileSize);
+                    }
+                }
+                
+                // 渲染地图注释
+                this.renderMapAnnotations();
+                
+                // 渲染图例标记
+                this.renderLegends();
+            }
+            
+            // 渲染地图注释
+            renderMapAnnotations() {
+                const ctx = this.ctx;
+                
+                // 遍历所有注释分类
+                Object.values(MAP_ANNOTATIONS).forEach(category => {
+                    category.forEach(annotation => {
+                        // 获取当前缩放级别的位置
+                        const pos = this.getAnnotationPosition(annotation, this.currentZoom);
+                        const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                        
+                        // 检查是否在屏幕范围内
+                        if (screenPos.x < -100 || screenPos.x > this.canvas.width + 100 ||
+                            screenPos.y < -50 || screenPos.y > this.canvas.height + 50) {
+                            return;
+                        }
+                        
+                        // 绘制注释文字
+                        ctx.save();
+                        
+                        // 设置字体样式
+                        const fontSize = annotation.fontSize || 12;
+                        const fontWeight = annotation.fontWeight || 'normal';
+                        ctx.font = `${fontWeight} ${fontSize}px Arial, "Microsoft YaHei", sans-serif`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        
+                        // 绘制文字阴影（增强可读性）
+                        ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+                        ctx.lineWidth = 3;
+                        ctx.strokeText(annotation.name, screenPos.x, screenPos.y);
+                        
+                        // 绘制文字
+                        ctx.fillStyle = annotation.color;
+                        ctx.fillText(annotation.name, screenPos.x, screenPos.y);
+                        
+                        // 为重要地标添加下划线
+                        if (annotation.fontWeight === 'bold') {
+                            const textWidth = ctx.measureText(annotation.name).width;
+                            ctx.strokeStyle = annotation.color;
+                            ctx.lineWidth = 2;
+                            ctx.beginPath();
+                            ctx.moveTo(screenPos.x - textWidth/2, screenPos.y + fontSize/2 + 2);
+                            ctx.lineTo(screenPos.x + textWidth/2, screenPos.y + fontSize/2 + 2);
+                            ctx.stroke();
+                        }
+                        
+                        ctx.restore();
+                    });
+                });
+            }
+            
+            // 获取当前缩放级别下注释的位置
+            getAnnotationPosition(annotation, zoomLevel) {
+                const position = annotation.positions.find(p => p.level === zoomLevel);
+                if (position) {
+                    return { 
+                        mapX: position.mapX, 
+                        mapY: position.mapY
+                    };
+                }
+                // 如果没找到对应级别，返回第一个位置作为默认值
+                return { 
+                    mapX: annotation.positions[0].mapX, 
+                    mapY: annotation.positions[0].mapY
+                };
+            }
+            
+            // 图例渲染方法
+            renderLegends() {
+                const ctx = this.ctx;
+                
+                // 先渲染范围
+                this.renderLegendRanges();
+                
+                // 再渲染图例标记点
+                Object.values(this.legendData).forEach(category => {
+                    if (!category.visible) return;
+                    
+                    // 遍历分类下的所有标记点
+                    category.items.forEach(item => {
+                        // 获取当前缩放级别的位置
+                        const pos = this.getLegendPosition(item, this.currentZoom);
+                        const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                        
+                        // 检查是否在屏幕范围内
+                        if (screenPos.x < -30 || screenPos.x > this.canvas.width + 30 ||
+                            screenPos.y < -30 || screenPos.y > this.canvas.height + 30) {
+                            return;
+                        }
+                        
+                        // 绘制标记
+                        ctx.save();
+                        
+                        // 外圈（白色边框）
+                        ctx.beginPath();
+                        ctx.arc(screenPos.x, screenPos.y, 8, 0, Math.PI * 2);
+                        ctx.fillStyle = 'white';
+                        ctx.fill();
+                        
+                        // 内圈（颜色）
+                        ctx.beginPath();
+                        ctx.arc(screenPos.x, screenPos.y, 6, 0, Math.PI * 2);
+                        ctx.fillStyle = item.color;
+                        ctx.fill();
+                        
+                        // 如果被选中显示范围，添加高亮边框
+                        if (this.rangeDisplays.has(item)) {
+                            ctx.beginPath();
+                            ctx.arc(screenPos.x, screenPos.y, 10, 0, Math.PI * 2);
+                            ctx.strokeStyle = item.color;
+                            ctx.lineWidth = 3;
+                            ctx.setLineDash([5, 5]);
+                            ctx.stroke();
+                            ctx.setLineDash([]);
+                        }
+                        
+                        // 鼠标悬停效果
+                        if (item === this.hoveredLegend) {
+                            ctx.shadowColor = item.color;
+                            ctx.shadowBlur = 15;
+                            ctx.beginPath();
+                            ctx.arc(screenPos.x, screenPos.y, 10, 0, Math.PI * 2);
+                            ctx.strokeStyle = item.color;
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                            
+                            // 显示标签
+                            this.drawLegendTooltip(screenPos.x, screenPos.y, item);
+                        }
+                        
+                        ctx.restore();
+                    });
+                });
+            }
+            
+            // 渲染图例范围
+            renderLegendRanges() {
+                const ctx = this.ctx;
+                
+                this.rangeDisplays.forEach(item => {
+                    const pos = this.getLegendPosition(item, this.currentZoom);
+                    const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                    const rangeSize = pos.rangeSize || 50;
+                    
+                    // 检查是否在屏幕范围内（扩大检查范围以包含可能的大范围）
+                    if (screenPos.x < -rangeSize - 50 || screenPos.x > this.canvas.width + rangeSize + 50 ||
+                        screenPos.y < -rangeSize - 50 || screenPos.y > this.canvas.height + rangeSize + 50) {
+                        return;
+                    }
+                    
+                    ctx.save();
+                    ctx.globalAlpha = 0.3;
+                    ctx.fillStyle = item.color;
+                    ctx.strokeStyle = item.color;
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([10, 5]);
+                    
+                    // 根据形状类型绘制范围
+                    switch (item.rangeShape) {
+                        case 'circle':
+                            // 圆形
+                            ctx.beginPath();
+                            ctx.arc(screenPos.x, screenPos.y, rangeSize, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.globalAlpha = 0.8;
+                            ctx.stroke();
+                            break;
+                            
+                        case 'square':
+                            // 正方形
+                            const halfSize = rangeSize;
+                            ctx.fillRect(screenPos.x - halfSize, screenPos.y - halfSize, halfSize * 2, halfSize * 2);
+                            ctx.globalAlpha = 0.8;
+                            ctx.strokeRect(screenPos.x - halfSize, screenPos.y - halfSize, halfSize * 2, halfSize * 2);
+                            break;
+                            
+                        case 'ellipse':
+                            // 竖向椭圆形
+                            ctx.beginPath();
+                            ctx.ellipse(screenPos.x, screenPos.y, rangeSize * 0.8, rangeSize * 1.2, 0, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.globalAlpha = 0.8;
+                            ctx.stroke();
+                            break;
+							
+                        case 'ellipse1':
+                            // 横向椭圆形
+                            ctx.beginPath();
+                            ctx.ellipse(screenPos.x, screenPos.y, rangeSize * 1.2, rangeSize * 0.8, 0, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.globalAlpha = 0.8;
+                            ctx.stroke();
+                            break;
+                    }
+                    
+                    // 在范围中心显示名称
+                    ctx.restore();
+                    ctx.save();
+                    ctx.fillStyle = item.color;
+                    ctx.font = 'bold 12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 3;
+                    ctx.strokeText(item.name, screenPos.x, screenPos.y - 15);
+                    ctx.fillText(item.name, screenPos.x, screenPos.y - 15);
+                    ctx.restore();
+                });
+            }
+            
+            drawLegendTooltip(x, y, item) {
+                const ctx = this.ctx;
+                const text = item.name;
+                
+                ctx.save();
+                ctx.font = '12px Arial';
+                
+                const textWidth = ctx.measureText(text).width;
+                const padding = 8;
+                const tooltipWidth = textWidth + padding * 2;
+                const tooltipHeight = 25;
+                
+                // 调整位置避免超出屏幕
+                let tooltipX = x + 15;
+                let tooltipY = y - tooltipHeight / 2;
+                
+                if (tooltipX + tooltipWidth > this.canvas.width) {
+                    tooltipX = x - tooltipWidth - 15;
+                }
+                if (tooltipY < 0) tooltipY = 0;
+                if (tooltipY + tooltipHeight > this.canvas.height) {
+                    tooltipY = this.canvas.height - tooltipHeight;
+                }
+                
+                // 绘制背景
+                ctx.fillStyle = 'rgba(0,0,0,0.9)';
+                ctx.fillRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
+                
+                // 绘制边框
+                ctx.strokeStyle = item.color;
+                ctx.lineWidth = 2;
+                ctx.strokeRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
+                
+                // 绘制文字
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'left';
+                ctx.fillText(text, tooltipX + padding, tooltipY + 16);
+                
+                ctx.restore();
+            }
+            
+            // 获取当前缩放级别下图例的位置和范围大小
+            getLegendPosition(item, zoomLevel) {
+                const position = item.positions.find(p => p.level === zoomLevel);
+                if (position) {
+                    return { 
+                        mapX: position.mapX, 
+                        mapY: position.mapY,
+                        rangeSize: position.rangeSize || 50
+                    };
+                }
+                // 如果没找到对应级别，返回第一个位置作为默认值
+                return { 
+                    mapX: item.positions[0].mapX, 
+                    mapY: item.positions[0].mapY,
+                    rangeSize: item.positions[0].rangeSize || 50
+                };
+            }
+            
+            // 切换图例范围显示
+            toggleLegendRange(item) {
+                if (this.rangeDisplays.has(item)) {
+                    this.rangeDisplays.delete(item);
+                } else {
+                    this.rangeDisplays.add(item);
+                }
+            }
+            
+            // 简化的坐标转换方法（不再需要复杂的缩放计算）
+            mapToScreen(mapX, mapY) {
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                
+                return {
+                    x: centerX + this.viewX + mapX,
+                    y: centerY + this.viewY + mapY
+                };
+            }
+            
+            screenToMap(screenX, screenY) {
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                
+                return {
+                    x: screenX - centerX - this.viewX,
+                    y: screenY - centerY - this.viewY
+                };
+            }
+            
+            // 检查鼠标是否悬停在图例上
+            getLegendAtPosition(screenX, screenY) {
+                for (let category of Object.values(this.legendData)) {
+                    if (!category.visible) continue;
+                    
+                    for (let item of category.items) {
+                        // 获取当前缩放级别的位置
+                        const pos = this.getLegendPosition(item, this.currentZoom);
+                        const screenPos = this.mapToScreen(pos.mapX, pos.mapY);
+                        const distance = Math.sqrt(
+                            Math.pow(screenX - screenPos.x, 2) + 
+                            Math.pow(screenY - screenPos.y, 2)
+                        );
+                        
+                        if (distance <= 10) {
+                            return item;
+                        }
+                    }
+                }
+                return null;
+            }
+            
+            // 图例面板设置
+            setupLegendPanel() {
+                const container = document.getElementById('legendCategories');
+                container.innerHTML = '';
+                
+                Object.entries(this.legendData).forEach(([key, category]) => {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'legend-category';
+                    
+                    // 分类标题
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'legend-category-header';
+                    headerDiv.innerHTML = `
+                        <input type="checkbox" class="legend-checkbox" ${category.visible ? 'checked' : ''}>
+                        <span class="legend-category-name">${category.name}</span>
+                        <span class="legend-count">${category.items.length}</span>
+                    `;
+                    
+                    // 点击标题处理
+                    headerDiv.addEventListener('click', (e) => {
+                        if (e.target.type === 'checkbox') {
+                            // 只点击复选框时，切换显示状态
+                            category.visible = e.target.checked;
+                            this.updateToggleButton();
+                        } else {
+                            // 点击其他区域时，展开/折叠详情
+                            category.expanded = !category.expanded;
+                            const itemsDiv = categoryDiv.querySelector('.legend-items');
+                            itemsDiv.classList.toggle('expanded', category.expanded);
+                        }
+                    });
+                    
+                    // 分类项目列表
+                    const itemsDiv = document.createElement('div');
+                    itemsDiv.className = 'legend-items';
+                    if (category.expanded) {
+                        itemsDiv.classList.add('expanded');
+                    }
+                    
+                    category.items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'legend-item';
+                        itemDiv.innerHTML = `
+                            <div class="legend-color" style="background-color: ${item.color}"></div>
+                            <span>${item.name}</span>
+                        `;
+                        
+                        // 点击定位到图例位置并显示名称，右键切换范围显示
+                        itemDiv.addEventListener('click', (e) => {
+                            // 获取当前缩放级别的位置
+                            const pos = this.getLegendPosition(item, this.currentZoom);
+                            const targetX = -pos.mapX;
+                            const targetY = -pos.mapY;
+                            
+                            // 移动到目标位置
+                            this.animateViewTo(targetX, targetY, 1000);
+                            
+            
+        
+            // 显示图例名称提示
+                            this.showLegendNameToast(item.name, item.color);
+                        });
+                        
+                        // 右键点击切换范围显示
+                        itemDiv.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+                            this.toggleLegendRange(item);
+                            
+                            // 显示范围切换提示
+                            const isShowing = this.rangeDisplays.has(item);
+                            this.showRangeToggleToast(item.name, isShowing);
+                        });
+                        
+                        itemsDiv.appendChild(itemDiv);
+                    });
+                    
+                    categoryDiv.appendChild(headerDiv);
+                    categoryDiv.appendChild(itemsDiv);
+                    container.appendChild(categoryDiv);
+                });
+                
+                this.updateToggleButton();
+            }
+            
+            // 更新全部切换按钮状态
+            updateToggleButton() {
+                const button = document.querySelector('.legend-toggle-btn');
+                const visibleCount = Object.values(this.legendData).filter(c => c.visible).length;
+                const totalCount = Object.keys(this.legendData).length;
+                
+                if (visibleCount === 0) {
+                    button.textContent = '全部显示';
+                } else if (visibleCount === totalCount) {
+                    button.textContent = '全部隐藏';
+                } else {
+                    button.textContent = `${visibleCount}/${totalCount} 显示`;
+                }
+            }
+            
+            // 切换所有图例显示状态
+            toggleAllLegends() {
+                const visibleCount = Object.values(this.legendData).filter(c => c.visible).length;
+                const shouldShow = visibleCount === 0;
+                
+                Object.values(this.legendData).forEach(category => {
+                    category.visible = shouldShow;
+                });
+                
+                // 更新UI
+                document.querySelectorAll('.legend-checkbox').forEach(checkbox => {
+                    checkbox.checked = shouldShow;
+                });
+                
+                this.updateToggleButton();
+            }
+
+            // 显示范围切换提示
+            showRangeToggleToast(name, isShowing) {
+                // 移除之前的提示
+                const existingToast = document.querySelector('.range-toggle-toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                const toast = document.createElement('div');
+                toast.className = 'range-toggle-toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20%;
+                    right: 45%;
+                    transform: translateY(-50%);
+                    background: rgba(0,0,0,0.9);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    z-index: 3000;
+                    font-size: 14px;
+                    border: 2px solid ${isShowing ? '#00b285' : '#666'};
+                    animation: rangeToastSlide 0.3s ease-out;
+                `;
+                
+                toast.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <span style="margin-right: 8px;">${isShowing ? '✅' : '❌'}</span>
+                        <span>${name} 范围 ${isShowing ? '已显示' : '已隐藏'}</span>
+                    </div>
+                `;
+                
+                // 添加动画样式
+                if (!document.querySelector('#rangeToastStyles')) {
+                    const style = document.createElement('style');
+                    style.id = 'rangeToastStyles';
+                    style.textContent = `
+                        @keyframes rangeToastSlide {
+                            0% {
+                                opacity: 0;
+                                transform: translateY(-50%) translateX(100px);
+                            }
+                            100% {
+                                opacity: 1;
+                                transform: translateY(-50%) translateX(0);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                document.body.appendChild(toast);
+                
+                // 2秒后移除提示
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.transition = 'opacity 0.3s, transform 0.3s';
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translateY(-50%) translateX(100px)';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
+                    }
+                }, 2000);
+            }
+            
+            // 显示图例名称提示
+            showLegendNameToast(name, color) {
+                // 移除之前的提示
+                const existingToast = document.querySelector('.legend-name-toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+                
+                // 创建新的提示
+                const toast = document.createElement('div');
+                toast.className = 'legend-name-toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0,0,0,0.9);
+                    color: white;
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    z-index: 3000;
+                    font-size: 18px;
+                    font-weight: bold;
+                    text-align: center;
+                    border: 3px solid ${color};
+                    box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 40px ${color}40;
+                    animation: legendToastShow 0.5s ease-out;
+                `;
+                
+                toast.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <div style="width: 16px; height: 16px; background: ${color}; border-radius: 50%; margin-right: 12px; border: 2px solid white;"></div>
+                        <span>${name}</span>
+                    </div>
+                `;
+                
+                // 添加动画样式
+                if (!document.querySelector('#legendToastStyles')) {
+                    const style = document.createElement('style');
+                    style.id = 'legendToastStyles';
+                    style.textContent = `
+                        @keyframes legendToastShow {
+                            0% {
+                                opacity: 0;
+                                transform: translate(-50%, -50%) scale(0.8);
+                            }
+                            100% {
+                                opacity: 1;
+                                transform: translate(-50%, -50%) scale(1);
+                            }
+                        }
+                        @keyframes legendToastHide {
+                            0% {
+                                opacity: 1;
+                                transform: translate(-50%, -50%) scale(1);
+                            }
+                            100% {
+                                opacity: 0;
+                                transform: translate(-50%, -50%) scale(0.8);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                document.body.appendChild(toast);
+                
+                // 3秒后移除提示
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.animation = 'legendToastHide 0.3s ease-in forwards';
+                        setTimeout(() => {
+                            if (toast.parentNode) {
+                                toast.remove();
+                            }
+                        }, 300);
+                    }
+                }, 1800);
+            }
+            
+            animateViewTo(targetX, targetY, duration = 800) {
+                const startX = this.viewX;
+                const startY = this.viewY;
+                const startTime = performance.now();
+                
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // 使用easeInOutCubic缓动函数
+                    const easeProgress = progress < 0.5 
+                        ? 4 * progress * progress * progress
+                        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+                    
+                    this.viewX = startX + (targetX - startX) * easeProgress;
+                    this.viewY = startY + (targetY - startY) * easeProgress;
+                    this.updateUI();
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+            
+            switchZoom(newZoom, mouseX, mouseY) {
+                if (newZoom < 0 || newZoom >= config.basePaths.length || newZoom === this.currentZoom) {
+                    return;
+                }
+                
+                if (!this.loadedLevels.has(newZoom)) {
+                    console.log(`级别 ${newZoom + 1} 尚未加载`);
+                    return;
+                }
+                
+                // 鼠标中心缩放
+                if (mouseX !== undefined && mouseY !== undefined) {
+                    const oldCols = config.totalFolders[this.currentZoom];
+                    const oldRows = config.imagesPerFolder[this.currentZoom];
+                    const newCols = config.totalFolders[newZoom];
+                    const newRows = config.imagesPerFolder[newZoom];
+                    
+                    const scaleX = newCols / oldCols;
+                    const scaleY = newRows / oldRows;
+                    const scale = (scaleX + scaleY) / 2;
+                    
+                    const centerX = this.canvas.width / 2;
+                    const centerY = this.canvas.height / 2;
+                    const mouseDeltaX = mouseX - centerX;
+                    const mouseDeltaY = mouseY - centerY;
+                    
+                    this.viewX = this.viewX * scale - mouseDeltaX * (scale - 1);
+                    this.viewY = this.viewY * scale - mouseDeltaY * (scale - 1);
+                }
+                
+                this.currentZoom = newZoom;
+                this.updateUI();
+                console.log(`切换到级别 ${newZoom + 1}`);
+            }
+            
+            resetView() {
+                this.viewX = 0;
+                this.viewY = 0;
+                this.updateUI();
+            }
+            
+            updateUI() {
+                document.getElementById('zoomLevel').textContent = `${this.currentZoom + 1}/5`;
+                document.getElementById('viewportPos').textContent = `(${Math.round(this.viewX)}, ${Math.round(this.viewY)})`;
+            }
+            
+            bindEvents() {
+                // 鼠标事件
+                this.canvas.addEventListener('mousedown', (e) => {
+                    this.isDragging = true;
+                    this.canvas.classList.add('dragging');
+                    this.lastMouseX = e.clientX;
+                    this.lastMouseY = e.clientY;
+                    this.dragStartX = this.viewX;
+                    this.dragStartY = this.viewY;
+                });
+                
+                document.addEventListener('mousemove', (e) => {
+                    document.getElementById('mousePos').textContent = `(${e.clientX}, ${e.clientY})`;
+                    
+                    // 检查鼠标是否悬停在图例上
+                    this.hoveredLegend = this.getLegendAtPosition(e.clientX, e.clientY);
+                    
+                    if (this.isDragging) {
+                        const dx = e.clientX - this.lastMouseX;
+                        const dy = e.clientY - this.lastMouseY;
+                        this.viewX = this.dragStartX + dx;
+                        this.viewY = this.dragStartY + dy;
+                        this.updateUI();
+                    }
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    this.isDragging = false;
+                    this.canvas.classList.remove('dragging');
+                });
+                
+                // 滚轮缩放
+                this.canvas.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const newZoom = e.deltaY < 0 ? 
+                        Math.min(this.currentZoom + 1, 5) : 
+                        Math.max(this.currentZoom - 1, 0);
+                    this.switchZoom(newZoom, e.clientX, e.clientY);
+                }, { passive: false });
+                
+                // 键盘事件
+                window.addEventListener('keydown', (e) => {
+                    switch(e.key.toLowerCase()) {
+                        case 'r':
+                            this.resetView();
+                            break;
+                        case '+':
+                        case '=':
+                            this.switchZoom(Math.min(this.currentZoom + 1, 5));
+                            break;
+                        case '-':
+                            this.switchZoom(Math.max(this.currentZoom - 1, 0));
+                            break;
+                        case 'l':
+                            this.toggleAllLegends();
+                            break;
+                    }
+                });
+                
+                // 窗口大小变化
+                window.addEventListener('resize', () => {
+                    this.setupCanvas();
+                });
+            }
+        }
+        
+        // 启动地图
+        let map;
+        try {
+            map = new CanvasMap();
+        } catch (error) {
+            console.error('启动失败:', error);
+            document.body.innerHTML = `
+                <div style="color: white; text-align: center; margin-top: 100px;">
+                    <h2>启动失败</h2>
+                    <p>${error.message}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

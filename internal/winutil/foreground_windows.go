@@ -16,7 +16,6 @@ var (
 	kernel32                  = windows.NewLazySystemDLL("kernel32.dll")
 	procEnumWindows           = user32.NewProc("EnumWindows")
 	procGetWindowThreadProcId = user32.NewProc("GetWindowThreadProcessId")
-	procIsWindowVisible       = user32.NewProc("IsWindowVisible")
 	procBringWindowToTop      = user32.NewProc("BringWindowToTop")
 	procSetForegroundWindow   = user32.NewProc("SetForegroundWindow")
 	procAttachThreadInput     = user32.NewProc("AttachThreadInput")
@@ -70,6 +69,9 @@ func ActivateAndPlace(title string, x, y int) {
 }
 
 func findWindow(title string) uintptr {
+	if title == "" {
+		return 0
+	}
 	titlePtr, err := syscall.UTF16PtrFromString(title)
 	if err != nil {
 		return 0
@@ -79,6 +81,7 @@ func findWindow(title string) uintptr {
 		return hwnd
 	}
 	ourPID := uint32(os.Getpid())
+	procGetWindowText := user32.NewProc("GetWindowTextW")
 	var found uintptr
 	cb := syscall.NewCallback(func(hwnd uintptr, _ uintptr) uintptr {
 		var pid uint32
@@ -86,14 +89,10 @@ func findWindow(title string) uintptr {
 		if pid != ourPID {
 			return 1
 		}
-		visible, _, _ := procIsWindowVisible.Call(hwnd)
-		if visible == 0 {
-			var buf [512]uint16
-			procGetWindowText := user32.NewProc("GetWindowTextW")
-			procGetWindowText.Call(hwnd, uintptr(unsafe.Pointer(&buf[0])), 512)
-			if windows.UTF16ToString(buf[:]) == "" {
-				return 1
-			}
+		var buf [512]uint16
+		procGetWindowText.Call(hwnd, uintptr(unsafe.Pointer(&buf[0])), 512)
+		if windows.UTF16ToString(buf[:]) != title {
+			return 1
 		}
 		found = hwnd
 		return 0
@@ -147,4 +146,8 @@ func TrackedTitle() string {
 
 func ActivateTracked(x, y int) {
 	ActivateAndPlace(TrackedTitle(), x, y)
+}
+
+func FindWindowByTitle(title string) uintptr {
+	return findWindow(title)
 }

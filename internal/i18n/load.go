@@ -153,7 +153,6 @@ func readLocaleTable(code string) (LocaleTable, localeMeta, error) {
 	return table, meta, nil
 }
 
-// KeyCounts returns per-locale string key totals from catalog.json.
 func KeyCounts() map[string]int {
 	out := make(map[string]int, len(catalogMeta.KeyCounts))
 	for code, count := range catalogMeta.KeyCounts {
@@ -168,7 +167,6 @@ func KeyCounts() map[string]int {
 	return out
 }
 
-// DefaultLocale returns the default locale code from catalog.json.
 func DefaultLocale() string {
 	if catalogMeta.Default != "" {
 		return catalogMeta.Default
@@ -176,7 +174,6 @@ func DefaultLocale() string {
 	return "zh_TW"
 }
 
-// LocaleMeta returns embedded _meta.language_name for a locale code.
 func LocaleMeta(code string) (languageName string, ok bool) {
 	table, exists := builtin[code]
 	if !exists {

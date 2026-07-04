@@ -1,5 +1,3 @@
-// Package appmeta holds product identity, window defaults, and build-time constants.
-// Win10/amd64 desktop app (Go + Wails v3); build via build_win10.bat or wails3 build.
 package appmeta
 
 const (

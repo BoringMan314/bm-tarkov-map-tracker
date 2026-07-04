@@ -104,6 +104,87 @@
           </div>
         </div>
       </div>
+      <div class="select-container" id="embedded-select">
+        <button type="button" class="toolbar-btn select-field" id="embedded-select-btn" aria-haspopup="true" aria-expanded="false">
+          <span id="embedded-select-label">內嵌地圖</span>
+          <span class="select-caret" aria-hidden="true">▼</span>
+        </button>
+        <div class="dropdown-list embedded-panel hidden" id="embedded-panel">
+          <div class="exfil-filter-row embedded-status-row">
+            <span class="exfil-filter-label" id="embedded-display-target-label">顯示於</span>
+            <span class="embedded-status-value" id="embedded-display-target-value">—</span>
+          </div>
+          <label class="exfil-filter-row embedded-option-row">
+            <span class="exfil-filter-label" id="embedded-position-label">位置</span>
+            <select id="embedded-position" class="embedded-select">
+              <option value="none">無</option>
+              <option value="top-left">左上</option>
+              <option value="top-right">右上</option>
+              <option value="bottom-left">左下</option>
+              <option value="bottom-right">右下</option>
+            </select>
+          </label>
+          <label class="exfil-filter-row embedded-option-row">
+            <span class="exfil-filter-label" id="embedded-range-label">顯示範圍</span>
+            <select id="embedded-range" class="embedded-select">
+              <option value="1">1X</option>
+              <option value="5">5X</option>
+              <option value="10" selected>10X</option>
+              <option value="15">15X</option>
+              <option value="20">20X</option>
+            </select>
+          </label>
+          <label class="exfil-filter-row embedded-option-row">
+            <span class="exfil-filter-label" id="embedded-size-label">顯示尺寸</span>
+            <select id="embedded-size" class="embedded-select">
+              <option value="100">100×100</option>
+              <option value="200">200×200</option>
+              <option value="300" selected>300×300</option>
+            </select>
+          </label>
+          <label class="exfil-filter-row embedded-option-row">
+            <span class="exfil-filter-label" id="embedded-offset-x-label">偏移 X</span>
+            <select id="embedded-offset-x" class="embedded-select">
+              <option value="0">0</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="150">150</option>
+              <option value="200">200</option>
+              <option value="250" selected>250</option>
+              <option value="300">300</option>
+              <option value="350">350</option>
+              <option value="400">400</option>
+              <option value="450">450</option>
+              <option value="500">500</option>
+            </select>
+          </label>
+          <label class="exfil-filter-row embedded-option-row">
+            <span class="exfil-filter-label" id="embedded-offset-y-label">偏移 Y</span>
+            <select id="embedded-offset-y" class="embedded-select">
+              <option value="0" selected>0</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="150">150</option>
+              <option value="200">200</option>
+              <option value="250">250</option>
+              <option value="300">300</option>
+              <option value="350">350</option>
+              <option value="400">400</option>
+              <option value="450">450</option>
+              <option value="500">500</option>
+            </select>
+          </label>
+          <label class="exfil-filter-row embedded-option-row">
+            <span class="exfil-filter-label" id="embedded-opacity-label">透明度</span>
+            <select id="embedded-opacity" class="embedded-select">
+              <option value="0">0%</option>
+              <option value="30">30%</option>
+              <option value="50" selected>50%</option>
+              <option value="80">80%</option>
+            </select>
+          </label>
+        </div>
+      </div>
       <button type="button" class="toolbar-btn action-btn" id="reset-view-btn">
         <svg class="btn-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />

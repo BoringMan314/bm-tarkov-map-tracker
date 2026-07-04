@@ -1,0 +1,156 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+.embedded-root {
+  --embedded-ui-scale: 1;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.embedded-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  border: 1px solid rgba(51, 181, 229, 0.45);
+}
+
+.embedded-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  will-change: transform;
+}
+
+.embedded-content {
+  position: relative;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.embedded-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.embedded-markers {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.exfil-marker {
+  position: absolute;
+  display: block;
+  width: calc(24px * var(--embedded-ui-scale));
+  height: calc(24px * var(--embedded-ui-scale));
+  transform-origin: center center;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.exfil-marker-label {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  margin-bottom: calc(4px * var(--embedded-ui-scale));
+  font-size: calc(12px * var(--embedded-ui-scale));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 1px 1px 2px #000;
+  -webkit-text-stroke: 0.2px #000;
+}
+
+.marker-coords-label {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: calc(4px * var(--embedded-ui-scale));
+  font-size: calc(11px * var(--embedded-ui-scale));
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+  color: #33b5e5;
+  text-shadow: 1px 1px 2px #000;
+  -webkit-text-stroke: 0.2px #000;
+}
+
+.exfil-marker img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.exfil-marker[data-exfil="pmc"] img {
+  filter: drop-shadow(0 0 3px #00a700);
+}
+
+.exfil-marker[data-exfil="scav"] img {
+  filter: drop-shadow(0 0 3px #ca8a00);
+}
+
+.exfil-marker[data-exfil="transit"] img {
+  filter: drop-shadow(0 0 3px #cd1e2f);
+}
+
+.exfil-marker[data-exfil="coop"] img {
+  filter: drop-shadow(0 0 3px #0292c0);
+}
+
+.embedded-player {
+  position: absolute;
+  width: calc(28px * var(--embedded-ui-scale));
+  height: calc(28px * var(--embedded-ui-scale));
+  transform-origin: center center;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.embedded-player img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform-origin: center center;
+  filter: drop-shadow(0 0 6px #d22d2d);
+}
+
+.embedded-player .marker-coords-label {
+  color: #fff;
+}
+
+.embedded-player.hidden {
+  display: none;
+}
+
+.embedded-root.is-idle .embedded-viewport {
+  visibility: hidden;
+}

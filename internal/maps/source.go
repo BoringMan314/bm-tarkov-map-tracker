@@ -21,7 +21,6 @@ func SourceFromRequest(r *http.Request) string {
 	return NormalizeSource(r.URL.Query().Get("source"))
 }
 
-// NormalizeMapVariant maps query values to A (satellite, default) or B (abstract).
 func NormalizeMapVariant(variant string) string {
 	switch strings.ToLower(strings.TrimSpace(variant)) {
 	case "b", "abstract", "abs":

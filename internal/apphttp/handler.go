@@ -4,6 +4,7 @@ import (
 	"io/fs"
 	"net/http"
 
+	"bm-tarkov-map-tracker/internal/embeddedmap"
 	"bm-tarkov-map-tracker/internal/localehttp"
 	"bm-tarkov-map-tracker/internal/maps"
 	"bm-tarkov-map-tracker/internal/player"
@@ -13,6 +14,7 @@ import (
 func Handler(frontend fs.FS) http.Handler {
 	mux := http.NewServeMux()
 	localehttp.Register(mux)
+	embeddedmap.RegisterHTTP(mux)
 	points.RegisterHTTP(mux)
 	player.RegisterHTTP(mux)
 	maps.RegisterHTTP(mux)

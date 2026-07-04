@@ -10,4 +10,5 @@ frontend/node_modules
 node_modules
 build/windows/nsis/MicrosoftEdgeWebview2Setup.exe
 wails_windows_*.syso
-tools
+tools/__pycache__/
+tools/_tmp_tiles/
