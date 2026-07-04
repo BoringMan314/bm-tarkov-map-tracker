@@ -19,9 +19,11 @@ Windows 桌面版《Escape from Tarkov》互動地圖工具，支援 **tarkov.de
 ---
 ## 該專案尚在開發，歡迎提交 Pull requests
 
-| | | |
-| --- | --- | --- |
-| ![程式畫面 1](screenshot/screenshot_01.png) | ![程式畫面 2](screenshot/screenshot_02.png) | ![程式畫面 3](screenshot/screenshot_03.png) |
+![程式畫面 1](screenshot/screenshot_01.png)
+
+![程式畫面 2](screenshot/screenshot_02.png)
+
+![程式畫面 3](screenshot/screenshot_03.png)
 
 ---
 
