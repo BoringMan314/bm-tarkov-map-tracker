@@ -1,9 +1,6 @@
 package appchrome
 
 import (
-	"log"
-	"os"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -24,7 +21,6 @@ type Chrome struct {
 
 	mu             sync.Mutex
 	updateInfo     *githubupdate.ReleaseUpdate
-	downloading    bool
 	checkStarted   bool
 	titleAlt       bool
 	titleAfterStop chan struct{}
@@ -160,15 +156,10 @@ func (c *Chrome) BuildTrayMenu() {
 
 	c.mu.Lock()
 	info := c.updateInfo
-	downloading := c.downloading
 	c.mu.Unlock()
 
 	if info != nil {
-		item := menu.Add(i18n.T("download_update"))
-		if downloading {
-			item.SetEnabled(false)
-		}
-		item.OnClick(func(ctx *application.Context) {
+		menu.Add(i18n.T("download_update")).OnClick(func(ctx *application.Context) {
 			c.downloadUpdate()
 		})
 	}
@@ -187,39 +178,14 @@ func (c *Chrome) BuildTrayMenu() {
 
 func (c *Chrome) downloadUpdate() {
 	c.mu.Lock()
-	if c.downloading || c.updateInfo == nil {
-		c.mu.Unlock()
+	info := c.updateInfo
+	c.mu.Unlock()
+	if info == nil || info.DownloadURL == "" {
 		return
 	}
-	info := c.updateInfo
-	c.downloading = true
-	c.mu.Unlock()
-
-	c.BuildTrayMenu()
-
-	go func() {
-		exePath, err := os.Executable()
-		if err != nil {
-			c.finishDownload()
-			return
-		}
-		dest := githubupdate.BuildSavePath(
-			filepath.Dir(exePath),
-			appmeta.ExeFileStem,
-			info.Major, info.Minor, info.Patch,
-		)
-		if err := githubupdate.DownloadRelease(info.DownloadURL, dest, appmeta.UpdateUserAgent); err != nil {
-			log.Print(err)
-		}
-		c.finishDownload()
-	}()
-}
-
-func (c *Chrome) finishDownload() {
-	c.mu.Lock()
-	c.downloading = false
-	c.mu.Unlock()
+	url := info.DownloadURL
 	application.InvokeSync(func() {
-		c.BuildTrayMenu()
+		_ = c.app.Browser.OpenURL(url)
+		c.app.Quit()
 	})
 }
