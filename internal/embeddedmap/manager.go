@@ -13,22 +13,23 @@ import (
 
 const (
 	gameMissHideThreshold = 50
-	gameScanInterval      = 500 * time.Millisecond
+	gameScanInterval      = 2 * time.Second
+	trackerInterval       = 250 * time.Millisecond
 )
 
 type Manager struct {
-	mu             sync.RWMutex
-	app            *application.App
-	mainWin        application.Window
-	win            application.Window
-	settings       Settings
-	context        Context
-	viewport       *Viewport
-	display        DisplayStatus
-	gameWindow     GameWindowStatus
-	lastGame       gamewin.WindowInfo
-	lastAnchor     gamewin.WindowInfo
-	gameMiss       int
+	mu                sync.RWMutex
+	app               *application.App
+	mainWin           application.Window
+	win               application.Window
+	settings          Settings
+	context           Context
+	viewport          *Viewport
+	display           DisplayStatus
+	gameWindow        GameWindowStatus
+	lastGame          gamewin.WindowInfo
+	lastAnchor        gamewin.WindowInfo
+	gameMiss          int
 	overlayShown      bool
 	overlayConfigured bool
 	lastAppliedBounds application.Rect
@@ -349,7 +350,7 @@ func (m *Manager) startTracker() {
 	m.mu.Unlock()
 
 	go func() {
-		ticker := time.NewTicker(100 * time.Millisecond)
+		ticker := time.NewTicker(trackerInterval)
 		defer ticker.Stop()
 		for {
 			select {

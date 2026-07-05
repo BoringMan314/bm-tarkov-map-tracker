@@ -45,6 +45,7 @@ func applyOverlayBounds(win application.Window, position string, sizeDIP, offset
 		Width:  sizePhys,
 		Height: sizePhys,
 	}
+	sizeChanged := last == nil || last.Width != physical.Width || last.Height != physical.Height
 	if last != nil && boundsEqual(*last, physical) {
 		return
 	}
@@ -58,7 +59,9 @@ func applyOverlayBounds(win application.Window, position string, sizeDIP, offset
 		uintptr(sizePhys),
 		uintptr(swpNoZOrder|swpNoActivate),
 	)
-	refreshOverlayTransparency(win)
+	if sizeChanged {
+		refreshOverlayTransparency(win)
+	}
 	if last != nil {
 		*last = physical
 	}

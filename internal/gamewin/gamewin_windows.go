@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"syscall"
 	"unsafe"
 
@@ -27,6 +28,10 @@ var (
 	procGetDpiForWindow          = user32.NewProc("GetDpiForWindow")
 	procIsWindow                 = user32.NewProc("IsWindow")
 	procSystemParametersInfoW    = user32.NewProc("SystemParametersInfoW")
+
+	enumMu       sync.Mutex
+	enumScan     *windowScan
+	enumCallback = syscall.NewCallback(enumWindowCallback)
 )
 
 const spiGetWorkArea = 0x0030
@@ -41,6 +46,14 @@ type win32Rect struct {
 type point struct {
 	X int32
 	Y int32
+}
+
+type windowScan struct {
+	pid       uint32
+	byProcess bool
+	best      WindowInfo
+	bestArea  int
+	found     bool
 }
 
 func rectFromWin32(rc win32Rect) Rect {
@@ -94,65 +107,55 @@ func findEFTWindowByProcess() (WindowInfo, bool) {
 }
 
 func findEFTWindowByEnum() (WindowInfo, bool) {
-	var best WindowInfo
-	var bestArea int
-	var found bool
-	cb := syscall.NewCallback(func(hwnd uintptr, _ uintptr) uintptr {
-		if !isCandidateGameWindow(hwnd) {
-			return 1
-		}
-		info, ok := windowInfoFromHWND(hwnd)
-		if !ok {
-			return 1
-		}
-		area := info.Rect.Width() * info.Rect.Height()
-		if area < 640*480 {
-			return 1
-		}
-		if area <= bestArea {
-			return 1
-		}
-		bestArea = area
-		best = info
-		found = true
-		return 1
-	})
-	_, _, _ = procEnumWindows.Call(cb, 0)
-	return best, found
+	scan := &windowScan{}
+	enumMu.Lock()
+	enumScan = scan
+	_, _, _ = procEnumWindows.Call(enumCallback, 0)
+	enumScan = nil
+	enumMu.Unlock()
+	return scan.best, scan.found
 }
 
 func largestWindowForProcess(pid uint32) (WindowInfo, bool) {
-	var best WindowInfo
-	var bestArea int
-	var found bool
-	cb := syscall.NewCallback(func(hwnd uintptr, _ uintptr) uintptr {
+	scan := &windowScan{pid: pid, byProcess: true}
+	enumMu.Lock()
+	enumScan = scan
+	_, _, _ = procEnumWindows.Call(enumCallback, 0)
+	enumScan = nil
+	enumMu.Unlock()
+	return scan.best, scan.found
+}
+
+func enumWindowCallback(hwnd uintptr, _ uintptr) uintptr {
+	scan := enumScan
+	if scan == nil {
+		return 1
+	}
+	if scan.byProcess {
 		var wpid uint32
 		procGetWindowThreadProcessId.Call(hwnd, uintptr(unsafe.Pointer(&wpid)))
-		if wpid != pid {
+		if wpid != scan.pid {
 			return 1
 		}
 		iconic, _, _ := procIsIconic.Call(hwnd)
 		if iconic != 0 {
 			return 1
 		}
-		info, ok := windowInfoFromHWND(hwnd)
-		if !ok {
-			return 1
-		}
-		area := info.Rect.Width() * info.Rect.Height()
-		if area < 640*480 {
-			return 1
-		}
-		if area <= bestArea {
-			return 1
-		}
-		bestArea = area
-		best = info
-		found = true
+	} else if !isCandidateGameWindow(hwnd) {
 		return 1
-	})
-	_, _, _ = procEnumWindows.Call(cb, 0)
-	return best, found
+	}
+	info, ok := windowInfoFromHWND(hwnd)
+	if !ok {
+		return 1
+	}
+	area := info.Rect.Width() * info.Rect.Height()
+	if area < 640*480 || area <= scan.bestArea {
+		return 1
+	}
+	scan.bestArea = area
+	scan.best = info
+	scan.found = true
+	return 1
 }
 
 func eftProcessIDs() ([]uint32, error) {
@@ -361,4 +364,3 @@ func windowClientScreenRect(hwnd uintptr) (Rect, bool) {
 	}
 	return out, true
 }
-

@@ -60,7 +60,7 @@ Windows 桌面版《Escape from Tarkov》互動地圖工具，支援 **tarkov.de
   - 右鍵選單：**GitHub**、關於、離開；有新版時另顯示**下載更新**
 - GitHub Release 版本檢查：啟動後背景比對，有新版本時視窗標題交替提示。
 - 防多開：後開會結束前開實例（含 exe 改名／複製情境）。
-- 視窗標題格式：`[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14`（產品名依語系 `project_name` 切換）。
+- 視窗標題格式：`[B.M] 塔科夫地圖追蹤 V0.2 By. [B.M] 圓周率 3.14`（產品名依語系 `project_name` 切換）。
 
 ---
 
@@ -183,7 +183,7 @@ wails3 task windows:run
 - 內建字串來源：根目錄 **`i18n/`**（每語系一個 `<code>.json`，檔案開頭含 `_meta` 定義顯示名稱）。
 - 新增語言：複製 `i18n/en_US.json` → `i18n/<新代碼>.json`，修改 `_meta`，再執行 `python tools/sync_root_i18n.py`（會自動併入 catalog、補缺 key、注入撤離點名稱）。
 - 繁中／簡中：`zh_TW.json`、`zh_CN.json` 的 UI 與 **`exfil_*` 撤離點名稱** 已自 `internal/points/exfil_names.json`、`eftarkov_names.json` 注入對應翻譯；其餘語系缺譯時 fallback 英文。
-- 視窗標題產品名僅使用 **`project_name`**（與 `[B.M] … V0.1 By. [B.M] 圓周率 3.14` 前後綴組合）。
+- 視窗標題產品名僅使用 **`project_name`**（與 `[B.M] … V0.2 By. [B.M] 圓周率 3.14` 前後綴組合）。
 
 ### 設定檔格式範例
 

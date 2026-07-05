@@ -84,6 +84,7 @@ func showOverlayNoActivate(win application.Window) bool {
 		return false
 	}
 	procShowWindow.Call(hwnd, swShowNoActivate)
+	refreshOverlayTransparency(win)
 	return true
 }
 

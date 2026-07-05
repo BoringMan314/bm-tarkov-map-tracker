@@ -6,10 +6,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 )
 
 func main() {
-	version := "0.1"
+	version := "0.2"
 	writeWindowsInfoJSON(version)
 	updateConfigYML(version)
 }
@@ -54,22 +55,14 @@ func updateConfigYML(version string) {
 		return
 	}
 	product := fmt.Sprintf("[B.M] 塔科夫地圖追蹤 V%s By. [B.M] 圓周率 3.14", version)
-	replacements := []struct {
-		old string
-		new string
-	}{
-		{`companyName: "My Company"`, `companyName: "[B.M] 圓周率 3.14"`},
-		{`productName: "My Product"`, fmt.Sprintf(`productName: "%s"`, product)},
-		{`productIdentifier: "com.mycompany.myproduct"`, `productIdentifier: "com.bm.tarkov-map-tracker"`},
-		{`description: "A program that does X"`, fmt.Sprintf(`description: "%s"`, product)},
-		{`copyright: "(c) 2025, My Company"`, `copyright: "[B.M] 圓周率 3.14"`},
-		{`comments: "Some Product Comments"`, `comments: "bm-tarkov-map-tracker"`},
-		{`version: "1.0.0"`, fmt.Sprintf(`version: "%s"`, version)},
-	}
 	out := string(data)
-	for _, r := range replacements {
-		out = replaceOnce(out, r.old, r.new)
-	}
+	out = replaceYAMLValue(out, "companyName", "[B.M] 圓周率 3.14")
+	out = replaceYAMLValue(out, "productName", product)
+	out = replaceYAMLValue(out, "productIdentifier", "com.bm.tarkov-map-tracker")
+	out = replaceYAMLValue(out, "description", product)
+	out = replaceYAMLValue(out, "copyright", "[B.M] 圓周率 3.14")
+	out = replaceYAMLValue(out, "comments", "bm-tarkov-map-tracker")
+	out = replaceYAMLValue(out, "version", version)
 	if err := os.WriteFile(path, []byte(out), 0644); err != nil {
 		fmt.Fprintf(os.Stderr, "write config.yml: %v\n", err)
 		os.Exit(1)
@@ -77,19 +70,7 @@ func updateConfigYML(version string) {
 	fmt.Printf("updated %s\n", path)
 }
 
-func replaceOnce(s, old, new string) string {
-	if old == "" {
-		return s
-	}
-	idx := -1
-	for i := 0; i <= len(s)-len(old); i++ {
-		if s[i:i+len(old)] == old {
-			idx = i
-			break
-		}
-	}
-	if idx < 0 {
-		return s
-	}
-	return s[:idx] + new + s[idx+len(old):]
+func replaceYAMLValue(s, key, value string) string {
+	re := regexp.MustCompile(`(?m)^(\s*` + regexp.QuoteMeta(key) + `:\s*").*(")\s*$`)
+	return re.ReplaceAllString(s, `${1}`+value+`${2}`)
 }

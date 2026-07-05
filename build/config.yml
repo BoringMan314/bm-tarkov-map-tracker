@@ -4,13 +4,12 @@ version: '3'
 
 info:
   companyName: "[B.M] 圓周率 3.14"
-  productName: "[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14"
+  productName: "[B.M] 塔科夫地圖追蹤 V0.2 By. [B.M] 圓周率 3.14"
   productIdentifier: "com.bm.tarkov-map-tracker"
-  description: "[B.M] 塔科夫地圖追蹤 V0.1 By. [B.M] 圓周率 3.14"
+  description: "[B.M] 塔科夫地圖追蹤 V0.2 By. [B.M] 圓周率 3.14"
   copyright: "[B.M] 圓周率 3.14"
   comments: "bm-tarkov-map-tracker"
-  version: "0.1"
-
+  version: "0.2"
 dev_mode:
   root_path: .
   log_level: warn
